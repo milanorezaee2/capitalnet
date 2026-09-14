@@ -14,6 +14,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, TrendingUp, Layers, Search, Users, FileText, Star, Briefcase, Lock } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
 // ─────────────────────────────────────────────────────────────────────────────
@@ -249,7 +252,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                     <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/30">
                       <TrendingUp size={16} className="text-amber-400" />
                     </div>
-                    <p className="text-sm font-semibold text-white">فعالیت‌های سایت</p>
+                    <p className="text-sm font-semibold text-white">{t("فعالیت‌های سایت")}</p>
                   </div>
                   <div className="space-y-3">
                     {(settings.journey_metrics || []).map((item: any, index: number) => (
@@ -357,7 +360,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                   className="max-w-2xl space-y-5"
                 >
                   <p className="text-base leading-8 text-white/70 md:text-lg">
-                    هیچ فرصت سرمایه‌گذاری بدون بررسی اولیه به شبکه سرمایه‌گذاران معرفی نمی‌شود. هدف ما اطمینان از کیفیت و حرفه‌ای بودن فرصت‌هاست.
+                    {t("هیچ فرصت سرمایه‌گذاری بدون بررسی اولیه به شبکه سرمایه‌گذاران معرفی نمی‌شود. هدف ما اطمینان از کیفیت و حرفه‌ای بودن فرصت‌هاست.")}
                   </p>
 
                   {/* Structured Points */}
@@ -367,8 +370,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Search size={14} className="text-amber-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">بررسی اولیه و ارزیابی تخصصی</h4>
-                        <p className="text-xs text-white/60 leading-6">پیش از هر معرفی، بررسی دقیق انجام می‌شود.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("بررسی اولیه و ارزیابی تخصصی")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("پیش از هر معرفی، بررسی دقیق انجام می‌شود.")}</p>
                       </div>
                     </div>
 
@@ -377,8 +380,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Users size={14} className="text-teal-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">استانداردهای معرفی برای سرمایه‌گذاران</h4>
-                        <p className="text-xs text-white/60 leading-6">پیش از معرفی هر پروژه، مدارک مالی، مدل کسب‌وکار، بازار هدف، تیم، میزان سرمایه موردنیاز، نحوه مصرف سرمایه و ریسک‌های اصلی آن توسط متخصصان باتجربه بررسی می‌شود.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("استانداردهای معرفی برای سرمایه‌گذاران")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("پیش از معرفی هر پروژه، مدارک مالی، مدل کسب‌وکار، بازار هدف، تیم، میزان سرمایه موردنیاز، نحوه مصرف سرمایه و ریسک‌های اصلی آن توسط متخصصان باتجربه بررسی می‌شود.")}</p>
                       </div>
                     </div>
 
@@ -387,8 +390,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <FileText size={14} className="text-cyan-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">الزامات مدارک برای متقاضیان</h4>
-                        <p className="text-xs text-white/60 leading-6">برای معرفی کسب‌وکار یا پروژه شما به سرمایه‌گذار، مدارکی مانند Pitch Deck، مدل مالی، بیزینس پلن، One-Pager، Investment Memo و اطلاعات تیم باید کامل، دقیق و قابل دفاع باشند.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("الزامات مدارک برای متقاضیان")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("برای معرفی کسب‌وکار یا پروژه شما به سرمایه‌گذار، مدارکی مانند Pitch Deck، مدل مالی، بیزینس پلن، One-Pager، Investment Memo و اطلاعات تیم باید کامل، دقیق و قابل دفاع باشند.")}</p>
                       </div>
                     </div>
 
@@ -397,8 +400,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Star size={14} className="text-purple-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">اهمیت ارائه حرفه‌ای</h4>
-                        <p className="text-xs text-white/60 leading-6">حتی اگر یک پروژه ظرفیت خوبی داشته باشد، ارائه غیرحرفه‌ای می‌تواند در چند ثانیه نخست اعتماد و توجه سرمایه‌گذار را از بین ببرد.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("اهمیت ارائه حرفه‌ای")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("حتی اگر یک پروژه ظرفیت خوبی داشته باشد، ارائه غیرحرفه‌ای می‌تواند در چند ثانیه نخست اعتماد و توجه سرمایه‌گذار را از بین ببرد.")}</p>
                       </div>
                     </div>
 
@@ -407,8 +410,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Briefcase size={14} className="text-rose-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">خدمات آماده‌سازی مدارک</h4>
-                        <p className="text-xs text-white/60 leading-6">اگر با نحوه تهیه این مدارک آشنا نیستید یا فایل‌های فعلی شما نیاز به اصلاح دارند، از بخش خدمات آماده‌سازی جذب سرمایه اقدام کنید.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("خدمات آماده‌سازی مدارک")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("اگر با نحوه تهیه این مدارک آشنا نیستید یا فایل‌های فعلی شما نیاز به اصلاح دارند، از بخش خدمات آماده‌سازی جذب سرمایه اقدام کنید.")}</p>
                       </div>
                     </div>
 
@@ -417,8 +420,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Lock size={14} className="text-emerald-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">تضمین محرمانگی اطلاعات</h4>
-                        <p className="text-xs text-white/60 leading-6">تمامی مدارک و اطلاعات دریافتی با رویکرد محرمانه بررسی می‌شوند و بدون هماهنگی و تأیید صاحب پروژه در اختیار اشخاص یا مجموعه‌های نامرتبط قرار نمی‌گیرند.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("تضمین محرمانگی اطلاعات")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("تمامی مدارک و اطلاعات دریافتی با رویکرد محرمانه بررسی می‌شوند و بدون هماهنگی و تأیید صاحب پروژه در اختیار اشخاص یا مجموعه‌های نامرتبط قرار نمی‌گیرند.")}</p>
                       </div>
                     </div>
                   </div>
@@ -461,10 +464,10 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-teal-400/20 to-cyan-600/10 border border-teal-400/30">
                         <Briefcase size={14} className="text-teal-400" />
                       </div>
-                      <h4 className="text-sm font-semibold text-white">بازار کپیتال نتورک</h4>
+                      <h4 className="text-sm font-semibold text-white">{t("بازار کپیتال نتورک")}</h4>
                     </div>
                     <p className="text-xs text-white/80 leading-7 text-justify mb-3">
-                      برای درخواست سرمایه و یا سرمایه‌گذاری کمتر از ۵ میلیارد تومان، لطفاً از طریق بازار کپیتال نتورک درخواست‌های خود را ثبت کنید.
+                      {t("برای درخواست سرمایه و یا سرمایه‌گذاری کمتر از ۵ میلیارد تومان، لطفاً از طریق بازار کپیتال نتورک درخواست‌های خود را ثبت کنید.")}
                     </p>
                     <a
                       href="https://market.capitalnetwork.ir"

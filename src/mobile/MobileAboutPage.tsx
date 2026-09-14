@@ -2,6 +2,9 @@ import { motion } from 'framer-motion';
 import { Users, Target, Star, ArrowLeft } from 'lucide-react';
 import type { SiteSettings } from '../lib/settingsApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   settings: SiteSettings;
   onNavigate: (page: string) => void;
@@ -86,7 +89,7 @@ export default function MobileAboutPage({ settings, onNavigate, themeMode = 'dar
           variants={fadeUp}
           className={`rounded-2xl p-4 border ${isLight ? 'border-amber-500/30 bg-amber-50' : 'border-amber-400/20 bg-amber-400/[0.04]'}`}
         >
-          <p className="text-[10px] font-black tracking-widest text-amber-500/80 uppercase mb-1.5">داستان ما</p>
+          <p className="text-[10px] font-black tracking-widest text-amber-500/80 uppercase mb-1.5">{t("داستان ما")}</p>
           <h3 className={`text-base font-black leading-snug ${isLight ? 'text-slate-900' : 'text-white'}`}>{settings.about_story_title}</h3>
           <p className={`mobile-justified-text mt-2 text-xs leading-[1.8] ${isLight ? 'text-slate-600' : 'text-white/50'}`}>{settings.about_story_desc}</p>
           {settings.about_story_items?.length > 0 && (
@@ -119,7 +122,7 @@ export default function MobileAboutPage({ settings, onNavigate, themeMode = 'dar
       {/* ── Team ── */}
       {team.length > 0 && (
         <motion.div variants={fadeUp}>
-          <p className={`mb-3 text-[10px] font-black uppercase tracking-widest ${isLight ? 'text-slate-500' : 'text-white/30'}`}>تیم کلیدی</p>
+          <p className={`mb-3 text-[10px] font-black uppercase tracking-widest ${isLight ? 'text-slate-500' : 'text-white/30'}`}>{t("تیم کلیدی")}</p>
           <div className="space-y-2">
             {team.map((member: any, i: number) => (
               <motion.div
@@ -162,14 +165,14 @@ export default function MobileAboutPage({ settings, onNavigate, themeMode = 'dar
           className="flex-1 rounded-xl py-3 text-sm font-black text-slate-900"
           style={{ background: 'linear-gradient(135deg, #f59e0b, #06b6d4)' }}
         >
-          تماس با تیم
+          {t("تماس با تیم")}
         </button>
         <button
           type="button"
           onClick={() => onNavigate('services')}
           className={`flex items-center gap-1.5 rounded-xl px-4 py-3 text-sm font-bold border ${isLight ? 'border-slate-200 bg-slate-100 text-slate-700' : 'border-white/10 bg-white/[0.03] text-white/70'}`}
         >
-          خدمات
+          {t("خدمات")}
           <ArrowLeft size={13} />
         </button>
       </motion.div>

@@ -1,6 +1,7 @@
 // ─── Router Configuration (Path-based SEO-optimized routing) ─────────────────
 
 import { getPageRouteLinkId } from '../constants/linkIds';
+import { getLang, withLangPrefix, stripLangPrefix } from '../i18n';
 
 export type PageKey = 'home' | 'services' | 'service-detail' | 'process' | 'blog' | 'blog-post' | 'category' | 'tag' | 'author' | 'contact' | 'about' | 'evaluation';
 export type BlogCategory = 'investment' | 'strategy' | 'case-study' | 'market-analysis' | 'negotiation' | 'financial-modeling';
@@ -29,7 +30,9 @@ export function parsePathname(): RouteParams {
   if (typeof window === 'undefined') return { page: 'home' };
 
   const hash = window.location.hash.replace(/^#/, '').replace(/^\//, '');
-  const pathname = normalizeRoutePath(window.location.pathname);
+  // پیشوند زبان را جدا می‌کنیم تا مسیر صفحه درست تشخیص داده شود (/en/blog → /blog)
+  const { path } = stripLangPrefix(window.location.pathname);
+  const pathname = normalizeRoutePath(path);
   const search = window.location.search;
   
   // Parse query parameters
@@ -200,7 +203,8 @@ export function buildPath(params: RouteParams): string {
   // linkId و resolvedLinkId برای backward-compat خوانده می‌شوند ولی به URL اضافه نمی‌شوند.
   void (linkId || resolveRouteLinkId(params));
 
-  return path;
+  // ── پیشوند زبان: در حالت انگلیسی مسیرها زیر /en ساخته می‌شوند (/en/blog)
+  return withLangPrefix(path, getLang());
 }
 
 export function navigateToPath(params: RouteParams): void {

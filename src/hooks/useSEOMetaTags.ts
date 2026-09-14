@@ -3,6 +3,9 @@
 import { useEffect } from 'react';
 import type { MetaTags, SchemaMarkup } from '../lib/seoGenerator';
 
+import { t } from '@/i18n';
+
+
 export function useSEOMetaTags(metaTags: MetaTags, schemaMarkup?: SchemaMarkup | SchemaMarkup[]) {
   useEffect(() => {
     // Set meta title
@@ -105,30 +108,30 @@ function setSchemaMarkup(schemas: SchemaMarkup[]): void {
  */
 export function createBreadcrumbItems(currentPage: string): Array<{ name: string; url: string }> {
   const items: Array<{ name: string; url: string }> = [
-    { name: 'خانه', url: '/' },
+    { name: t("خانه"), url: '/' },
   ];
 
   if (currentPage === 'blog') {
-    items.push({ name: 'بلاگ', url: '/blog' });
+    items.push({ name: t("بلاگ"), url: '/blog' });
   } else if (currentPage === 'blog-post') {
     items.push(
-      { name: 'بلاگ', url: '/blog' },
-      { name: 'مقاله', url: '#' }
+      { name: t("بلاگ"), url: '/blog' },
+      { name: t("مقاله"), url: '#' }
     );
   } else if (currentPage === 'category') {
     items.push(
-      { name: 'بلاگ', url: '/blog' },
-      { name: 'دسته‌بندی', url: '#' }
+      { name: t("بلاگ"), url: '/blog' },
+      { name: t("دسته‌بندی"), url: '#' }
     );
   } else if (currentPage === 'tag') {
     items.push(
-      { name: 'بلاگ', url: '/blog' },
-      { name: 'تگ', url: '#' }
+      { name: t("بلاگ"), url: '/blog' },
+      { name: t("تگ"), url: '#' }
     );
   } else if (currentPage === 'author') {
     items.push(
-      { name: 'بلاگ', url: '/blog' },
-      { name: 'نویسنده', url: '#' }
+      { name: t("بلاگ"), url: '/blog' },
+      { name: t("نویسنده"), url: '#' }
     );
   }
 

@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Eye, Clock } from 'lucide-react';
 import type { BlogPost, BlogCategory } from '../types/blog';
 
+import { t } from '@/i18n';
+
+
 interface RelatedPostsProps {
   currentPost: BlogPost;
   allPosts: BlogPost[];
@@ -87,9 +90,9 @@ export function RelatedPosts({ currentPost, allPosts, onNavigate }: RelatedPosts
         <div className="mb-8">
           <h2 className="text-2xl md:text-3xl font-black text-white mb-2 flex items-center gap-3">
             <ArrowLeft size={28} className="text-teal-400" />
-            مقالات مرتبط
+            {t("مقالات مرتبط")}
           </h2>
-          <p className="text-white/60">مقالاتی که ممکن است مورد علاقه شما باشد</p>
+          <p className="text-white/60">{t("مقالاتی که ممکن است مورد علاقه شما باشد")}</p>
         </div>
 
         <motion.div variants={vStagger} initial="hidden" animate="show" className="grid gap-6 md:grid-cols-3">
@@ -210,7 +213,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-8">
-      <h3 className="text-sm font-bold text-white mb-4">مطالب این مقاله</h3>
+      <h3 className="text-sm font-bold text-white mb-4">{t("مطالب این مقاله")}</h3>
       <nav className="space-y-2">
         {headings.map((heading) => (
           <a
@@ -261,7 +264,7 @@ export function RelatedAuthors({ currentAuthor, allPosts, onNavigate }: RelatedA
         onClick={() => onNavigate(currentAuthor.name)}
         className="w-full btn-gold text-sm font-semibold py-2 rounded-lg"
       >
-        مشاهده تمام مقالات
+        {t("مشاهده تمام مقالات")}
       </button>
     </aside>
   );

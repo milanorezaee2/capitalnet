@@ -5,6 +5,9 @@
 import { Eye, TrendingUp } from 'lucide-react';
 import type { AppBlogPost } from '../../../lib/blogApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   posts: AppBlogPost[];
   onNavigate: (slug: string) => void;
@@ -23,7 +26,7 @@ export default function PopularPosts({ posts, onNavigate }: Props) {
         className="flex items-center gap-2 text-sm font-bold text-white mb-4"
       >
         <TrendingUp size={16} className="text-amber-400" aria-hidden="true" />
-        مقالات محبوب
+        {t("مقالات محبوب")}
       </h3>
 
       <ol className="space-y-3" role="list">
@@ -46,7 +49,7 @@ export default function PopularPosts({ posts, onNavigate }: Props) {
                 </p>
                 <div className="flex items-center gap-1.5 text-white/35 text-[11px]">
                   <Eye size={10} aria-hidden="true" />
-                  {(post.views ?? 0).toLocaleString('fa-IR')} بازدید
+                  {(post.views ?? 0).toLocaleString('fa-IR')} {t("بازدید")}
                 </div>
               </div>
             </button>

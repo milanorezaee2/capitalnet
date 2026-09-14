@@ -6,6 +6,9 @@ import { Mail, Send, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import type { Newsletter } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface NewsletterProps {
   newsletter: Newsletter;
 }
@@ -89,7 +92,7 @@ export const NewsletterSection = ({ newsletter }: NewsletterProps) => {
 
                 {/* Input */}
                 <motion.input
-                  aria-label="ایمیل"
+                  aria-label={t("ایمیل")}
                   placeholder={newsletter.placeholder}
                   type="email"
                   value={email}

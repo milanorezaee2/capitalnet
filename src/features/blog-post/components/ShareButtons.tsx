@@ -6,6 +6,9 @@
 import { Link, Linkedin, Facebook, Twitter, Check } from 'lucide-react';
 import { useCopyToClipboard } from '../hooks';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   title: string;
   url: string;
@@ -66,8 +69,8 @@ export default function ShareButtons({ title, url }: Props) {
   const [copied, copy] = useCopyToClipboard(2200);
 
   return (
-    <div className="flex flex-wrap items-center gap-2" role="group" aria-label="اشتراک‌گذاری">
-      <span className="text-sm text-white/40 ml-1">اشتراک‌گذاری:</span>
+    <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t("اشتراک‌گذاری")}>
+      <span className="text-sm text-white/40 ml-1">{t("اشتراک‌گذاری:")}</span>
 
       {PLATFORMS.map((p) => (
         <a
@@ -76,7 +79,7 @@ export default function ShareButtons({ title, url }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-white/50 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-teal-500/50 ${p.color}`}
-          aria-label={`اشتراک‌گذاری در ${p.label}`}
+          aria-label={t('اشتراک‌گذاری در {label}', { label: p.label })}
         >
           {p.icon}
           <span className="hidden sm:inline">{p.label}</span>
@@ -91,12 +94,12 @@ export default function ShareButtons({ title, url }: Props) {
             ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
             : 'border-white/10 bg-white/5 text-white/50 hover:bg-teal-500/10 hover:text-teal-400 hover:border-teal-500/40'
         }`}
-        aria-label={copied ? 'لینک کپی شد' : 'کپی لینک'}
+        aria-label={copied ? t("لینک کپی شد") : t("کپی لینک")}
       >
         {copied ? (
-          <><Check size={14} aria-hidden="true" /> کپی شد</>
+          <><Check size={14} aria-hidden="true" /> {t("کپی شد")}</>
         ) : (
-          <><Link size={14} aria-hidden="true" /> <span className="hidden sm:inline">کپی لینک</span></>
+          <><Link size={14} aria-hidden="true" /> <span className="hidden sm:inline">{t("کپی لینک")}</span></>
         )}
       </button>
     </div>

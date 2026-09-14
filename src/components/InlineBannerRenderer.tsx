@@ -20,6 +20,9 @@ import { ExternalLink, X } from 'lucide-react';
 import type { InlineBanner, BannerPage, BannerCorner } from '../lib/settingsApi';
 import { BANNER_TEMPLATES } from '../lib/settingsApi';
 
+import { t as tr } from '@/i18n';
+
+
 // ─────────────────────────────────────────────────────────────────────────────
 // CSS position helper for each corner
 // ─────────────────────────────────────────────────────────────────────────────
@@ -112,7 +115,7 @@ function BannerCard({ banner, onDismiss, compact = false }: {
             style={{ width: 26, height: 26, background: 'rgba(0,0,0,0.45)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.15)' }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.7)'; (e.currentTarget as HTMLElement).style.color = '#fff'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.45)'; (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.7)'; }}
-            aria-label="بستن"
+            aria-label={tr("بستن")}
           >
             <X size={12} />
           </button>
@@ -200,7 +203,7 @@ function BannerCard({ banner, onDismiss, compact = false }: {
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.55)'; (e.currentTarget as HTMLElement).style.color = '#fff'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.28)'; (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.55)'; }}
-            aria-label="بستن"
+            aria-label={tr("بستن")}
           >
             <X size={compact ? 11 : 13} />
           </button>

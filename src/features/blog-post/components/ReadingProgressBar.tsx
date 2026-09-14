@@ -5,6 +5,9 @@
  */
 import { useReadingProgress } from '../hooks';
 
+import { t } from '@/i18n';
+
+
 export default function ReadingProgressBar() {
   const progress = useReadingProgress();
 
@@ -20,7 +23,7 @@ export default function ReadingProgressBar() {
         aria-valuenow={progress}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-label="پیشرفت خواندن مقاله"
+        aria-label={t("پیشرفت خواندن مقاله")}
       />
     </div>
   );

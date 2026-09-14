@@ -5,6 +5,9 @@
  */
 import { Download, FileText, FileArchive, FileVideo, FileAudio } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   filename: string;
   label: string;
@@ -26,7 +29,7 @@ export default function DownloadBox({ filename, label, size, href = '#' }: Props
       href={href}
       download={filename}
       className="bp-download no-underline group"
-      aria-label={`دانلود ${label}`}
+      aria-label={t("دانلود {label}", { label })}
     >
       <div className="w-11 h-11 rounded-xl bg-amber-500/15 flex items-center justify-center text-amber-400 flex-shrink-0 group-hover:bg-amber-500/25 transition-colors">
         <FileIcon filename={filename} />

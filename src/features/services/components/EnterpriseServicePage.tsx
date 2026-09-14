@@ -21,6 +21,9 @@ import { Related } from './sections/Related';
 import { NewsletterSection } from './sections/Newsletter';
 import type { EnterpriseServicePageContent } from '../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface EnterpriseServicePageProps {
   content: EnterpriseServicePageContent;
   canonicalUrl?: string;
@@ -71,9 +74,9 @@ export const EnterpriseServicePage = ({ content, canonicalUrl }: EnterpriseServi
       {content.settings.sections.benefits && (
         <section id="benefits" className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="max-w-3xl">
-            <h2 className="text-3xl font-black text-white md:text-4xl">مزایای کلیدی</h2>
+            <h2 className="text-3xl font-black text-white md:text-4xl">{t("مزایای کلیدی")}</h2>
             <p className="mt-4 text-lg leading-8 text-slate-300">
-              چرا این خدمات برای شما مناسب است.
+              {t("چرا این خدمات برای شما مناسب است.")}
             </p>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -127,9 +130,9 @@ export const EnterpriseServicePage = ({ content, canonicalUrl }: EnterpriseServi
       {content.settings.sections.deliverables && (
         <section id="deliverables" className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="max-w-3xl">
-            <h2 className="text-3xl font-black text-white md:text-4xl">خروجی‌ها</h2>
+            <h2 className="text-3xl font-black text-white md:text-4xl">{t("خروجی‌ها")}</h2>
             <p className="mt-4 text-lg leading-8 text-slate-300">
-              آنچه در پایان پروژه دریافت می‌کنید.
+              {t("آنچه در پایان پروژه دریافت می‌کنید.")}
             </p>
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -149,9 +152,9 @@ export const EnterpriseServicePage = ({ content, canonicalUrl }: EnterpriseServi
       {content.settings.sections.technologies && (
         <section id="technologies" className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="max-w-3xl">
-            <h2 className="text-3xl font-black text-white md:text-4xl">تکنولوژی‌ها</h2>
+            <h2 className="text-3xl font-black text-white md:text-4xl">{t("تکنولوژی‌ها")}</h2>
             <p className="mt-4 text-lg leading-8 text-slate-300">
-              ابزارها و فناوری‌های مورد استفاده.
+              {t("ابزارها و فناوری‌های مورد استفاده.")}
             </p>
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
@@ -174,9 +177,9 @@ export const EnterpriseServicePage = ({ content, canonicalUrl }: EnterpriseServi
       {content.settings.sections.comparison && (
         <section id="comparison" className="mx-auto max-w-7xl px-6 py-16 md:py-24">
           <div className="max-w-3xl">
-            <h2 className="text-3xl font-black text-white md:text-4xl">مقایسه</h2>
+            <h2 className="text-3xl font-black text-white md:text-4xl">{t("مقایسه")}</h2>
             <p className="mt-4 text-lg leading-8 text-slate-300">
-              مقایسه پلن‌های مختلف.
+              {t("مقایسه پلن‌های مختلف.")}
             </p>
           </div>
           <div className="mt-10 overflow-x-auto">

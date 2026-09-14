@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import type { IntroductionContent } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface IntroductionProps {
   content: IntroductionContent;
 }
@@ -19,7 +22,7 @@ export const Introduction = ({ content }: IntroductionProps) => (
             viewport={{ once: true }}
             className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-emerald-400"
           >
-            معرفی
+            {t("معرفی")}
           </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -59,9 +62,9 @@ export const Introduction = ({ content }: IntroductionProps) => (
         {/* right: two columns of lists */}
         <div className="grid gap-8 sm:grid-cols-2">
           {[
-            { label: 'کاربردها', items: content.uses },
-            { label: 'مخاطبان', items: content.audience },
-            { label: 'ارزش‌ها', items: content.value },
+            { label: t("کاربردها"), items: content.uses },
+            { label: t("مخاطبان"), items: content.audience },
+            { label: t("ارزش‌ها"), items: content.value },
           ].map(({ label, items }, gi) => (
             <motion.div
               key={label}

@@ -33,3 +33,7 @@ typecheck-out.txt
 # Bob internal
 .bob/
 .bobinbono/
+
+
+# Local helper scripts (not part of the app)
+.tools/

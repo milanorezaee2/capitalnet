@@ -7,6 +7,9 @@ import { useState } from 'react';
 import { Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   postId: string;
 }
@@ -43,10 +46,10 @@ export default function RatingStars({ postId }: Props) {
   const displayRating = hovered || userRating || 0;
 
   return (
-    <div className="flex flex-col items-center gap-3 py-6" aria-label="امتیازدهی">
-      <p className="text-sm font-semibold text-white/70">این مقاله چقدر مفید بود؟</p>
+    <div className="flex flex-col items-center gap-3 py-6" aria-label={t("امتیازدهی")}>
+      <p className="text-sm font-semibold text-white/70">{t("این مقاله چقدر مفید بود؟")}</p>
 
-      <div className="flex items-center gap-1.5" role="group" aria-label="انتخاب امتیاز">
+      <div className="flex items-center gap-1.5" role="group" aria-label={t("انتخاب امتیاز")}>
         {[1, 2, 3, 4, 5].map((n) => (
           <motion.button
             key={n}
@@ -56,7 +59,7 @@ export default function RatingStars({ postId }: Props) {
             onClick={() => handleRate(n)}
             disabled={submitted}
             className="bp-star focus:outline-none focus:ring-2 focus:ring-amber-500/40 rounded disabled:cursor-default"
-            aria-label={`امتیاز ${n}`}
+            aria-label={t("امتیاز {n}", { n })}
             aria-pressed={userRating === n}
           >
             <Star
@@ -80,13 +83,13 @@ export default function RatingStars({ postId }: Props) {
             role="status"
             aria-live="polite"
           >
-            ممنون! امتیاز شما ({userRating}/5) ثبت شد.
+            {t("ممنون! امتیاز شما (")}{userRating}{t("/5) ثبت شد.")}
           </motion.p>
         )}
       </AnimatePresence>
 
       <p className="text-xs text-white/35">
-        میانگین: <span className="text-white/55 font-semibold">{avgRating.toFixed(1)}</span> از ۵
+        {t("میانگین:")} <span className="text-white/55 font-semibold">{avgRating.toFixed(1)}</span> {t("از ۵")}
       </p>
     </div>
   );

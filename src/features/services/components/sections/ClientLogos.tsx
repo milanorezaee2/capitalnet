@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import { Building2 } from 'lucide-react';
 import type { ClientLogo } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface ClientLogosProps {
   logos: ClientLogo[];
 }
@@ -36,18 +39,18 @@ export const ClientLogos = ({ logos }: ClientLogosProps) => {
           <div>
             <h2 className="text-4xl font-black text-white md:text-5xl">
               <span className="bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent">
-                مشتریان ما
+                {t("مشتریان ما")}
               </span>
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-slate-300">
-              برندهایی که به ما اعتماد کرده‌اند.
+              {t("برندهایی که به ما اعتماد کرده‌اند.")}
             </p>
           </div>
           <a
             href="/#client-showcase"
             className="shrink-0 flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-2.5 text-sm font-bold text-amber-300 transition-all hover:bg-amber-500/20 hover:-translate-y-0.5"
           >
-            مشاهده موفقیت‌های ما
+            {t("مشاهده موفقیت‌های ما")}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
           </a>
         </div>

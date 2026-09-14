@@ -4,6 +4,9 @@ import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import type { Testimonial } from '../../types/enterprise';
 import { useState, useEffect } from 'react';
 
+import { t as tr } from '@/i18n';
+
+
 export interface TestimonialsProps {
   testimonials: Testimonial[];
 }
@@ -36,7 +39,7 @@ export const Testimonials = ({ testimonials }: TestimonialsProps) => {
           viewport={{ once: true }}
           className="mb-3 text-center text-xs font-bold uppercase tracking-[0.3em] text-rose-400"
         >
-          نظرات مشتریان
+          {tr("نظرات مشتریان")}
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -44,7 +47,7 @@ export const Testimonials = ({ testimonials }: TestimonialsProps) => {
           viewport={{ once: true }}
           className="mb-16 text-center text-4xl font-black text-white md:text-5xl"
         >
-          آنچه می‌گویند
+          {tr("آنچه می‌گویند")}
         </motion.h2>
 
         {/* quote */}

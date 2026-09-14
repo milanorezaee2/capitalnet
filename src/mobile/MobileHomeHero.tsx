@@ -2,6 +2,9 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, TrendingUp, Shield, Zap } from 'lucide-react';
 import type { SiteSettings } from '../lib/settingsApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   settings: SiteSettings;
   onNavigate?: (page: string) => void;
@@ -38,7 +41,7 @@ export default function MobileHomeHero({ settings, onNavigate, themeMode = 'dark
               CAPITAL NETWORK
             </span>
             <div className={`rounded-full border px-2.5 py-1 text-[10px] font-black ${isLight ? 'border-slate-200 bg-slate-100 text-slate-600' : 'border-white/10 bg-white/[0.05] text-white/80'}`}>
-              نسخه موبایل
+              {t("نسخه موبایل")}
             </div>
           </div>
 
@@ -57,24 +60,24 @@ export default function MobileHomeHero({ settings, onNavigate, themeMode = 'dark
               onClick={() => onNavigate?.('evaluation')}
               className="mn-btn-primary flex-1 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
             >
-              شروع ارزیابی
+              {t("شروع ارزیابی")}
             </button>
             <button
               type="button"
               onClick={() => onNavigate?.('services')}
               className="mn-btn-ghost flex items-center gap-1.5"
             >
-              خدمات
+              {t("خدمات")}
               <ArrowLeft size={13} />
             </button>
           </div>
 
           <div className="flex flex-wrap gap-2">
             {[
-              { label: 'خدمات', page: 'services' },
-              { label: 'فرآیند', page: 'process' },
-              { label: 'ارزیابی', page: 'evaluation' },
-              { label: 'درباره ما', page: 'about' },
+              { label: t("خدمات"), page: 'services' },
+              { label: t("فرآیند"), page: 'process' },
+              { label: t("ارزیابی"), page: 'evaluation' },
+              { label: t("درباره ما"), page: 'about' },
             ].map((item) => (
               <button
                 key={item.page}

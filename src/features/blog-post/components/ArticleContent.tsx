@@ -32,6 +32,9 @@ import DownloadBox   from './DownloadBox';
 import VideoEmbed    from './VideoEmbed';
 import GalleryGrid   from './GalleryGrid';
 
+import { t } from '@/i18n';
+
+
 // ─── Font size ────────────────────────────────────────────────────────────────
 const FONT_SIZE_CLASS: Record<FontSizeLevel, string> = {
   sm: 'text-sm', base: 'text-[15px]', lg: 'text-lg', xl: 'text-xl',
@@ -75,11 +78,11 @@ function CodeBlock({ code, lang }: { code: string; lang: string }) {
         <button
           onClick={() => copy(code)}
           className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white/80 transition-colors px-2.5 py-1 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-teal-500/40"
-          aria-label={copied ? 'کپی شد' : 'کپی کد'}
+          aria-label={copied ? t("کپی شد") : t("کپی کد")}
         >
           {copied
-            ? <><Check size={12} className="text-emerald-400" aria-hidden="true" /> کپی شد</>
-            : <><Copy size={12} aria-hidden="true" /> کپی</>}
+            ? <><Check size={12} className="text-emerald-400" aria-hidden="true" /> {t("کپی شد")}</>
+            : <><Copy size={12} aria-hidden="true" /> {t("کپی")}</>}
         </button>
       </div>
       <div className="bp-code-body">
@@ -243,7 +246,7 @@ export default function ArticleContent({ content, fontSize = 'base', readingMode
 
       // Inline-param blocks
       if (type === 'download') {
-        const [filename = 'file', label = 'دانلود فایل', size] = param.split('|').map((s) => s.trim());
+        const [filename = 'file', label = t("دانلود فایل"), size] = param.split('|').map((s) => s.trim());
         nodes.push(<DownloadBox key={`dl-${i}`} filename={filename} label={label} size={size} />);
         i++; continue;
       }
@@ -261,7 +264,7 @@ export default function ArticleContent({ content, fontSize = 'base', readingMode
         i++; continue;
       }
       if (type === 'audio') {
-        const [src = '', title = 'صوت'] = param.split('|').map((s) => s.trim());
+        const [src = '', title = t("صوت")] = param.split('|').map((s) => s.trim());
         nodes.push(
           <figure key={`audio-${i}`} className="my-6 rounded-2xl border border-white/10 p-4 bg-white/[0.02]">
             <figcaption className="text-sm text-white/60 mb-2">{title}</figcaption>

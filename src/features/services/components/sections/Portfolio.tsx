@@ -4,6 +4,9 @@ import { ExternalLink } from 'lucide-react';
 import type { PortfolioItem } from '../../types/enterprise';
 import { useState } from 'react';
 
+import { t } from '@/i18n';
+
+
 export interface PortfolioProps {
   items: PortfolioItem[];
 }
@@ -110,7 +113,7 @@ export const Portfolio = ({ items }: PortfolioProps) => {
           viewport={{ once: true }}
           className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-pink-400"
         >
-          نمونه‌کارها
+          {t("نمونه‌کارها")}
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -119,7 +122,7 @@ export const Portfolio = ({ items }: PortfolioProps) => {
           transition={{ duration: 0.5 }}
           className="mb-10 text-4xl font-black text-white md:text-5xl"
         >
-          پروژه‌های موفق
+          {t("پروژه‌های موفق")}
         </motion.h2>
 
         {/* filter */}
@@ -135,7 +138,7 @@ export const Portfolio = ({ items }: PortfolioProps) => {
                     : 'border-white/10 bg-white/5 text-slate-400 hover:border-white/20 hover:text-white'
                 }`}
               >
-                {cat === 'all' ? 'همه' : cat}
+                {cat === 'all' ? t("همه") : cat}
               </button>
             ))}
           </div>

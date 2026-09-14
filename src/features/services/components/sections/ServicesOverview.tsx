@@ -2,6 +2,9 @@
 import { motion } from 'framer-motion';
 import type { ServicesOverviewContent } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface ServicesOverviewProps {
   content: ServicesOverviewContent;
 }
@@ -114,7 +117,7 @@ export const ServicesOverview = ({ content }: ServicesOverviewProps) => {
             className="mt-14 rounded-2xl border border-cyan-500/20 bg-cyan-500/[0.05] px-8 py-6"
           >
             <p className="text-base leading-relaxed text-slate-300">
-              <span className="font-bold text-white">کسب‌وکار شما را برای یک ارائه جدی آماده می‌کنیم — </span>
+              <span className="font-bold text-white">{t("کسب‌وکار شما را برای یک ارائه جدی آماده می‌کنیم —")} </span>
               {content.bottomNote}
             </p>
           </motion.div>

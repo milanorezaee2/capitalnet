@@ -8,6 +8,9 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, ChevronDown, CheckCircle2 } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   items?: string[];
   summary?: string;
@@ -42,7 +45,7 @@ export default function AIBox({ items = [], summary, defaultOpen = true }: Props
   if (!items.length && !summary) return null;
 
   return (
-    <div className="bp-ai-box mb-8 bp-no-print" role="complementary" aria-label="خلاصه هوشمند">
+    <div className="bp-ai-box mb-8 bp-no-print" role="complementary" aria-label={t("خلاصه هوشمند")}>
       {/* Header */}
       <button
         onClick={() => setOpen((v) => !v)}
@@ -53,7 +56,7 @@ export default function AIBox({ items = [], summary, defaultOpen = true }: Props
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-500/30 to-violet-500/30 flex items-center justify-center">
             <Sparkles size={14} className="text-teal-300" aria-hidden="true" />
           </div>
-          <span className="text-sm font-bold text-white">نکات کلیدی مقاله</span>
+          <span className="text-sm font-bold text-white">{t("نکات کلیدی مقاله")}</span>
           <span className="text-xs bg-teal-500/15 text-teal-300 px-2 py-0.5 rounded-full font-semibold">AI</span>
         </div>
         <motion.span

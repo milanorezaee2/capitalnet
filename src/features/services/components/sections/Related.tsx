@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Briefcase, FileText, Sparkles } from 'lucide-react';
 import type { RelatedService, RelatedBlogPost } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface RelatedProps {
   services: RelatedService[];
   blogPosts: RelatedBlogPost[];
@@ -82,7 +85,7 @@ const RelatedServiceCard = ({
             whileHover={{ x: 5 }}
             className="inline-flex items-center gap-2 text-sm font-black text-cyan-300 transition-colors hover:text-cyan-200"
           >
-            مشاهده
+            {t("مشاهده")}
             <motion.div
               whileHover={{ x: 5 }}
               transition={{ type: 'spring' }}
@@ -180,7 +183,7 @@ const RelatedBlogCard = ({
             whileHover={{ x: 5 }}
             className="inline-flex items-center gap-2 text-sm font-black text-rose-300 transition-colors hover:text-rose-200"
           >
-            خواندن
+            {t("خواندن")}
             <motion.div
               whileHover={{ x: 5 }}
               transition={{ type: 'spring' }}
@@ -228,11 +231,11 @@ export const Related = ({ services, blogPosts }: RelatedProps) => {
         />
         <h2 className="text-4xl font-black text-white md:text-5xl">
           <span className="bg-gradient-to-r from-white via-slate-100 to-white bg-clip-text text-transparent">
-            محتوای مرتبط
+            {t("محتوای مرتبط")}
           </span>
         </h2>
         <p className="mt-4 text-lg leading-relaxed text-slate-300">
-          پیشنهادهای مرتبط برای ادامه کار.
+          {t("پیشنهادهای مرتبط برای ادامه کار.")}
         </p>
       </motion.div>
 
@@ -280,7 +283,7 @@ export const Related = ({ services, blogPosts }: RelatedProps) => {
                 >
                   <Briefcase size={24} />
                 </motion.div>
-                <h3 className="text-2xl font-black text-white">خدمات مرتبط</h3>
+                <h3 className="text-2xl font-black text-white">{t("خدمات مرتبط")}</h3>
               </motion.div>
 
               <ul className="space-y-4">
@@ -340,13 +343,13 @@ export const Related = ({ services, blogPosts }: RelatedProps) => {
                   >
                     <FileText size={24} />
                   </motion.div>
-                  <h3 className="text-2xl font-black text-white">مقالات مرتبط</h3>
+                  <h3 className="text-2xl font-black text-white">{t("مقالات مرتبط")}</h3>
                 </div>
                 <a
                   href="/blog"
                   className="flex items-center gap-1.5 rounded-lg border border-rose-500/25 bg-rose-500/10 px-3 py-1.5 text-xs font-bold text-rose-300 hover:bg-rose-500/20 transition-colors"
                 >
-                  همه مقالات
+                  {t("همه مقالات")}
                   <ArrowRight size={12} />
                 </a>
               </motion.div>

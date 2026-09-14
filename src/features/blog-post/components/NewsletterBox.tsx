@@ -6,6 +6,9 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   /** Optional callback when a valid email is submitted */
   onSubscribe?: (email: string) => Promise<void>;
@@ -25,11 +28,11 @@ export default function NewsletterBox({ onSubscribe }: Props) {
     setErrorMsg('');
 
     if (!email.trim()) {
-      setErrorMsg('ایمیل خود را وارد کنید.');
+      setErrorMsg(t("ایمیل خود را وارد کنید."));
       return;
     }
     if (!isValidEmail(email)) {
-      setErrorMsg('آدرس ایمیل معتبر نیست.');
+      setErrorMsg(t("آدرس ایمیل معتبر نیست."));
       return;
     }
 
@@ -41,7 +44,7 @@ export default function NewsletterBox({ onSubscribe }: Props) {
       setStatus('success');
     } catch {
       setStatus('error');
-      setErrorMsg('خطایی رخ داد. لطفاً دوباره تلاش کنید.');
+      setErrorMsg(t("خطایی رخ داد. لطفاً دوباره تلاش کنید."));
     }
   };
 
@@ -59,10 +62,10 @@ export default function NewsletterBox({ onSubscribe }: Props) {
             id="newsletter-heading"
             className="text-lg font-black text-white mb-1"
           >
-            عضویت در خبرنامه
+            {t("عضویت در خبرنامه")}
           </h2>
           <p className="text-sm text-white/55">
-            آخرین مقالات و تحلیل‌های تخصصی را مستقیم در ایمیل خود دریافت کنید.
+            {t("آخرین مقالات و تحلیل‌های تخصصی را مستقیم در ایمیل خود دریافت کنید.")}
           </p>
         </div>
       </div>
@@ -79,7 +82,7 @@ export default function NewsletterBox({ onSubscribe }: Props) {
           >
             <CheckCircle2 size={18} className="text-emerald-400 flex-shrink-0" aria-hidden="true" />
             <p className="text-sm text-emerald-300">
-              ثبت‌نام شما با موفقیت انجام شد! به زودی اولین خبرنامه را دریافت خواهید کرد.
+              {t("ثبت‌نام شما با موفقیت انجام شد! به زودی اولین خبرنامه را دریافت خواهید کرد.")}
             </p>
           </motion.div>
         ) : (
@@ -87,7 +90,7 @@ export default function NewsletterBox({ onSubscribe }: Props) {
             key="form"
             onSubmit={handleSubmit}
             noValidate
-            aria-label="فرم عضویت در خبرنامه"
+            aria-label={t("فرم عضویت در خبرنامه")}
           >
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="flex-1 relative">
@@ -100,9 +103,9 @@ export default function NewsletterBox({ onSubscribe }: Props) {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ایمیل شما"
+                  placeholder={t("ایمیل شما")}
                   required
-                  aria-label="آدرس ایمیل"
+                  aria-label={t("آدرس ایمیل")}
                   aria-invalid={!!errorMsg}
                   aria-describedby={errorMsg ? 'newsletter-error' : undefined}
                   className="w-full bg-white/5 border border-white/10 rounded-xl pr-9 pl-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-colors"
@@ -118,7 +121,7 @@ export default function NewsletterBox({ onSubscribe }: Props) {
                 ) : (
                   <Send size={15} aria-hidden="true" />
                 )}
-                عضویت
+                {t("عضویت")}
               </button>
             </div>
 

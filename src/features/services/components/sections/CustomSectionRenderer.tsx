@@ -2,6 +2,9 @@
 import { motion } from 'framer-motion';
 import type { CustomSection, CustomBlock } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 // ── Block-level renderer ──────────────────────────────────────────────────────
 
 const SPACER_SIZE: Record<string, string> = { xs: 'py-2', sm: 'py-4', md: 'py-8', lg: 'py-14' };
@@ -89,7 +92,7 @@ function Block({ block }: { block: CustomBlock }) {
               borderColor: block.badgeColor ? `${block.badgeColor}40` : 'rgba(0,188,212,0.3)',
               color: block.badgeColor ?? '#00BCD4',
             }}>
-            {block.content || 'برچسب'}
+            {block.content || t("برچسب")}
           </span>
         </div>
       );
@@ -112,7 +115,7 @@ function Block({ block }: { block: CustomBlock }) {
                 : { borderColor: block.bgColor ?? '#00BCD4', color: block.bgColor ?? '#00BCD4' }
             }
           >
-            {block.content || 'دکمه'}
+            {block.content || t("دکمه")}
           </a>
         </div>
       );

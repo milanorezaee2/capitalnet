@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Brain, Zap, ShieldCheck, BarChart2, Lock, Plug, CheckCircle2, type LucideIcon } from 'lucide-react';
 import type { Feature } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface FeaturesProps {
   features: Feature[];
 }
@@ -42,7 +45,7 @@ export const Features = ({ features }: FeaturesProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-violet-400"
       >
-        قابلیت‌ها
+        {t("قابلیت‌ها")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
@@ -50,7 +53,7 @@ export const Features = ({ features }: FeaturesProps) => (
         viewport={{ once: true }}
         className="mb-14 text-4xl font-black text-white md:text-5xl"
       >
-        ویژگی‌های کلیدی
+        {t("ویژگی‌های کلیدی")}
       </motion.h2>
 
       <div className="grid gap-4 md:grid-cols-2">

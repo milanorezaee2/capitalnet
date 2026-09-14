@@ -8,6 +8,9 @@
  */
 import { ArrowLeft, PhoneCall, UserPlus, Download, BookOpen } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 type CTAVariant = 'consult' | 'contact' | 'register' | 'download' | 'read-more';
 
 interface Props {
@@ -66,7 +69,7 @@ export default function BlogPostCTA({ variant = 'consult', onAction }: Props) {
   return (
     <div
       className="mt-12 rounded-2xl border border-white/10 overflow-hidden relative"
-      aria-label="دعوت به اقدام"
+      aria-label={t("دعوت به اقدام")}
     >
       {/* Gradient background */}
       <div

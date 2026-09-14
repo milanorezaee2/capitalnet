@@ -2,6 +2,9 @@
 import { motion } from 'framer-motion';
 import type { Benefit } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface BenefitsProps {
   benefits: Benefit[];
 }
@@ -64,7 +67,7 @@ export const Benefits = ({ benefits }: BenefitsProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-cyan-500"
       >
-        مزایا
+        {t("مزایا")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
@@ -72,7 +75,7 @@ export const Benefits = ({ benefits }: BenefitsProps) => (
         viewport={{ once: true }}
         className="mb-14 text-4xl font-black text-white md:text-5xl"
       >
-        مزایای کلیدی
+        {t("مزایای کلیدی")}
       </motion.h2>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

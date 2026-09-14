@@ -2,6 +2,9 @@
 import { motion } from 'framer-motion';
 import type { WhyChooseUsContent } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface WhyChooseUsProps {
   content: WhyChooseUsContent;
 }
@@ -66,7 +69,7 @@ export const WhyChooseUs = ({ content }: WhyChooseUsProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-violet-400"
       >
-        تمایز ما
+        {t("تمایز ما")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}

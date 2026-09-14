@@ -5,6 +5,9 @@
  */
 import { Calendar, RefreshCw, Clock, Eye, ThumbsUp, MessageCircle, FileText, Tag } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   publishedAt:  string;
   updatedAt?:   string;
@@ -32,22 +35,22 @@ export default function PostMetaBar({
   return (
     <div
       className="flex flex-wrap items-center gap-x-5 gap-y-2.5 px-5 py-3 rounded-2xl border border-white/8 bg-white/[0.02] mb-6"
-      aria-label="اطلاعات مقاله"
+      aria-label={t("اطلاعات مقاله")}
     >
       <MetaItem icon={<Calendar size={13} />}       label={publishedAt} />
       {updatedAt && (
-        <MetaItem icon={<RefreshCw size={13} />}     label={`بروزرسانی: ${updatedAt}`} />
+        <MetaItem icon={<RefreshCw size={13} />}     label={t("بروزرسانی: {updatedAt}", { updatedAt })} />
       )}
       <MetaItem icon={<Clock size={13} />}           label={readTime} />
       {(views ?? 0) > 0 && (
-        <MetaItem icon={<Eye size={13} />}           label={`${(views ?? 0).toLocaleString('fa-IR')} بازدید`} />
+        <MetaItem icon={<Eye size={13} />}           label={t('{count} بازدید', { count: formatNumber(views ?? 0) })} />
       )}
       {(likes ?? 0) > 0 && (
         <MetaItem icon={<ThumbsUp size={13} />}      label={`${(likes ?? 0).toLocaleString('fa-IR')} پسند`} />
       )}
-      <MetaItem icon={<MessageCircle size={13} />}   label={`${commentCount} نظر`} />
+      <MetaItem icon={<MessageCircle size={13} />}   label={t("{commentCount} نظر", { commentCount })} />
       {(wordCount ?? 0) > 0 && (
-        <MetaItem icon={<FileText size={13} />}      label={`${(wordCount ?? 0).toLocaleString('fa-IR')} کلمه`} />
+        <MetaItem icon={<FileText size={13} />}      label={t('{count} کلمه', { count: formatNumber(wordCount ?? 0) })} />
       )}
       <MetaItem icon={<Tag size={13} />}             label={category} />
       {version && (

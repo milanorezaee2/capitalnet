@@ -3,12 +3,15 @@ import { motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
 import type { PricingPlan } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface PricingProps {
   plans: PricingPlan[];
 }
 
 const fmt = (n: number) =>
-  n === 0 ? 'تماس بگیرید' : new Intl.NumberFormat('fa-IR').format(n);
+  n === 0 ? t("تماس بگیرید") : new Intl.NumberFormat('fa-IR').format(n);
 
 export const Pricing = ({ plans }: PricingProps) => (
   <section id="pricing" className="py-24 md:py-32 bg-[#111c2d]">
@@ -19,7 +22,7 @@ export const Pricing = ({ plans }: PricingProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-emerald-400"
       >
-        قیمت‌گذاری
+        {t("قیمت‌گذاری")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
@@ -27,7 +30,7 @@ export const Pricing = ({ plans }: PricingProps) => (
         viewport={{ once: true }}
         className="mb-14 text-4xl font-black text-white md:text-5xl"
       >
-        پلن‌های ما
+        {t("پلن‌های ما")}
       </motion.h2>
 
       <div className="grid gap-5 md:grid-cols-3">
@@ -46,7 +49,7 @@ export const Pricing = ({ plans }: PricingProps) => (
           >
             {plan.featured && (
               <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-cyan-500 px-4 py-1 text-[11px] font-black uppercase tracking-wider text-slate-950">
-                محبوب‌ترین
+                {t("محبوب‌ترین")}
               </span>
             )}
 
@@ -58,7 +61,7 @@ export const Pricing = ({ plans }: PricingProps) => (
             <div className="mb-8">
               <span className="text-4xl font-black text-white">{fmt(plan.price)}</span>
               {plan.price > 0 && (
-                <span className="mr-1 text-sm text-slate-500"> {plan.currency} / ماه</span>
+                <span className="mr-1 text-sm text-slate-500"> {plan.currency} {t("/ ماه")}</span>
               )}
             </div>
 

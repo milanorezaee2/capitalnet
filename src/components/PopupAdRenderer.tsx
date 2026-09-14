@@ -13,6 +13,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink } from 'lucide-react';
 import type { PopupAd, SiteSection } from '../lib/settingsApi';
 
+import { t as tr } from '@/i18n';
+
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
 // ─────────────────────────────────────────────────────────────────────────────
@@ -329,7 +332,7 @@ function PopupCard({ ad, onClose }: PopupCardProps) {
             onClick={onClose}
             className="w-full text-center text-xs text-slate-600 hover:text-slate-400 mt-2.5 transition-colors"
           >
-            بستن
+            {tr("بستن")}
           </motion.button>
         </div>
 

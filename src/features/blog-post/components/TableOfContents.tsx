@@ -9,6 +9,9 @@ import { List } from 'lucide-react';
 import { useTOCActiveSection } from '../hooks';
 import type { TocItem } from '../types';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   items: TocItem[];
 }
@@ -21,12 +24,12 @@ export default function TableOfContents({ items }: Props) {
 
   return (
     <nav
-      aria-label="فهرست مطالب"
+      aria-label={t("فهرست مطالب")}
       className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-5"
     >
       <h3 className="flex items-center gap-2 text-sm font-bold text-white mb-4">
         <List size={16} className="text-teal-400" aria-hidden="true" />
-        فهرست مطالب
+        {t("فهرست مطالب")}
       </h3>
 
       <ol className="space-y-0.5" role="list">

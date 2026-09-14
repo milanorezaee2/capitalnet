@@ -7,12 +7,15 @@ import { ThumbsUp, ThumbsDown, Bookmark, BookmarkCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBlogPostCtx } from '../context/BlogPostContext';
 
+import { t } from '@/i18n';
+
+
 export default function LikeDislikeBar() {
   const { likeCount, dislikeCount, userVote, vote, isBookmarked, toggleBookmark } =
     useBlogPostCtx();
 
   return (
-    <div className="flex items-center gap-3" role="group" aria-label="واکنش به مقاله">
+    <div className="flex items-center gap-3" role="group" aria-label={t("واکنش به مقاله")}>
       {/* Like */}
       <button
         onClick={() => vote('like')}
@@ -21,7 +24,7 @@ export default function LikeDislikeBar() {
             ? 'bg-teal-500/20 border-teal-500/50 text-teal-300'
             : 'bg-white/5 border-white/10 text-white/50 hover:bg-teal-500/10 hover:text-teal-400 hover:border-teal-500/30'
         }`}
-        aria-label={`پسند${userVote === 'like' ? ' (انتخاب شده)' : ''}`}
+        aria-label={t('پسند{suffix}', { suffix: userVote === 'like' ? t(' (انتخاب شده)') : '' })}
         aria-pressed={userVote === 'like'}
       >
         <ThumbsUp size={15} fill={userVote === 'like' ? 'currentColor' : 'none'} aria-hidden="true" />
@@ -47,7 +50,7 @@ export default function LikeDislikeBar() {
             ? 'bg-rose-500/20 border-rose-500/50 text-rose-300'
             : 'bg-white/5 border-white/10 text-white/50 hover:bg-rose-500/10 hover:text-rose-400 hover:border-rose-500/30'
         }`}
-        aria-label={`نپسندیدن${userVote === 'dislike' ? ' (انتخاب شده)' : ''}`}
+        aria-label={t('نپسندیدن{suffix}', { suffix: userVote === 'dislike' ? t(' (انتخاب شده)') : '' })}
         aria-pressed={userVote === 'dislike'}
       >
         <ThumbsDown size={15} fill={userVote === 'dislike' ? 'currentColor' : 'none'} aria-hidden="true" />
@@ -73,7 +76,7 @@ export default function LikeDislikeBar() {
             ? 'bg-amber-500/20 border-amber-500/50 text-amber-300'
             : 'bg-white/5 border-white/10 text-white/50 hover:bg-amber-500/10 hover:text-amber-400 hover:border-amber-500/30'
         }`}
-        aria-label={isBookmarked ? 'حذف از نشانک‌ها' : 'افزودن به نشانک‌ها'}
+        aria-label={isBookmarked ? t("حذف از نشانک‌ها") : t("افزودن به نشانک‌ها")}
         aria-pressed={isBookmarked}
       >
         {isBookmarked ? (
@@ -81,7 +84,7 @@ export default function LikeDislikeBar() {
         ) : (
           <Bookmark size={15} aria-hidden="true" />
         )}
-        <span>{isBookmarked ? 'ذخیره شد' : 'ذخیره'}</span>
+        <span>{isBookmarked ? t("ذخیره شد") : t("ذخیره")}</span>
       </button>
     </div>
   );

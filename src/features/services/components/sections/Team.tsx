@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Linkedin, Twitter, Github, Mail } from 'lucide-react';
 import type { TeamMember } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface TeamProps {
   members: TeamMember[];
 }
@@ -98,7 +101,7 @@ export const Team = ({ members }: TeamProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-indigo-400"
       >
-        تیم ما
+        {t("تیم ما")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
@@ -107,7 +110,7 @@ export const Team = ({ members }: TeamProps) => (
         transition={{ duration: 0.5 }}
         className="mb-14 text-4xl font-black text-white md:text-5xl"
       >
-        اعضای تیم
+        {t("اعضای تیم")}
       </motion.h2>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

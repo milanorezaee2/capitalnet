@@ -4,6 +4,9 @@ import { Mail, Phone, Clock, CheckCircle2, Send, MessageCircle } from 'lucide-re
 import type { SiteSettings } from '../lib/settingsApi';
 import { insertContactMessage } from '../lib/messagesApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   settings: SiteSettings;
   onNavigate: (page: string) => void;
@@ -50,22 +53,22 @@ export default function MobileContactPage({ settings, themeMode = 'dark' }: Prop
   const contactItems = [
     {
       icon: Phone,
-      label: 'تلفن',
+      label: t("تلفن"),
       value: settings.contact_phone,
       color: '#06b6d4',
       href: `tel:${settings.contact_phone}`,
     },
     {
       icon: Mail,
-      label: 'ایمیل',
+      label: t("ایمیل"),
       value: settings.contact_email,
       color: '#f59e0b',
       href: `mailto:${settings.contact_email}`,
     },
     {
       icon: Clock,
-      label: 'ساعات کاری',
-      value: settings.working_hours ?? 'شنبه تا چهارشنبه، ۹ تا ۱۸',
+      label: t("ساعات کاری"),
+      value: settings.working_hours ?? t("شنبه تا چهارشنبه، ۹ تا ۱۸"),
       color: '#10b981',
       href: undefined,
     },
@@ -130,7 +133,7 @@ export default function MobileContactPage({ settings, themeMode = 'dark' }: Prop
 
       {/* ── Contact Form ── */}
       <motion.div variants={fadeUp}>
-        <p className={`mb-3 text-[11px] font-black uppercase tracking-widest ${isLight ? 'text-slate-500' : 'text-white/30'}`}>ارسال پیام</p>
+        <p className={`mb-3 text-[11px] font-black uppercase tracking-widest ${isLight ? 'text-slate-500' : 'text-white/30'}`}>{t("ارسال پیام")}</p>
 
         <AnimatePresence mode="wait">
           {status === 'sent' ? (
@@ -144,8 +147,8 @@ export default function MobileContactPage({ settings, themeMode = 'dark' }: Prop
                 <CheckCircle2 size={26} className="text-emerald-400" />
               </div>
               <div>
-                <p className={`text-base font-black ${isLight ? 'text-slate-900' : 'text-white'}`}>پیام ارسال شد</p>
-                <p className={`text-sm mt-1 ${isLight ? 'text-slate-600' : 'text-white/50'}`}>تیم ما در اسرع وقت پاسخ می‌دهد.</p>
+                <p className={`text-base font-black ${isLight ? 'text-slate-900' : 'text-white'}`}>{t("پیام ارسال شد")}</p>
+                <p className={`text-sm mt-1 ${isLight ? 'text-slate-600' : 'text-white/50'}`}>{t("تیم ما در اسرع وقت پاسخ می‌دهد.")}</p>
               </div>
             </motion.div>
           ) : (
@@ -156,14 +159,14 @@ export default function MobileContactPage({ settings, themeMode = 'dark' }: Prop
             >
               {/* Name */}
               <div>
-                <label className={`block text-xs font-bold mb-1.5 ${isLight ? 'text-slate-600' : 'text-white/45'}`}>نام و نام خانوادگی</label>
+                <label className={`block text-xs font-bold mb-1.5 ${isLight ? 'text-slate-600' : 'text-white/45'}`}>{t("نام و نام خانوادگی")}</label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => handleChange('name', e.target.value)}
                   onFocus={() => setFocused('name')}
                   onBlur={() => setFocused(null)}
-                  placeholder="مثال: علی رضایی"
+                  placeholder={t("مثال: علی رضایی")}
                   className={inputClass('name')}
                   required
                 />
@@ -171,7 +174,7 @@ export default function MobileContactPage({ settings, themeMode = 'dark' }: Prop
 
               {/* Email */}
               <div>
-                <label className={`block text-xs font-bold mb-1.5 ${isLight ? 'text-slate-600' : 'text-white/45'}`}>ایمیل</label>
+                <label className={`block text-xs font-bold mb-1.5 ${isLight ? 'text-slate-600' : 'text-white/45'}`}>{t("ایمیل")}</label>
                 <input
                   type="email"
                   value={form.email}
@@ -187,27 +190,27 @@ export default function MobileContactPage({ settings, themeMode = 'dark' }: Prop
 
               {/* Subject */}
               <div>
-                <label className={`block text-xs font-bold mb-1.5 ${isLight ? 'text-slate-600' : 'text-white/45'}`}>موضوع <span className={isLight ? 'text-slate-400' : 'text-white/20'}>(اختیاری)</span></label>
+                <label className={`block text-xs font-bold mb-1.5 ${isLight ? 'text-slate-600' : 'text-white/45'}`}>{t("موضوع")} <span className={isLight ? 'text-slate-400' : 'text-white/20'}>{t("(اختیاری)")}</span></label>
                 <input
                   type="text"
                   value={form.subject}
                   onChange={(e) => handleChange('subject', e.target.value)}
                   onFocus={() => setFocused('subject')}
                   onBlur={() => setFocused(null)}
-                  placeholder="موضوع پیام را بنویسید"
+                  placeholder={t("موضوع پیام را بنویسید")}
                   className={inputClass('subject')}
                 />
               </div>
 
               {/* Message */}
               <div>
-                <label className={`block text-xs font-bold mb-1.5 ${isLight ? 'text-slate-600' : 'text-white/45'}`}>پیام</label>
+                <label className={`block text-xs font-bold mb-1.5 ${isLight ? 'text-slate-600' : 'text-white/45'}`}>{t("پیام")}</label>
                 <textarea
                   value={form.message}
                   onChange={(e) => handleChange('message', e.target.value)}
                   onFocus={() => setFocused('message')}
                   onBlur={() => setFocused(null)}
-                  placeholder="پیام خود را بنویسید..."
+                  placeholder={t("پیام خود را بنویسید...")}
                   rows={4}
                   className={`${inputClass('message')} resize-none leading-relaxed`}
                   required
@@ -217,7 +220,7 @@ export default function MobileContactPage({ settings, themeMode = 'dark' }: Prop
               {/* Error */}
               {status === 'error' && (
                 <p className="text-xs text-red-400 font-medium">
-                  خطایی رخ داد. لطفاً دوباره امتحان کنید.
+                  {t("خطایی رخ داد. لطفاً دوباره امتحان کنید.")}
                 </p>
               )}
 
@@ -232,12 +235,12 @@ export default function MobileContactPage({ settings, themeMode = 'dark' }: Prop
                 {status === 'sending' ? (
                   <>
                     <span className="h-4 w-4 rounded-full border-2 border-slate-900/40 border-t-slate-900 animate-spin" />
-                    در حال ارسال...
+                    {t("در حال ارسال...")}
                   </>
                 ) : (
                   <>
                     <Send size={15} />
-                    ارسال پیام
+                    {t("ارسال پیام")}
                   </>
                 )}
               </motion.button>

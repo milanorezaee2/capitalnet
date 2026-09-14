@@ -2,6 +2,9 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, ArrowLeft, Sparkles } from 'lucide-react';
 import type { SiteSettings } from '../lib/settingsApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   settings: SiteSettings;
   onNavigate: (page: string) => void;
@@ -131,10 +134,10 @@ export default function MobileServicesPage({ settings, onNavigate, themeMode = '
         className={`rounded-2xl p-4 border ${isLight ? 'border-amber-500/30 bg-amber-50' : 'border-amber-400/20 bg-amber-400/[0.05]'}`}
       >
         <p className={`text-sm font-black leading-snug ${isLight ? 'text-slate-900' : 'text-white'}`}>
-          آماده شروع همکاری هستید؟
+          {t("آماده شروع همکاری هستید؟")}
         </p>
         <p className={`mobile-justified-text mt-1 text-xs leading-[1.7] ${isLight ? 'text-slate-600' : 'text-white/45'}`}>
-          با مشاوره رایگان اولیه، مسیر مناسب کسب‌وکارتان را پیدا کنید.
+          {t("با مشاوره رایگان اولیه، مسیر مناسب کسب‌وکارتان را پیدا کنید.")}
         </p>
         <div className="mt-3 flex gap-2">
           <button
@@ -143,14 +146,14 @@ export default function MobileServicesPage({ settings, onNavigate, themeMode = '
             className="flex-1 rounded-xl py-2.5 text-sm font-black text-slate-900"
             style={{ background: 'linear-gradient(135deg, #f59e0b, #06b6d4)' }}
           >
-            مشاوره رایگان
+            {t("مشاوره رایگان")}
           </button>
           <button
             type="button"
             onClick={() => onNavigate('process')}
             className={`flex items-center gap-1.5 rounded-xl px-3.5 py-2.5 text-sm font-bold border ${isLight ? 'border-slate-200 bg-slate-100 text-slate-700' : 'border-white/10 text-white/70'}`}
           >
-            فرآیند
+            {t("فرآیند")}
             <ArrowLeft size={13} />
           </button>
         </div>

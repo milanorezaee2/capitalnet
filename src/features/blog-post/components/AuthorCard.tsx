@@ -5,6 +5,9 @@
 import { Twitter, Linkedin, Globe, Github, BookOpen } from 'lucide-react';
 import type { BlogAuthorFull } from '../types';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   author: BlogAuthorFull;
   /** compact variant for sidebar */
@@ -34,7 +37,7 @@ export default function AuthorCard({ author, compact = false }: Props) {
         ) : (
           <div
             className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-amber-500 flex items-center justify-center text-white text-xl font-black flex-shrink-0"
-            aria-label={`آواتار ${author.name}`}
+            aria-label={t('آواتار {name}', { name: author.name })}
           >
             {author.name.charAt(0)}
           </div>
@@ -49,7 +52,7 @@ export default function AuthorCard({ author, compact = false }: Props) {
               {author.name}
             </span>
             <span className="text-xs bg-teal-500/15 text-teal-300 px-2 py-0.5 rounded-full">
-              نویسنده
+              {t("نویسنده")}
             </span>
           </div>
           <p className="text-white/50 text-sm" itemProp="jobTitle">
@@ -58,7 +61,7 @@ export default function AuthorCard({ author, compact = false }: Props) {
           {author.articleCount !== undefined && (
             <p className="flex items-center gap-1 text-xs text-white/35 mt-1">
               <BookOpen size={11} aria-hidden="true" />
-              {author.articleCount} مقاله
+              {author.articleCount} {t("مقاله")}
             </p>
           )}
         </div>
@@ -97,7 +100,7 @@ export default function AuthorCard({ author, compact = false }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 rounded-lg bg-white/5 hover:bg-sky-500/20 flex items-center justify-center text-white/40 hover:text-sky-400 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500/50"
-              aria-label="توییتر"
+              aria-label={t("توییتر")}
             >
               <Twitter size={15} aria-hidden="true" />
             </a>
@@ -108,7 +111,7 @@ export default function AuthorCard({ author, compact = false }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 rounded-lg bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-white/40 hover:text-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-              aria-label="لینکدین"
+              aria-label={t("لینکدین")}
             >
               <Linkedin size={15} aria-hidden="true" />
             </a>
@@ -119,7 +122,7 @@ export default function AuthorCard({ author, compact = false }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 flex items-center justify-center text-white/40 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/30"
-              aria-label="گیت‌هاب"
+              aria-label={t("گیت‌هاب")}
             >
               <Github size={15} aria-hidden="true" />
             </a>
@@ -130,7 +133,7 @@ export default function AuthorCard({ author, compact = false }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 rounded-lg bg-white/5 hover:bg-teal-500/20 flex items-center justify-center text-white/40 hover:text-teal-400 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500/50"
-              aria-label="وبسایت"
+              aria-label={t("وبسایت")}
             >
               <Globe size={15} aria-hidden="true" />
             </a>

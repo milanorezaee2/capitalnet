@@ -6,6 +6,9 @@ import { type LucideIcon } from 'lucide-react';
 import { Card } from './Card';
 import { ArrowRight } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 export interface ServiceCardProps {
   title: string;
   description: string;
@@ -27,7 +30,7 @@ export const ServiceCard = ({ title, description, icon: Icon, accent, href }: Se
           href={href}
           className="mt-6 inline-flex items-center gap-2 text-cyan-300 transition hover:text-cyan-200"
         >
-          مشاهده بیشتر
+          {t("مشاهده بیشتر")}
           <ArrowRight size={16} />
         </a>
       </Card>

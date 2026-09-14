@@ -14,9 +14,12 @@ import {
   DollarSign, Briefcase, Lock, Globe
 } from 'lucide-react';
 import {
+
   loadProcessContent, PROCESS_STORE_KEY,
   type ProcessContent,
 } from './processContentStore';
+
+import { t as tr } from '@/i18n';
 
 // ─── Capital Network Background Canvas ────────────────────────────────────────
 // شبکه سرمایه‌گذاری: نودهای VC/Startup متصل، جریان سرمایه، candlestick chart
@@ -445,7 +448,7 @@ function LiveJourneyPanel() {
         style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-bold text-slate-300">مسیر VC-Ready</span>
+          <span className="text-xs font-bold text-slate-300">{tr("مسیر VC-Ready")}</span>
         </div>
         <span className="text-[10px] font-mono" style={{ color: '#00BCD4' }}>LIVE TRACKER</span>
       </div>
@@ -489,10 +492,10 @@ function LiveJourneyPanel() {
       {/* Status */}
       <div className="px-5 py-3 flex items-center justify-between"
         style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-        <span className="text-[10px] text-slate-600">آخرین آپدیت: همین الان</span>
+        <span className="text-[10px] text-slate-600">{tr("آخرین آپدیت: همین الان")}</span>
         <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
           style={{ background: 'rgba(0,188,212,0.12)', color: '#00BCD4', border: '1px solid rgba(0,188,212,0.2)' }}>
-          در حال پیشرفت
+          {tr("در حال پیشرفت")}
         </span>
       </div>
     </div>
@@ -535,11 +538,11 @@ function Hero({ onNavigate, c }: { onNavigate: (page: string) => void; c: Proces
         <button type="button" onClick={() => onNavigate('home')}
           className="group inline-flex items-center gap-2.5 rounded-xl border border-white/12 bg-white/[0.06] px-5 py-2.5 text-sm font-semibold text-slate-200 transition-all hover:bg-white/10 hover:border-white/20 hover:text-white">
           <Home size={15} className="text-cyan-400 transition-transform group-hover:-translate-x-0.5" />
-          بازگشت به صفحه اصلی
+          {tr("بازگشت به صفحه اصلی")}
         </button>
         <button type="button" onClick={() => onNavigate('contact')}
           className="group inline-flex items-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-5 py-2.5 text-sm font-semibold text-cyan-300 transition-all hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:text-white">
-          تماس با ما
+          {tr("تماس با ما")}
           <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
         </button>
       </motion.div>
@@ -751,7 +754,7 @@ function Timeline({ c }: { c: ProcessContent }) {
                           {TIMELINE_ICONS[safeActive % TIMELINE_ICONS.length]}
                         </div>
                         <div>
-                          <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: step.color }}>مرحله {step.number}</p>
+                          <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: step.color }}>{tr("مرحله")} {step.number}</p>
                           <h3 className="text-xl font-black text-white">{step.title}</h3>
                         </div>
                         <span className="mr-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
@@ -765,7 +768,7 @@ function Timeline({ c }: { c: ProcessContent }) {
                     <div className="px-7 py-6 grid md:grid-cols-2 gap-6">
                       {/* Deliverables */}
                       <div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">خروجی‌های این مرحله</p>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">{tr("خروجی‌های این مرحله")}</p>
                         <ul className="space-y-2">
                           {step.deliverables.map((d, di) => (
                             <li key={di} className="flex items-center gap-2.5 text-sm text-slate-300">
@@ -778,7 +781,7 @@ function Timeline({ c }: { c: ProcessContent }) {
 
                       {/* Tags */}
                       <div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">حوزه‌های کلیدی</p>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">{tr("حوزه‌های کلیدی")}</p>
                         <div className="flex flex-wrap gap-2">
                           {step.tags.map((tag, ti) => (
                             <span key={ti} className="px-3 py-1 rounded-full text-xs font-semibold"
@@ -880,9 +883,9 @@ function ComparisonSection({ c }: { c: ProcessContent }) {
         <FadeIn>
           <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
             <div className="grid grid-cols-3 py-3" style={{ background: 'rgba(0,188,212,0.08)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-              <p className="px-6 text-xs font-bold text-slate-500 uppercase tracking-widest">حوزه</p>
-              <p className="px-6 text-xs font-bold text-red-400 uppercase tracking-widest text-center">بدون ما ❌</p>
-              <p className="px-6 text-xs font-bold text-emerald-400 uppercase tracking-widest text-center">با ما ✓</p>
+              <p className="px-6 text-xs font-bold text-slate-500 uppercase tracking-widest">{tr("حوزه")}</p>
+              <p className="px-6 text-xs font-bold text-red-400 uppercase tracking-widest text-center">{tr("بدون ما ❌")}</p>
+              <p className="px-6 text-xs font-bold text-emerald-400 uppercase tracking-widest text-center">{tr("با ما ✓")}</p>
             </div>
             {c.compareRows.map((row, i) => (
               <div key={row.id} className="grid grid-cols-3 py-4 transition-colors"

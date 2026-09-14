@@ -4,6 +4,9 @@ import { X, Send, MessageCircle, ChevronDown } from 'lucide-react';
 import { fetchSettings } from '../lib/settingsApi';
 import { supabase } from '../lib/supabaseApi';
 
+import { t as tr } from '@/i18n';
+
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Message {
@@ -27,19 +30,19 @@ function getSessionId(): string {
 
 // ─── Bot replies (fallback هنگامی که ادمین آفلاین است) ───────────────────────
 
-const DEFAULT_QUICK_REPLIES = ['خدمات VC-Ready سازی', 'نحوه همکاری', 'تماس با تیم'];
+const DEFAULT_QUICK_REPLIES = [tr("خدمات VC-Ready سازی"), tr("نحوه همکاری"), tr("تماس با تیم")];
 
 function botReply(userText: string): string {
   const t = userText.toLowerCase();
-  if (t.includes('vc-ready') || t.includes('آماده‌سازی') || t.includes('خدمات'))
-    return 'سرویس VC-Ready سازی شامل آماده‌سازی Pitch Deck، مدل مالی و روایت سرمایه‌گذاری است. برای مشاوره رایگان صفحه خدمات را ببینید.';
-  if (t.includes('نحوه') || t.includes('همکاری') || t.includes('چطور'))
-    return 'فرایند همکاری ما در ۳ مرحله است: ارزیابی اولیه → آماده‌سازی پرونده → معرفی هدفمند به VC. صفحه فرایند را مطالعه کنید.';
-  if (t.includes('تماس') || t.includes('تیم'))
-    return 'می‌توانید از طریق صفحه تماس فرم پر کنید یا مستقیم به ایمیل hello@capnet.io پیام بدهید.';
-  if (t.includes('قیمت') || t.includes('هزینه'))
-    return 'هزینه‌ها بر اساس مرحله استارتاپ و نوع سرویس متفاوت است. جهت دریافت پیش‌فاکتور با تیم ما تماس بگیرید.';
-  return 'ممنون از سؤالتان! تیم ما به زودی پاسخ می‌دهد. همچنین می‌توانید صفحه تماس را پر کنید.';
+  if (t.includes('vc-ready') || t.includes(tr("آماده‌سازی")) || t.includes(tr("خدمات")))
+    return tr("سرویس VC-Ready سازی شامل آماده‌سازی Pitch Deck، مدل مالی و روایت سرمایه‌گذاری است. برای مشاوره رایگان صفحه خدمات را ببینید.");
+  if (t.includes(tr("نحوه")) || t.includes(tr("همکاری")) || t.includes(tr("چطور")))
+    return tr("فرایند همکاری ما در ۳ مرحله است: ارزیابی اولیه → آماده‌سازی پرونده → معرفی هدفمند به VC. صفحه فرایند را مطالعه کنید.");
+  if (t.includes(tr("تماس")) || t.includes(tr("تیم")))
+    return tr("می‌توانید از طریق صفحه تماس فرم پر کنید یا مستقیم به ایمیل hello@capnet.io پیام بدهید.");
+  if (t.includes(tr("قیمت")) || t.includes(tr("هزینه")))
+    return tr("هزینه‌ها بر اساس مرحله استارتاپ و نوع سرویس متفاوت است. جهت دریافت پیش‌فاکتور با تیم ما تماس بگیرید.");
+  return tr("ممنون از سؤالتان! تیم ما به زودی پاسخ می‌دهد. همچنین می‌توانید صفحه تماس را پر کنید.");
 }
 
 // ─── INITIAL messages ─────────────────────────────────────────────────────────
@@ -48,7 +51,7 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: 1,
     from: 'bot',
-    text: 'سلام! 👋 به CapNet خوش آمدید.\nچطور می‌توانم در مسیر جذب سرمایه کمکتان کنم؟',
+    text: tr("سلام! 👋 به CapNet خوش آمدید.\nچطور می‌توانم در مسیر جذب سرمایه کمکتان کنم؟"),
   },
 ];
 
@@ -204,7 +207,7 @@ export default function ChatWidget() {
     // اگر نبود، یک room جدید با session_id بساز
     const { data: newRoom } = await (supabase as any)
       .from('chat_rooms')
-      .insert({ session_id: sessionId, guest_name: `مهمان-${sessionId.slice(0,6)}`, status: 'active' })
+      .insert({ session_id: sessionId, guest_name: t('مهمان-{id}', { id: sessionId.slice(0,6) }), status: 'active' })
       .select('id')
       .single();
 
@@ -288,8 +291,8 @@ export default function ChatWidget() {
                   <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#081224]" />
                 </div>
                 <div>
-                  <p className="text-white font-bold text-sm leading-none mb-0.5">پشتیبانی CapNet</p>
-                  <p className="text-green-400 text-xs">آنلاین</p>
+                  <p className="text-white font-bold text-sm leading-none mb-0.5">{tr("پشتیبانی CapNet")}</p>
+                  <p className="text-green-400 text-xs">{tr("آنلاین")}</p>
                 </div>
               </div>
               <button
@@ -333,7 +336,7 @@ export default function ChatWidget() {
                     }
                   >
                     {msg.from === 'admin' && (
-                      <p className="text-[10px] text-green-400 font-bold mb-1">تیم CapNet</p>
+                      <p className="text-[10px] text-green-400 font-bold mb-1">{tr("تیم CapNet")}</p>
                     )}
                     {msg.text}
                   </div>
@@ -392,7 +395,7 @@ export default function ChatWidget() {
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && send()}
-                placeholder="پیام خود را بنویسید..."
+                placeholder={tr("پیام خود را بنویسید...")}
                 className="flex-1 bg-transparent text-white text-sm outline-none placeholder-white/30 text-right"
               />
               <button
@@ -418,7 +421,7 @@ export default function ChatWidget() {
           background: 'linear-gradient(135deg, #00BCD4 0%, #00838F 100%)',
           boxShadow: '0 8px 32px rgba(0,188,212,0.40), 0 2px 8px rgba(0,0,0,0.4)',
         }}
-        aria-label="چت با پشتیبانی"
+        aria-label={tr("چت با پشتیبانی")}
       >
         <AnimatePresence mode="wait">
           {open ? (

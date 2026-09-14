@@ -12,6 +12,9 @@ import { useEffect } from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { ChevronLeft, Home } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 export interface BreadcrumbItem {
   /** Human-readable label shown in the UI */
   label: string;
@@ -76,7 +79,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       variants={vFadeIn}
       initial="hidden"
       animate="show"
-      aria-label="مسیر صفحه"
+      aria-label={t("مسیر صفحه")}
       className="mb-6"
       dir="rtl"
     >

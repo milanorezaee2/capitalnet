@@ -37,6 +37,9 @@ import { Accordion } from '../../components/process/FAQ';
 import { LoadingState } from '../../components/ui/LoadingState';
 import { ErrorState } from '../../components/ui/ErrorState';
 
+import { t } from '@/i18n';
+
+
 export interface ProcessPageProps {
   data: ProcessPageType;
   loading?: boolean;
@@ -51,7 +54,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
   onRetry,
 }) => {
   if (loading) {
-    return <LoadingState message="در حال بارگذاری صفحه فرآیند..." />;
+    return <LoadingState message={t("در حال بارگذاری صفحه فرآیند...")} />;
   }
 
   if (error) {
@@ -184,7 +187,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-bold text-white mb-4">اهداف فرآیند</h3>
+              <h3 className="text-xl font-bold text-white mb-4">{t("اهداف فرآیند")}</h3>
               <ul className="space-y-3">
                 {data.overview.objectives.map((objective, index) => (
                   <li key={index} className="flex items-start gap-3 text-gray-300">
@@ -200,7 +203,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-bold text-white mb-4">مزایا</h3>
+              <h3 className="text-xl font-bold text-white mb-4">{t("مزایا")}</h3>
               <ul className="space-y-3">
                 {data.overview.benefits.map((benefit, index) => (
                   <li key={index} className="flex items-start gap-3 text-gray-300">
@@ -218,7 +221,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-xl font-bold text-white mb-2">ارزش افزوده برای شما</h3>
+            <h3 className="text-xl font-bold text-white mb-2">{t("ارزش افزوده برای شما")}</h3>
             <p className="text-gray-300">{data.overview.valueProposition}</p>
           </motion.div>
         </div>
@@ -342,7 +345,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
               <div className="text-center">
                 <Clock className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-white">{data.timelineSchedule.totalDuration}</div>
-                <div className="text-gray-400 text-sm">مدت کل پروژه</div>
+                <div className="text-gray-400 text-sm">{t("مدت کل پروژه")}</div>
               </div>
             </div>
             
@@ -367,7 +370,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
                     {phase.milestone && (
                       <div className="flex items-center gap-2 text-amber-400 text-sm">
                         <Award className="w-4 h-4" />
-                        نقطه عطف مهم
+                        {t("نقطه عطف مهم")}
                       </div>
                     )}
                   </div>

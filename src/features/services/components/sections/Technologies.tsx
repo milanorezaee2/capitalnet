@@ -2,6 +2,9 @@
 import { motion } from 'framer-motion';
 import type { Technology } from '../../types/enterprise';
 
+import { t as tr } from '@/i18n';
+
+
 export interface TechnologiesProps {
   technologies: Technology[];
 }
@@ -28,7 +31,7 @@ export const Technologies = ({ technologies }: TechnologiesProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-orange-400"
       >
-        تکنولوژی‌ها
+        {tr("تکنولوژی‌ها")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
@@ -37,7 +40,7 @@ export const Technologies = ({ technologies }: TechnologiesProps) => (
         transition={{ duration: 0.5 }}
         className="mb-14 text-4xl font-black text-white md:text-5xl"
       >
-        ابزارها و فناوری‌ها
+        {tr("ابزارها و فناوری‌ها")}
       </motion.h2>
 
       {/* group by category */}

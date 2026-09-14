@@ -5,6 +5,9 @@
 import { Clock, TrendingUp } from 'lucide-react';
 import type { AppBlogPost } from '../../../lib/blogApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   posts: AppBlogPost[];
   onNavigate: (slug: string) => void;
@@ -29,7 +32,7 @@ export default function RelatedPosts({ posts, onNavigate }: Props) {
         className="flex items-center gap-2 text-xl font-black text-white mb-6"
       >
         <TrendingUp size={20} className="text-amber-400" aria-hidden="true" />
-        مقالات مرتبط
+        {t("مقالات مرتبط")}
       </h2>
 
       <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" role="list">

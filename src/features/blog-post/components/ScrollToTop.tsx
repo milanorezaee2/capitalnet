@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false);
 
@@ -28,7 +31,7 @@ export default function ScrollToTop() {
           transition={{ duration: 0.2 }}
           onClick={scrollUp}
           className="bp-scroll-top bp-no-print"
-          aria-label="بازگشت به بالا"
+          aria-label={t("بازگشت به بالا")}
         >
           <ChevronUp size={20} aria-hidden="true" />
         </motion.button>

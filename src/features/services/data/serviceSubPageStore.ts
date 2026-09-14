@@ -1,3 +1,6 @@
+
+import { t } from '@/i18n';
+
 // ─── Service Sub-Page Store ────────────────────────────────────────────────────
 // Manages dynamically created service sub-pages (e.g. "مشاوره مالی", "Pitch Deck")
 // Persisted in localStorage. Used by both the admin panel and the public site.
@@ -116,29 +119,29 @@ export function deleteSubPage(id: string): void {
 export function makeDefaultSection(type: SectionType): SubPageSection {
   const defaults: Record<SectionType, Record<string, unknown>> = {
     hero: {
-      badge: 'خدمات تخصصی',
+      badge: t("خدمات تخصصی"),
       eyebrow: 'CAPITAL NETWORK',
-      title: 'عنوان صفحه خدمت',
-      subtitle: 'زیرعنوان جذاب برای این خدمت',
-      description: 'توضیحات کامل‌تر درباره این خدمت و ارزشی که ارائه می‌دهد.',
-      ctaPrimary: 'شروع رایگان',
-      ctaSecondary: 'تماس با ما',
-      trustBadges: ['امنیت کامل', 'پشتیبانی ۲۴/۷', 'تضمین کیفیت'],
+      title: t("عنوان صفحه خدمت"),
+      subtitle: t("زیرعنوان جذاب برای این خدمت"),
+      description: t("توضیحات کامل‌تر درباره این خدمت و ارزشی که ارائه می‌دهد."),
+      ctaPrimary: t("شروع رایگان"),
+      ctaSecondary: t("تماس با ما"),
+      trustBadges: [t("امنیت کامل"), t("پشتیبانی ۲۴/۷"), t("تضمین کیفیت")],
     },
     introduction: {
-      title: 'معرفی خدمت',
-      description: 'توضیحات مفصل درباره این خدمت و مزایای آن.',
-      uses: ['کاربرد اول', 'کاربرد دوم'],
-      audience: ['استارتاپ‌ها', 'شرکت‌های نوپا'],
-      value: ['ارزش اول', 'ارزش دوم'],
-      advantages: ['مزیت اول', 'مزیت دوم'],
+      title: t("معرفی خدمت"),
+      description: t("توضیحات مفصل درباره این خدمت و مزایای آن."),
+      uses: [t("کاربرد اول"), t("کاربرد دوم")],
+      audience: [t("استارتاپ‌ها"), t("شرکت‌های نوپا")],
+      value: [t("ارزش اول"), t("ارزش دوم")],
+      advantages: [t("مزیت اول"), t("مزیت دوم")],
     },
     categories: { items: [] },
     features: { items: [] },
     benefits: { items: [] },
     whyChooseUs: {
-      title: 'چرا ما را انتخاب کنید؟',
-      description: 'دلایل انتخاب ما',
+      title: t("چرا ما را انتخاب کنید؟"),
+      description: t("دلایل انتخاب ما"),
       items: [],
     },
     process: { steps: [] },
@@ -146,9 +149,9 @@ export function makeDefaultSection(type: SectionType): SubPageSection {
     technologies: { items: [] },
     pricing: { plans: [] },
     comparison: {
-      title: 'مقایسه پلن‌ها',
+      title: t("مقایسه پلن‌ها"),
       description: '',
-      columns: ['ویژگی', 'پایه', 'حرفه‌ای', 'سازمانی'],
+      columns: [t("ویژگی"), t("پایه"), t("حرفه‌ای"), t("سازمانی")],
       rows: [],
     },
     portfolio: { items: [] },
@@ -159,23 +162,23 @@ export function makeDefaultSection(type: SectionType): SubPageSection {
     team: { members: [] },
     faq: { items: [] },
     cta: {
-      title: 'آماده شروع هستید؟',
-      description: 'همین امروز با ما تماس بگیرید.',
-      primaryLabel: 'شروع رایگان',
+      title: t("آماده شروع هستید؟"),
+      description: t("همین امروز با ما تماس بگیرید."),
+      primaryLabel: t("شروع رایگان"),
       primaryLink: '/evaluation',
-      secondaryLabel: 'تماس با ما',
+      secondaryLabel: t("تماس با ما"),
       secondaryLink: '/contact',
       enabled: true,
     },
     newsletter: {
-      title: 'عضویت در خبرنامه',
-      description: 'آخرین اخبار را دریافت کنید.',
-      placeholder: 'ایمیل شما...',
-      buttonLabel: 'عضویت',
+      title: t("عضویت در خبرنامه"),
+      description: t("آخرین اخبار را دریافت کنید."),
+      placeholder: t("ایمیل شما..."),
+      buttonLabel: t("عضویت"),
       enabled: true,
     },
     richText: {
-      content: '<p>متن دلخواه خود را اینجا بنویسید...</p>',
+      content: t("<p>متن دلخواه خود را اینجا بنویسید...</p>"),
     },
     imageGallery: {
       images: [],
