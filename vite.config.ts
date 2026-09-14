@@ -96,14 +96,22 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    open: true,
+    // ── Bind on all interfaces so the dev server is reachable from outside
+    // the container (Docker / remote sandboxes / LAN devices).
+    host: true,
+    // ── Allow proxied hostnames (e.g. *.e2b.app preview domains) ───────────
+    allowedHosts: true,
+    // ── Never try to launch a browser automatically (headless environments) ─
+    open: false,
     watch: {
       ignored: ['**/dist.zip'],
     },
   },
   preview: {
     port: 5173,
-    open: true,
+    host: true,
+    allowedHosts: true,
+    open: false,
   },
   build: {
     // ── Target modern browsers — smaller output, no legacy polyfills ───────────
