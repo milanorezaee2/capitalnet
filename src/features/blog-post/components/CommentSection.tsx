@@ -9,6 +9,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ThumbsUp, Reply, Trash2, Flag, ChevronDown, MessageCircle, Send } from 'lucide-react';
 import type { CommentData } from '../hooks';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   comments: CommentData[];
   onAdd: (author: string, content: string) => void;
@@ -46,7 +49,7 @@ function Comment({
   };
 
   return (
-    <div className={depth > 0 ? 'pr-8 border-r border-white/8 mr-4' : ''}>
+    <div className={depth > 0 ? "pe-8 border-e border-white/8 me-4" : ''}>
       <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4 mb-3">
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
@@ -60,7 +63,7 @@ function Comment({
           <button
             onClick={() => onDelete(comment.id)}
             className="p-1.5 rounded-lg text-white/25 hover:text-rose-400 hover:bg-rose-500/10 transition-colors focus:outline-none focus:ring-2 focus:ring-rose-500/30"
-            aria-label="حذف نظر"
+            aria-label={t("حذف نظر")}
           >
             <Trash2 size={13} aria-hidden="true" />
           </button>
@@ -78,7 +81,7 @@ function Comment({
                 ? 'text-teal-300 bg-teal-500/15'
                 : 'text-white/35 hover:text-teal-400 hover:bg-teal-500/10'
             }`}
-            aria-label={`پسندیدن نظر${comment.liked ? ' (پسندیده شد)' : ''}`}
+            aria-label={t('پسندیدن نظر{suffix}', { suffix: comment.liked ? t(' (پسندیده شد)') : '' })}
             aria-pressed={comment.liked}
           >
             <ThumbsUp size={12} fill={comment.liked ? 'currentColor' : 'none'} aria-hidden="true" />
@@ -89,20 +92,20 @@ function Comment({
             <button
               onClick={() => setReplyOpen((v) => !v)}
               className="flex items-center gap-1.5 text-xs text-white/35 hover:text-white/70 transition-colors px-2.5 py-1 rounded-full hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-white/20"
-              aria-label="پاسخ به نظر"
+              aria-label={t("پاسخ به نظر")}
               aria-expanded={replyOpen}
             >
               <Reply size={12} aria-hidden="true" />
-              پاسخ
+              {t("پاسخ")}
             </button>
           )}
 
           <button
             className="flex items-center gap-1.5 text-xs text-white/25 hover:text-amber-400 transition-colors px-2.5 py-1 rounded-full hover:bg-amber-500/10 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
-            aria-label="گزارش نظر"
+            aria-label={t("گزارش نظر")}
           >
             <Flag size={11} aria-hidden="true" />
-            گزارش
+            {t("گزارش")}
           </button>
         </div>
       </div>
@@ -115,19 +118,19 @@ function Comment({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="overflow-hidden mb-3 pr-4"
+            className="overflow-hidden mb-3 pe-4"
           >
             <div className="space-y-2 p-3 rounded-xl border border-white/10 bg-white/[0.02]">
               <input
                 value={replyAuthor}
                 onChange={(e) => setReplyAuthor(e.target.value)}
-                placeholder="نام شما"
+                placeholder={t("نام شما")}
                 className="w-full text-sm bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/40"
               />
               <textarea
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
-                placeholder="پاسخ خود را بنویسید..."
+                placeholder={t("پاسخ خود را بنویسید...")}
                 rows={2}
                 className="w-full text-sm bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white placeholder-white/30 resize-none focus:outline-none focus:ring-2 focus:ring-teal-500/40"
               />
@@ -136,13 +139,13 @@ function Comment({
                   onClick={() => setReplyOpen(false)}
                   className="text-xs text-white/40 px-3 py-1.5 rounded-lg hover:bg-white/5"
                 >
-                  انصراف
+                  {t("انصراف")}
                 </button>
                 <button
                   onClick={submitReply}
                   className="text-xs bg-teal-500 hover:bg-teal-400 text-black font-semibold px-4 py-1.5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                 >
-                  ارسال
+                  {t("ارسال")}
                 </button>
               </div>
             </div>
@@ -155,13 +158,13 @@ function Comment({
         <>
           <button
             onClick={() => setShowReplies((v) => !v)}
-            className="flex items-center gap-1 text-xs text-white/35 hover:text-white/60 transition-colors mb-2 mr-4 focus:outline-none"
+            className="flex items-center gap-1 text-xs text-white/35 hover:text-white/60 transition-colors mb-2 me-4 focus:outline-none"
             aria-expanded={showReplies}
           >
             <motion.span animate={{ rotate: showReplies ? 0 : -90 }} transition={{ duration: 0.18 }}>
               <ChevronDown size={13} aria-hidden="true" />
             </motion.span>
-            {comment.replies.length} پاسخ
+            {comment.replies.length} {t("پاسخ")}
           </button>
 
           <AnimatePresence>
@@ -199,7 +202,7 @@ export default function CommentSection({ comments, onAdd, onReply, onLike, onDel
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!author.trim() || !content.trim()) {
-      setError('لطفاً نام و متن نظر را وارد کنید.');
+      setError(t("لطفاً نام و متن نظر را وارد کنید."));
       return;
     }
     setError('');
@@ -215,7 +218,7 @@ export default function CommentSection({ comments, onAdd, onReply, onLike, onDel
         className="flex items-center gap-2 text-xl font-black text-white mb-6"
       >
         <MessageCircle size={20} className="text-teal-400" aria-hidden="true" />
-        نظرات ({comments.length})
+        {t("نظرات (")}{comments.length})
       </h2>
 
       {/* New comment form */}
@@ -223,9 +226,9 @@ export default function CommentSection({ comments, onAdd, onReply, onLike, onDel
         onSubmit={handleSubmit}
         className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 mb-8"
         noValidate
-        aria-label="فرم ارسال نظر"
+        aria-label={t("فرم ارسال نظر")}
       >
-        <h3 className="text-sm font-bold text-white mb-4">نظر خود را بنویسید</h3>
+        <h3 className="text-sm font-bold text-white mb-4">{t("نظر خود را بنویسید")}</h3>
 
         {error && (
           <p className="text-xs text-rose-400 mb-3" role="alert">
@@ -237,30 +240,30 @@ export default function CommentSection({ comments, onAdd, onReply, onLike, onDel
           <input
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            placeholder="نام شما *"
+            placeholder={t("نام شما *")}
             required
-            aria-label="نام"
+            aria-label={t("نام")}
             className="w-full text-sm bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/40 transition-colors"
           />
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="نظر خود را بنویسید... *"
+            placeholder={t("نظر خود را بنویسید... *")}
             required
             rows={4}
-            aria-label="متن نظر"
+            aria-label={t("متن نظر")}
             className="w-full text-sm bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 resize-none focus:outline-none focus:ring-2 focus:ring-teal-500/40 transition-colors"
           />
           <div className="flex items-center justify-between">
             <p className="text-xs text-white/30">
-              نظر شما پس از بررسی نمایش داده می‌شود.
+              {t("نظر شما پس از بررسی نمایش داده می‌شود.")}
             </p>
             <button
               type="submit"
               className="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-black font-bold text-sm px-5 py-2.5 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500/50"
             >
               <Send size={14} aria-hidden="true" />
-              ارسال نظر
+              {t("ارسال نظر")}
             </button>
           </div>
         </div>
@@ -269,7 +272,7 @@ export default function CommentSection({ comments, onAdd, onReply, onLike, onDel
       {/* Comments list */}
       {comments.length === 0 ? (
         <p className="text-center text-white/30 text-sm py-8">
-          هنوز نظری ثبت نشده است. اولین نفر باشید!
+          {t("هنوز نظری ثبت نشده است. اولین نفر باشید!")}
         </p>
       ) : (
         <div className="space-y-2">

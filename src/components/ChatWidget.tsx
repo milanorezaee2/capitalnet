@@ -4,6 +4,9 @@ import { X, Send, MessageCircle, ChevronDown } from 'lucide-react';
 import { fetchSettings } from '../lib/settingsApi';
 import { supabase } from '../lib/supabaseApi';
 
+import { t as tr, useLanguage } from '@/i18n';
+
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Message {
@@ -27,40 +30,55 @@ function getSessionId(): string {
 
 // ─── Bot replies (fallback هنگامی که ادمین آفلاین است) ───────────────────────
 
-const DEFAULT_QUICK_REPLIES = ['خدمات VC-Ready سازی', 'نحوه همکاری', 'تماس با تیم'];
+const DEFAULT_QUICK_REPLIES = [tr("خدمات VC-Ready سازی"), tr("نحوه همکاری"), tr("تماس با تیم")];
 
 function botReply(userText: string): string {
   const t = userText.toLowerCase();
-  if (t.includes('vc-ready') || t.includes('آماده‌سازی') || t.includes('خدمات'))
-    return 'سرویس VC-Ready سازی شامل آماده‌سازی Pitch Deck، مدل مالی و روایت سرمایه‌گذاری است. برای مشاوره رایگان صفحه خدمات را ببینید.';
-  if (t.includes('نحوه') || t.includes('همکاری') || t.includes('چطور'))
-    return 'فرایند همکاری ما در ۳ مرحله است: ارزیابی اولیه → آماده‌سازی پرونده → معرفی هدفمند به VC. صفحه فرایند را مطالعه کنید.';
-  if (t.includes('تماس') || t.includes('تیم'))
-    return 'می‌توانید از طریق صفحه تماس فرم پر کنید یا مستقیم به ایمیل hello@capnet.io پیام بدهید.';
-  if (t.includes('قیمت') || t.includes('هزینه'))
-    return 'هزینه‌ها بر اساس مرحله استارتاپ و نوع سرویس متفاوت است. جهت دریافت پیش‌فاکتور با تیم ما تماس بگیرید.';
-  return 'ممنون از سؤالتان! تیم ما به زودی پاسخ می‌دهد. همچنین می‌توانید صفحه تماس را پر کنید.';
+  if (t.includes('vc-ready') || t.includes(tr("آماده‌سازی")) || t.includes(tr("خدمات")))
+    return tr("سرویس VC-Ready سازی شامل آماده‌سازی Pitch Deck، مدل مالی و روایت سرمایه‌گذاری است. برای مشاوره رایگان صفحه خدمات را ببینید.");
+  if (t.includes(tr("نحوه")) || t.includes(tr("همکاری")) || t.includes(tr("چطور")))
+    return tr("فرایند همکاری ما در ۳ مرحله است: ارزیابی اولیه → آماده‌سازی پرونده → معرفی هدفمند به VC. صفحه فرایند را مطالعه کنید.");
+  if (t.includes(tr("تماس")) || t.includes(tr("تیم")))
+    return tr("می‌توانید از طریق صفحه تماس فرم پر کنید یا مستقیم به ایمیل hello@capnet.io پیام بدهید.");
+  if (t.includes(tr("قیمت")) || t.includes(tr("هزینه")))
+    return tr("هزینه‌ها بر اساس مرحله استارتاپ و نوع سرویس متفاوت است. جهت دریافت پیش‌فاکتور با تیم ما تماس بگیرید.");
+  return tr("ممنون از سؤالتان! تیم ما به زودی پاسخ می‌دهد. همچنین می‌توانید صفحه تماس را پر کنید.");
 }
 
 // ─── INITIAL messages ─────────────────────────────────────────────────────────
 
-const INITIAL_MESSAGES: Message[] = [
-  {
-    id: 1,
-    from: 'bot',
-    text: 'سلام! 👋 به CapNet خوش آمدید.\nچطور می‌توانم در مسیر جذب سرمایه کمکتان کنم؟',
-  },
-];
+// پیام خوش‌آمدگویی باید هنگام استفاده (نه هنگام بارگذاری ماژول) ترجمه شود،
+// تا با تغییر زبان به‌روزرسانی گردد.
+function createInitialMessages(): Message[] {
+  return [
+    {
+      id: 1,
+      from: 'bot',
+      text: tr("سلام! 👋 به CapNet خوش آمدید.\nچطور می‌توانم در مسیر جذب سرمایه کمکتان کنم؟"),
+    },
+  ];
+}
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function ChatWidget() {
+  const { lang } = useLanguage();
   const [chatEnabled, setChatEnabled] = useState<boolean | null>(null);
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState<Message[]>(createInitialMessages);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
   const [unread, setUnread] = useState(1);
+
+  // با تغییر زبان، پیام خوش‌آمدگویی دوباره ترجمه می‌شود
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 0 || prev[0].from !== 'bot') return prev;
+      const [welcome] = createInitialMessages();
+      if (prev[0].text === welcome.text) return prev;
+      return [welcome, ...prev.slice(1)];
+    });
+  }, [lang]);
   const [quickReplies, setQuickReplies] = useState<string[]>(DEFAULT_QUICK_REPLIES);
   const [roomId, setRoomId] = useState<string | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
@@ -179,7 +197,7 @@ export default function ChatWidget() {
         created_at: m.created_at,
       }));
 
-    setMessages([...INITIAL_MESSAGES, ...history]);
+    setMessages([...createInitialMessages(), ...history]);
   }, []);
 
   // ── پیدا کردن یا ساختن chat room (بر اساس session_id) ──────────────────────
@@ -204,7 +222,7 @@ export default function ChatWidget() {
     // اگر نبود، یک room جدید با session_id بساز
     const { data: newRoom } = await (supabase as any)
       .from('chat_rooms')
-      .insert({ session_id: sessionId, guest_name: `مهمان-${sessionId.slice(0,6)}`, status: 'active' })
+      .insert({ session_id: sessionId, guest_name: t('مهمان-{id}', { id: sessionId.slice(0,6) }), status: 'active' })
       .select('id')
       .single();
 
@@ -253,7 +271,7 @@ export default function ChatWidget() {
   if (chatEnabled === false) return null;
 
   return (
-    <div className="chat-widget-fab fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3" dir="rtl">
+    <div className="chat-widget-fab fixed bottom-8 end-8 z-50 flex flex-col items-end gap-3">
       {/* Chat Panel */}
       <AnimatePresence>
         {open && (
@@ -285,11 +303,11 @@ export default function ChatWidget() {
                     style={{ background: 'linear-gradient(135deg, #00BCD4, #00838F)' }}>
                     <MessageCircle size={18} className="text-white" />
                   </div>
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#081224]" />
+                  <span className="absolute bottom-0 end-0 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#081224]" />
                 </div>
                 <div>
-                  <p className="text-white font-bold text-sm leading-none mb-0.5">پشتیبانی CapNet</p>
-                  <p className="text-green-400 text-xs">آنلاین</p>
+                  <p className="text-white font-bold text-sm leading-none mb-0.5">{tr("پشتیبانی CapNet")}</p>
+                  <p className="text-green-400 text-xs">{tr("آنلاین")}</p>
                 </div>
               </div>
               <button
@@ -333,7 +351,7 @@ export default function ChatWidget() {
                     }
                   >
                     {msg.from === 'admin' && (
-                      <p className="text-[10px] text-green-400 font-bold mb-1">تیم CapNet</p>
+                      <p className="text-[10px] text-green-400 font-bold mb-1">{tr("تیم CapNet")}</p>
                     )}
                     {msg.text}
                   </div>
@@ -392,8 +410,8 @@ export default function ChatWidget() {
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && send()}
-                placeholder="پیام خود را بنویسید..."
-                className="flex-1 bg-transparent text-white text-sm outline-none placeholder-white/30 text-right"
+                placeholder={tr("پیام خود را بنویسید...")}
+                className="flex-1 bg-transparent text-white text-sm outline-none placeholder-white/30 text-end"
               />
               <button
                 onClick={() => send()}
@@ -418,7 +436,7 @@ export default function ChatWidget() {
           background: 'linear-gradient(135deg, #00BCD4 0%, #00838F 100%)',
           boxShadow: '0 8px 32px rgba(0,188,212,0.40), 0 2px 8px rgba(0,0,0,0.4)',
         }}
-        aria-label="چت با پشتیبانی"
+        aria-label={tr("چت با پشتیبانی")}
       >
         <AnimatePresence mode="wait">
           {open ? (
@@ -440,7 +458,7 @@ export default function ChatWidget() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
-              className="absolute -top-1 -left-1 w-5 h-5 bg-amber-400 rounded-full text-[10px] font-black text-gray-900 flex items-center justify-center"
+              className="absolute -top-1 -start-1 w-5 h-5 bg-amber-400 rounded-full text-[10px] font-black text-gray-900 flex items-center justify-center"
             >
               {unread}
             </motion.span>

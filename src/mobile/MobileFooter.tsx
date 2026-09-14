@@ -2,6 +2,9 @@ import { Mail, Phone, Youtube, Twitter, Linkedin } from 'lucide-react';
 import type { SiteSettings } from '../lib/settingsApi';
 import type { MobilePageKey } from './MobileAppShell';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   themeMode: 'dark' | 'light';
   settings?: SiteSettings;
@@ -33,7 +36,7 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
   const iconColor   = d ? 'rgba(255,255,255,0.55)'   : '#475569';
 
   const logoText   = settings?.header_logo_text   ?? 'Capital Network';
-  const tagline    = settings?.footer_brand_tagline ?? 'اتصال استارتاپ از Seed تا Series B به شبکه جهانی سرمایه‌گذاران Tier-1 در ۵ قاره.';
+  const tagline    = settings?.footer_brand_tagline ?? t("اتصال استارتاپ از Seed تا Series B به شبکه جهانی سرمایه‌گذاران Tier-1 در ۵ قاره.");
   const email      = settings?.contact_email       ?? 'invest@capitalnetwork.ir';
   const phone      = settings?.contact_phone       ?? '+98 21 1234 5678';
   const copyright  = settings?.footer_copyright    ?? `© Capital Network. All rights reserved ${new Date().getFullYear()} ©`;
@@ -43,7 +46,6 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
 
   return (
     <footer
-      dir="rtl"
       className="mx-3 mt-4 rounded-[22px] overflow-hidden"
       style={{ background: bg, border: `1px solid ${border}`, marginBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))' }}
     >
@@ -60,7 +62,7 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
           </div>
           <div className="min-w-0">
             <p className="text-sm font-black leading-none truncate" style={{ color: textHigh }}>{logoText}</p>
-            <p className="text-[10px] mt-0.5 leading-none" style={{ color: textMid }}>پلتفرم رشد و سرمایه‌گذاری</p>
+            <p className="text-[10px] mt-0.5 leading-none" style={{ color: textMid }}>{t("پلتفرم رشد و سرمایه‌گذاری")}</p>
           </div>
         </div>
 
@@ -71,19 +73,19 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
           className="shrink-0 rounded-full px-4 py-2 text-[11px] font-black text-white"
           style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}
         >
-          ارزیابی رایگان
+          {t("ارزیابی رایگان")}
         </button>
       </div>
 
       {/* ── Brand tagline ── */}
       <div className="px-4 py-3" style={{ borderBottom: `1px solid ${divider}` }}>
-        <p className="text-xs leading-[1.85] text-right" style={{ color: textMid }}>{tagline}</p>
+        <p className="text-xs leading-[1.85] text-end" style={{ color: textMid }}>{tagline}</p>
       </div>
 
       {/* ── Quick access links ── */}
       <div className="px-4 py-3" style={{ borderBottom: `1px solid ${divider}` }}>
-        <p className="text-[10px] font-black tracking-widest mb-2.5 text-right" style={{ color: textLow }}>
-          دسترسی سریع
+        <p className="text-[10px] font-black tracking-widest mb-2.5 text-end" style={{ color: textLow }}>
+          {t("دسترسی سریع")}
         </p>
         <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
           {NAV_LINKS.map((item) => (
@@ -91,7 +93,7 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
               key={item.page}
               type="button"
               onClick={() => onNavigate(item.page)}
-              className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-right text-xs font-semibold transition-colors active:opacity-70"
+              className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-end text-xs font-semibold transition-colors active:opacity-70"
               style={{ color: textMid }}
               onMouseEnter={(e) => (e.currentTarget.style.background = navHoverBg)}
               onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
@@ -105,8 +107,8 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
 
       {/* ── Contact info ── */}
       <div className="px-4 py-3" style={{ borderBottom: `1px solid ${divider}` }}>
-        <p className="text-[10px] font-black tracking-widest mb-2.5 text-right" style={{ color: textLow }}>
-          ارتباط با ما
+        <p className="text-[10px] font-black tracking-widest mb-2.5 text-end" style={{ color: textLow }}>
+          {t("ارتباط با ما")}
         </p>
         <div className="space-y-2">
           {/* Email */}
@@ -138,7 +140,7 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
       {/* ── Social networks ── */}
       <div className="px-4 py-3" style={{ borderBottom: `1px solid ${divider}` }}>
         <div className="flex items-center justify-end gap-2.5">
-          <p className="text-[10px] font-semibold" style={{ color: textLow }}>:شبکه‌های اجتماعی</p>
+          <p className="text-[10px] font-semibold" style={{ color: textLow }}>{t(":شبکه‌های اجتماعی")}</p>
 
           {/* YouTube */}
           <a

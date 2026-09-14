@@ -96,6 +96,9 @@ import { FinancialBackground } from '../../components/FinancialBackground';
 
 import type { TocItem, FaqItem, SourceItem, BlogAuthorFull } from './types';
 
+import { t as tr } from '@/i18n';
+
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -164,10 +167,10 @@ function extractFAQ(content: string): FaqItem[] {
   let i = 0;
   while (i < lines.length) {
     const line = lines[i].trim();
-    if (line.startsWith('سوال:') || line.startsWith('Q:') || line.startsWith('❓')) {
+    if (line.startsWith(tr("سوال:")) || line.startsWith('Q:') || line.startsWith('❓')) {
       const question = line.replace(/^(سوال:|Q:|❓)\s*/, '').trim();
       const nextLine = lines[i + 1]?.trim() ?? '';
-      if (nextLine.startsWith('جواب:') || nextLine.startsWith('A:') || nextLine.startsWith('✅')) {
+      if (nextLine.startsWith(tr("جواب:")) || nextLine.startsWith('A:') || nextLine.startsWith('✅')) {
         const answer = nextLine.replace(/^(جواب:|A:|✅)\s*/, '').trim();
         if (question && answer) items.push({ question, answer });
         i += 2; continue;
@@ -252,8 +255,8 @@ function BlogPostPageInner({ post, allPosts, onBack, onNavigate }: InnerProps) {
   };
 
   const breadcrumbs = [
-    { name: 'خانه', url: `${window.location.origin}/` },
-    { name: 'بلاگ', url: `${window.location.origin}/blog` },
+    { name: tr("خانه"), url: `${window.location.origin}/` },
+    { name: tr("بلاگ"), url: `${window.location.origin}/blog` },
     { name: CATEGORY_LABELS[post.category ?? ''] ?? (post.category ?? ''), url: `${window.location.origin}/blog/category/${post.category ?? ''}` },
     { name: post.title, url: currentUrl },
   ];
@@ -272,9 +275,9 @@ function BlogPostPageInner({ post, allPosts, onBack, onNavigate }: InnerProps) {
       {/* ── Skip link ────────────────────────────────────────────────────────── */}
       <a
         href="#article-main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-black focus:font-bold focus:rounded-xl"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:end-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-black focus:font-bold focus:rounded-xl"
       >
-        رفتن به محتوا
+        {tr("رفتن به محتوا")}
       </a>
 
       <article
@@ -290,7 +293,7 @@ function BlogPostPageInner({ post, allPosts, onBack, onNavigate }: InnerProps) {
         <div className="mx-auto max-w-[1400px] px-4 md:px-6 xl:px-8 py-10">
 
           {/* Breadcrumb */}
-          <nav aria-label="مسیر صفحه" className="flex items-center gap-1.5 text-xs text-white/35 mb-6 print:hidden flex-wrap">
+          <nav aria-label={tr("مسیر صفحه")} className="flex items-center gap-1.5 text-xs text-white/35 mb-6 print:hidden flex-wrap">
             {breadcrumbs.map((crumb, idx) => (
               <span key={idx} className="flex items-center gap-1.5">
                 {idx > 0 && <ChevronRight size={11} className="opacity-30 flex-shrink-0" aria-hidden="true" />}
@@ -313,10 +316,10 @@ function BlogPostPageInner({ post, allPosts, onBack, onNavigate }: InnerProps) {
             <button
               onClick={onBack}
               className="inline-flex items-center gap-2 text-sm text-white/45 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500/40 rounded-xl px-3 py-2 hover:bg-white/5"
-              aria-label="بازگشت به صفحه بلاگ"
+              aria-label={tr("بازگشت به صفحه بلاگ")}
             >
               <ArrowLeft size={16} aria-hidden="true" />
-              بازگشت به بلاگ
+              {tr("بازگشت به بلاگ")}
             </button>
           </motion.div>
 
@@ -353,10 +356,10 @@ function BlogPostPageInner({ post, allPosts, onBack, onNavigate }: InnerProps) {
                 <button
                   onClick={() => window.print()}
                   className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white px-3 py-1.5 rounded-full border border-white/10 hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-white/20"
-                  aria-label="چاپ مقاله"
+                  aria-label={tr("چاپ مقاله")}
                 >
                   <Printer size={13} aria-hidden="true" />
-                  چاپ
+                  {tr("چاپ")}
                 </button>
               </motion.div>
 
@@ -392,10 +395,10 @@ function BlogPostPageInner({ post, allPosts, onBack, onNavigate }: InnerProps) {
 
               {/* Tags */}
               {(post.tags ?? []).length > 0 && (
-                <motion.section variants={fadeUp} initial="hidden" animate="show" aria-label="برچسب‌ها" className="mb-8 print:hidden">
+                <motion.section variants={fadeUp} initial="hidden" animate="show" aria-label={tr("برچسب‌ها")} className="mb-8 print:hidden">
                   <h3 className="flex items-center gap-2 text-xs font-bold text-white/50 uppercase tracking-wider mb-3">
                     <Tag size={12} className="text-teal-400" aria-hidden="true" />
-                    برچسب‌ها
+                    {tr("برچسب‌ها")}
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {(post.tags ?? []).map((tag) => (
@@ -423,7 +426,7 @@ function BlogPostPageInner({ post, allPosts, onBack, onNavigate }: InnerProps) {
                 >
                   <h2 id="sources-heading" className="flex items-center gap-2 text-xl font-black text-white mb-5">
                     <BookOpen size={18} className="text-teal-400" aria-hidden="true" />
-                    منابع
+                    {tr("منابع")}
                   </h2>
                   <ol className="space-y-2.5" role="list">
                     {sources.map((s, idx) => (
@@ -540,13 +543,13 @@ export default function EnterpriseBlogPostPage({ slug, onBack }: ShellProps) {
     return (
       <div className="min-h-screen bg-[#0d1829] text-white flex flex-col items-center justify-center gap-4 relative">
         <FinancialBackground />
-        <h1 className="text-2xl font-black">مقاله یافت نشد</h1>
+        <h1 className="text-2xl font-black">{tr("مقاله یافت نشد")}</h1>
         <button
           onClick={onBack}
           className="flex items-center gap-2 text-teal-400 hover:text-teal-300 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 rounded-xl px-4 py-2"
         >
           <ArrowLeft size={16} aria-hidden="true" />
-          بازگشت به بلاگ
+          {tr("بازگشت به بلاگ")}
         </button>
       </div>
     );

@@ -8,6 +8,9 @@
  */
 import { ArrowLeft, PhoneCall, UserPlus, Download, BookOpen } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 type CTAVariant = 'consult' | 'contact' | 'register' | 'download' | 'read-more';
 
 interface Props {
@@ -66,7 +69,7 @@ export default function BlogPostCTA({ variant = 'consult', onAction }: Props) {
   return (
     <div
       className="mt-12 rounded-2xl border border-white/10 overflow-hidden relative"
-      aria-label="دعوت به اقدام"
+      aria-label={t("دعوت به اقدام")}
     >
       {/* Gradient background */}
       <div
@@ -80,7 +83,7 @@ export default function BlogPostCTA({ variant = 'consult', onAction }: Props) {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
+      <div className="relative z-10 p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-end">
         {/* Icon badge */}
         <div
           className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-white"

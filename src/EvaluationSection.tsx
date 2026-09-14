@@ -10,9 +10,12 @@
  * - tailwindcss
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, TrendingUp, Layers, Search, Users, FileText, Star, Briefcase, Lock } from 'lucide-react';
+
+import { t, useLanguage, deepTranslate } from '@/i18n';
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -140,16 +143,23 @@ interface EvaluationSectionProps {
 }
 
 export default function EvaluationSection({ data = {}, className = '' }: EvaluationSectionProps) {
-  const settings = { ...defaultData, ...data };
+  //订阅 تغییر زبان تا محتوا دوباره رندر شود
+  const { lang } = useLanguage();
+
+  // محتوای پیش‌فرض این بخش به فارسی است؛ برای نسخهٔ انگلیسی ترجمهٔ عمیق اعمال می‌شود
+  const settings = useMemo(
+    () => deepTranslate({ ...defaultData, ...data }),
+    [data, lang]
+  );
 
   return (
     <section className={`relative overflow-hidden py-24 ${className}`}>
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-amber-500/5 to-teal-500/5 rounded-full blur-[150px]" />
+        <div className="absolute top-0 start-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-0 end-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-amber-500/5 to-teal-500/5 rounded-full blur-[150px]" />
       </div>
 
       {/* Grid Pattern */}
@@ -171,16 +181,14 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
         >
           {/* Main Card */}
           <div
-            className="relative overflow-hidden rounded-[40px] border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-transparent backdrop-blur-xl p-4 md:p-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]"
-            dir="rtl"
-          >
+            className="relative overflow-hidden rounded-[40px] border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-transparent backdrop-blur-xl p-4 md:p-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
             {/* Glass Effect Border */}
             <div className="absolute inset-0 rounded-[40px] bg-gradient-to-br from-white/10 via-transparent to-transparent" />
             <div className="absolute inset-0 rounded-[40px] border border-white/5" />
 
             {/* Animated Glow */}
             <motion.div
-              className="absolute -top-20 -right-20 w-40 h-40 bg-amber-400/20 rounded-full blur-[60px]"
+              className="absolute -top-20 -end-20 w-40 h-40 bg-amber-400/20 rounded-full blur-[60px]"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.5, 0.3],
@@ -192,7 +200,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
               }}
             />
             <motion.div
-              className="absolute -bottom-20 -left-20 w-40 h-40 bg-teal-400/20 rounded-full blur-[60px]"
+              className="absolute -bottom-20 -start-20 w-40 h-40 bg-teal-400/20 rounded-full blur-[60px]"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.5, 0.3],
@@ -249,7 +257,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                     <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/30">
                       <TrendingUp size={16} className="text-amber-400" />
                     </div>
-                    <p className="text-sm font-semibold text-white">فعالیت‌های سایت</p>
+                    <p className="text-sm font-semibold text-white">{t("فعالیت‌های سایت")}</p>
                   </div>
                   <div className="space-y-3">
                     {(settings.journey_metrics || []).map((item: any, index: number) => (
@@ -282,7 +290,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
 
                 {/* Floating Elements */}
                 <motion.div
-                  className="absolute -top-4 -right-4 h-8 w-8 rounded-full bg-amber-400/20 blur-xl"
+                  className="absolute -top-4 -end-4 h-8 w-8 rounded-full bg-amber-400/20 blur-xl"
                   animate={{
                     y: [0, -10, 0],
                     opacity: [0.3, 0.6, 0.3],
@@ -294,7 +302,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                   }}
                 />
                 <motion.div
-                  className="absolute -bottom-4 -left-4 h-8 w-8 rounded-full bg-teal-400/20 blur-xl"
+                  className="absolute -bottom-4 -start-4 h-8 w-8 rounded-full bg-teal-400/20 blur-xl"
                   animate={{
                     y: [0, 10, 0],
                     opacity: [0.3, 0.6, 0.3],
@@ -314,7 +322,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex flex-col justify-center text-right"
+                className="flex flex-col justify-center text-end"
               >
                 {/* Badge */}
                 <motion.div
@@ -357,7 +365,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                   className="max-w-2xl space-y-5"
                 >
                   <p className="text-base leading-8 text-white/70 md:text-lg">
-                    هیچ فرصت سرمایه‌گذاری بدون بررسی اولیه به شبکه سرمایه‌گذاران معرفی نمی‌شود. هدف ما اطمینان از کیفیت و حرفه‌ای بودن فرصت‌هاست.
+                    {t("هیچ فرصت سرمایه‌گذاری بدون بررسی اولیه به شبکه سرمایه‌گذاران معرفی نمی‌شود. هدف ما اطمینان از کیفیت و حرفه‌ای بودن فرصت‌هاست.")}
                   </p>
 
                   {/* Structured Points */}
@@ -367,8 +375,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Search size={14} className="text-amber-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">بررسی اولیه و ارزیابی تخصصی</h4>
-                        <p className="text-xs text-white/60 leading-6">پیش از هر معرفی، بررسی دقیق انجام می‌شود.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("بررسی اولیه و ارزیابی تخصصی")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("پیش از هر معرفی، بررسی دقیق انجام می‌شود.")}</p>
                       </div>
                     </div>
 
@@ -377,8 +385,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Users size={14} className="text-teal-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">استانداردهای معرفی برای سرمایه‌گذاران</h4>
-                        <p className="text-xs text-white/60 leading-6">پیش از معرفی هر پروژه، مدارک مالی، مدل کسب‌وکار، بازار هدف، تیم، میزان سرمایه موردنیاز، نحوه مصرف سرمایه و ریسک‌های اصلی آن توسط متخصصان باتجربه بررسی می‌شود.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("استانداردهای معرفی برای سرمایه‌گذاران")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("پیش از معرفی هر پروژه، مدارک مالی، مدل کسب‌وکار، بازار هدف، تیم، میزان سرمایه موردنیاز، نحوه مصرف سرمایه و ریسک‌های اصلی آن توسط متخصصان باتجربه بررسی می‌شود.")}</p>
                       </div>
                     </div>
 
@@ -387,8 +395,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <FileText size={14} className="text-cyan-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">الزامات مدارک برای متقاضیان</h4>
-                        <p className="text-xs text-white/60 leading-6">برای معرفی کسب‌وکار یا پروژه شما به سرمایه‌گذار، مدارکی مانند Pitch Deck، مدل مالی، بیزینس پلن، One-Pager، Investment Memo و اطلاعات تیم باید کامل، دقیق و قابل دفاع باشند.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("الزامات مدارک برای متقاضیان")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("برای معرفی کسب‌وکار یا پروژه شما به سرمایه‌گذار، مدارکی مانند Pitch Deck، مدل مالی، بیزینس پلن، One-Pager، Investment Memo و اطلاعات تیم باید کامل، دقیق و قابل دفاع باشند.")}</p>
                       </div>
                     </div>
 
@@ -397,8 +405,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Star size={14} className="text-purple-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">اهمیت ارائه حرفه‌ای</h4>
-                        <p className="text-xs text-white/60 leading-6">حتی اگر یک پروژه ظرفیت خوبی داشته باشد، ارائه غیرحرفه‌ای می‌تواند در چند ثانیه نخست اعتماد و توجه سرمایه‌گذار را از بین ببرد.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("اهمیت ارائه حرفه‌ای")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("حتی اگر یک پروژه ظرفیت خوبی داشته باشد، ارائه غیرحرفه‌ای می‌تواند در چند ثانیه نخست اعتماد و توجه سرمایه‌گذار را از بین ببرد.")}</p>
                       </div>
                     </div>
 
@@ -407,8 +415,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Briefcase size={14} className="text-rose-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">خدمات آماده‌سازی مدارک</h4>
-                        <p className="text-xs text-white/60 leading-6">اگر با نحوه تهیه این مدارک آشنا نیستید یا فایل‌های فعلی شما نیاز به اصلاح دارند، از بخش خدمات آماده‌سازی جذب سرمایه اقدام کنید.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("خدمات آماده‌سازی مدارک")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("اگر با نحوه تهیه این مدارک آشنا نیستید یا فایل‌های فعلی شما نیاز به اصلاح دارند، از بخش خدمات آماده‌سازی جذب سرمایه اقدام کنید.")}</p>
                       </div>
                     </div>
 
@@ -417,8 +425,8 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                         <Lock size={14} className="text-emerald-400" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-1">تضمین محرمانگی اطلاعات</h4>
-                        <p className="text-xs text-white/60 leading-6">تمامی مدارک و اطلاعات دریافتی با رویکرد محرمانه بررسی می‌شوند و بدون هماهنگی و تأیید صاحب پروژه در اختیار اشخاص یا مجموعه‌های نامرتبط قرار نمی‌گیرند.</p>
+                        <h4 className="text-sm font-semibold text-white mb-1">{t("تضمین محرمانگی اطلاعات")}</h4>
+                        <p className="text-xs text-white/60 leading-6">{t("تمامی مدارک و اطلاعات دریافتی با رویکرد محرمانه بررسی می‌شوند و بدون هماهنگی و تأیید صاحب پروژه در اختیار اشخاص یا مجموعه‌های نامرتبط قرار نمی‌گیرند.")}</p>
                       </div>
                     </div>
                   </div>
@@ -461,17 +469,16 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-teal-400/20 to-cyan-600/10 border border-teal-400/30">
                         <Briefcase size={14} className="text-teal-400" />
                       </div>
-                      <h4 className="text-sm font-semibold text-white">بازار کپیتال نتورک</h4>
+                      <h4 className="text-sm font-semibold text-white">{t("بازار کپیتال نتورک")}</h4>
                     </div>
                     <p className="text-xs text-white/80 leading-7 text-justify mb-3">
-                      برای درخواست سرمایه و یا سرمایه‌گذاری کمتر از ۵ میلیارد تومان، لطفاً از طریق بازار کپیتال نتورک درخواست‌های خود را ثبت کنید.
+                      {t("برای درخواست سرمایه و یا سرمایه‌گذاری کمتر از ۵ میلیارد تومان، لطفاً از طریق بازار کپیتال نتورک درخواست‌های خود را ثبت کنید.")}
                     </p>
                     <a
                       href="https://market.capitalnetwork.ir"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-teal-400/30 bg-gradient-to-r from-teal-400/15 to-cyan-400/15 px-4 py-2.5 text-xs font-semibold text-teal-300 backdrop-blur-sm hover:border-teal-400/50 hover:bg-teal-400/25 transition-all cursor-pointer"
-                    >
+                      className="inline-flex items-center gap-2 rounded-xl border border-teal-400/30 bg-gradient-to-r from-teal-400/15 to-cyan-400/15 px-4 py-2.5 text-xs font-semibold text-teal-300 backdrop-blur-sm hover:border-teal-400/50 hover:bg-teal-400/25 transition-all cursor-pointer">
                       <span>market.capitalnetwork.ir</span>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

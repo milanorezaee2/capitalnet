@@ -4,6 +4,9 @@ import { Plus, Minus } from 'lucide-react';
 import type { FAQ as FAQType } from '../../types/enterprise';
 import { useState } from 'react';
 
+import { t } from '@/i18n';
+
+
 export interface FAQSectionProps {
   faqs: FAQType[];
 }
@@ -21,7 +24,7 @@ export const FAQSection = ({ faqs }: FAQSectionProps) => {
           viewport={{ once: true }}
           className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-teal-400"
         >
-          سوالات متداول
+          {t("سوالات متداول")}
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -29,7 +32,7 @@ export const FAQSection = ({ faqs }: FAQSectionProps) => {
           viewport={{ once: true }}
           className="mb-14 text-4xl font-black text-white md:text-5xl"
         >
-          پرسش و پاسخ
+          {t("پرسش و پاسخ")}
         </motion.h2>
 
         <div className="divide-y divide-white/6">
@@ -43,7 +46,7 @@ export const FAQSection = ({ faqs }: FAQSectionProps) => {
             >
               <button
                 onClick={() => toggle(i)}
-                className="flex w-full items-start justify-between gap-4 py-5 text-right"
+                className="flex w-full items-start justify-between gap-4 py-5 text-end"
               >
                 <span className={`text-base font-bold transition-colors ${open === i ? 'text-white' : 'text-slate-300'}`}>
                   {faq.question}

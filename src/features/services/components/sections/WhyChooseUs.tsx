@@ -2,6 +2,9 @@
 import { motion } from 'framer-motion';
 import type { WhyChooseUsContent } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface WhyChooseUsProps {
   content: WhyChooseUsContent;
 }
@@ -41,7 +44,7 @@ const WhyCard = ({ item, index }: { item: any; index: number }) => {
 
         {/* status badge */}
         <span
-          className="absolute bottom-3 right-3 rounded-full px-3 py-1 text-[11px] font-black uppercase border"
+          className="absolute bottom-3 end-3 rounded-full px-3 py-1 text-[11px] font-black uppercase border"
           style={{ color: accent, borderColor: `${accent}40`, background: `${accent}15` }}
         >
           {item.status}
@@ -66,7 +69,7 @@ export const WhyChooseUs = ({ content }: WhyChooseUsProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-violet-400"
       >
-        تمایز ما
+        {t("تمایز ما")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}

@@ -10,6 +10,9 @@ import { motion, type Variants } from 'framer-motion';
 import { Calendar, Clock, Eye, MessageCircle, TrendingUp, Star } from 'lucide-react';
 import type { AppBlogPost } from '../../../lib/blogApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   post: AppBlogPost;
   commentCount: number;
@@ -135,7 +138,7 @@ export default function BlogPostHero({ post, commentCount }: Props) {
               }}
             >
               <Star size={11} fill="currentColor" aria-hidden="true" />
-              ویژه
+              {t("ویژه")}
             </span>
           )}
         </motion.div>
@@ -201,14 +204,14 @@ export default function BlogPostHero({ post, commentCount }: Props) {
           {(post.views ?? 0) > 0 && (
             <div className="flex items-center gap-1.5">
               <Eye size={14} style={{ color: colors.from }} aria-hidden="true" />
-              <span>{(post.views ?? 0).toLocaleString('fa-IR')} بازدید</span>
+              <span>{(post.views ?? 0).toLocaleString('fa-IR')} {t("بازدید")}</span>
             </div>
           )}
 
           {commentCount > 0 && (
             <div className="flex items-center gap-1.5">
               <MessageCircle size={14} style={{ color: colors.from }} aria-hidden="true" />
-              <span>{commentCount} نظر</span>
+              <span>{commentCount} {t("نظر")}</span>
             </div>
           )}
         </motion.div>

@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import type { Deliverable } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface DeliverablesProps {
   items: Deliverable[];
 }
@@ -48,7 +51,7 @@ export const Deliverables = ({ items }: DeliverablesProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-emerald-400"
       >
-        خروجی‌ها
+        {t("خروجی‌ها")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
@@ -57,7 +60,7 @@ export const Deliverables = ({ items }: DeliverablesProps) => (
         transition={{ duration: 0.5 }}
         className="mb-14 text-4xl font-black text-white md:text-5xl"
       >
-        آنچه تحویل می‌گیرید
+        {t("آنچه تحویل می‌گیرید")}
       </motion.h2>
 
       <div className="grid gap-3 md:grid-cols-2">

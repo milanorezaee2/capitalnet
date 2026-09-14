@@ -1,3 +1,6 @@
+
+import { t } from '@/i18n';
+
 /**
  * Skeleton loaders for the blog post page.
  * Used during data fetch to prevent layout shift.
@@ -25,7 +28,7 @@ export function SkeletonBlock({ h = '200px' }: { h?: string }) {
 /** Full post skeleton — shown while fetching the article */
 export function SkeletonPost() {
   return (
-    <div className="animate-pulse space-y-6" aria-label="در حال بارگذاری..." role="status">
+    <div className="animate-pulse space-y-6" aria-label={t("در حال بارگذاری...")} role="status">
       {/* Hero */}
       <SkeletonBlock h="480px" />
 

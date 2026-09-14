@@ -17,6 +17,9 @@ import MobileProcessPage from './MobileProcessPage';
 import MobileContactPage from './MobileContactPage';
 import MobileAboutPage from './MobileAboutPage';
 
+import { t as tr } from '@/i18n';
+
+
 export type MobilePageKey = 'home'|'services'|'process'|'blog'|'blog-post'|'contact'|'about'|'evaluation';
 
 interface Props {
@@ -134,7 +137,7 @@ export default function MobileAppShell({
       };
 
   return (
-    <div className="min-h-screen mn-shell" dir="rtl" style={shellStyles}>
+    <div className="min-h-screen mn-shell" style={shellStyles}>
       <AnimatePresence>
         {showSplash && (
           <motion.div
@@ -150,7 +153,7 @@ export default function MobileAppShell({
                 <Sparkles size={24} className={themeMode === 'dark' ? 'text-cyan-300' : 'text-white'} />
               </div>
               <h2 className={`mt-4 text-xl font-black ${themeMode === 'dark' ? 'text-white' : 'text-slate-900'}`}>Capital Network</h2>
-              <p className={`mt-2 text-sm leading-7 ${themeMode === 'dark' ? 'text-white/65' : 'text-slate-600'}`}>نسخه موبایل با تجربه‌ای مدرن، سریع و شیشه‌ای</p>
+              <p className={`mt-2 text-sm leading-7 ${themeMode === 'dark' ? 'text-white/65' : 'text-slate-600'}`}>{tr("نسخه موبایل با تجربه‌ای مدرن، سریع و شیشه‌ای")}</p>
             </div>
           </motion.div>
         )}
@@ -170,7 +173,7 @@ export default function MobileAppShell({
             <button type="button" onClick={() => onNavigate('home')} className="flex items-center gap-2.5 min-w-0">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-[11px] font-black text-white"
                 style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}>CN</div>
-              <div className="min-w-0 text-right">
+              <div className="min-w-0 text-end">
                 <AnimatePresence mode="wait">
                   <motion.p key={currentPage}
                     initial={{ opacity:0, y:3 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-3 }}
@@ -182,7 +185,7 @@ export default function MobileAppShell({
                   </motion.p>
                 </AnimatePresence>
                 <p className={`text-[10px] leading-none mt-0.5 ${themeMode === 'dark' ? 'text-white/50' : 'text-slate-500'}`}>
-                  {settings?.header_logo_text ?? 'پلتفرم رشد و سرمایه‌گذاری'}
+                  {settings?.header_logo_text ?? tr("پلتفرم رشد و سرمایه‌گذاری")}
                 </p>
               </div>
             </button>
@@ -194,7 +197,7 @@ export default function MobileAppShell({
                 onClick={() => setThemeMode(themeMode === 'dark' ? 'light' : 'dark')}
                 whileTap={{ scale:0.92 }}
                 className={`relative flex h-10 w-16 items-center rounded-full p-1 transition-colors ${themeMode === 'dark' ? 'bg-slate-800/90' : 'bg-slate-200/90'}`}
-                aria-label="تغییر تم"
+                aria-label={tr("تغییر تم")}
               >
                 <motion.span
                   layout
@@ -208,21 +211,21 @@ export default function MobileAppShell({
               {currentUser ? (
                 <motion.button type="button" onClick={onOpenDashboard} whileTap={{ scale:0.93 }}
                   className="mn-btn-ghost text-[11px] px-2.5 py-2">
-                  {displayName ?? 'پروفایل'}
+                  {displayName ?? tr("پروفایل")}
                 </motion.button>
               ) : (
                 <motion.button type="button" onClick={onOpenAuth} whileTap={{ scale:0.93 }}
                   className="rounded-xl px-3 py-2 text-[11px] font-black text-white"
                   style={{ background:'linear-gradient(135deg,#6366f1,#8b5cf6)' }}>
-                  ورود
+                  {tr("ورود")}
                 </motion.button>
               )}
               <motion.button type="button" onClick={onOpenSearch} whileTap={{ scale:0.88 }}
-                className="mn-icon-btn" aria-label="جستجو">
+                className="mn-icon-btn" aria-label={tr("جستجو")}>
                 <Search size={15} className={themeMode === 'dark' ? 'text-white/60' : 'text-slate-700'} />
               </motion.button>
               <motion.button type="button" onClick={() => setMenuOpen(true)} whileTap={{ scale:0.88 }}
-                className="mn-icon-btn" aria-label="منو">
+                className="mn-icon-btn" aria-label={tr("منو")}>
                 <Menu size={15} className={themeMode === 'dark' ? 'text-white/60' : 'text-slate-700'} />
               </motion.button>
             </div>
@@ -230,11 +233,11 @@ export default function MobileAppShell({
 
           <div className={`mt-2 flex items-center justify-between rounded-2xl border px-3 py-2 ${themeMode === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-slate-200 bg-white/80'}`}>
             <div className="flex min-w-0 items-center gap-2">
-              <span className="mn-badge"><span className="mn-badge-dot" /> موبایل</span>
-              <p className={`truncate text-[11px] ${themeMode === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>همه‌ی بخش‌ها در یک تجربه‌ی حرفه‌ای</p>
+              <span className="mn-badge"><span className="mn-badge-dot" /> {tr("موبایل")}</span>
+              <p className={`truncate text-[11px] ${themeMode === 'dark' ? 'text-white/60' : 'text-slate-600'}`}>{tr("همه‌ی بخش‌ها در یک تجربه‌ی حرفه‌ای")}</p>
             </div>
             <button type="button" onClick={() => onNavigate('evaluation')} className={`rounded-full border px-2.5 py-1 text-[10px] font-black ${themeMode === 'dark' ? 'border-white/10 bg-white/[0.05] text-white' : 'border-slate-200 bg-slate-100 text-slate-700'}`}>
-              ارزیابی
+              {tr("ارزیابی")}
             </button>
           </div>
         </div>
@@ -276,7 +279,7 @@ export default function MobileAppShell({
             <motion.div key="dr"
               initial={{ x:'100%' }} animate={{ x:0 }} exit={{ x:'100%' }}
               transition={{ type:'spring', stiffness:320, damping:32 }}
-              className="fixed top-0 right-0 bottom-0 z-50 w-[272px] flex flex-col"
+              className="fixed top-0 end-0 bottom-0 z-50 w-[272px] flex flex-col"
               style={{ background: themeMode === 'dark' ? 'rgba(9,11,20,0.98)' : 'rgba(255,255,255,0.86)', borderLeft: themeMode === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(15,23,42,0.08)', backdropFilter:'blur(32px)', WebkitBackdropFilter:'blur(32px)' }}>
               {/* Drawer header */}
               <div className={`relative overflow-hidden border-b px-5 pt-5 pb-4 ${themeMode === 'dark' ? 'border-white/[0.05]' : 'border-slate-200/80'}`}>
@@ -284,10 +287,10 @@ export default function MobileAppShell({
                 <div className="relative flex items-center justify-between">
                   <div>
                     <p className={`text-sm font-black ${themeMode === 'dark' ? 'text-white' : 'text-slate-900'}`}>{settings?.header_logo_text ?? 'Capital Network'}</p>
-                    <p className={`text-[11px] mt-0.5 ${themeMode === 'dark' ? 'text-white/50' : 'text-slate-600'}`}>پلتفرم رشد و سرمایه‌گذاری</p>
+                    <p className={`text-[11px] mt-0.5 ${themeMode === 'dark' ? 'text-white/50' : 'text-slate-600'}`}>{tr("پلتفرم رشد و سرمایه‌گذاری")}</p>
                   </div>
                   <motion.button type="button" onClick={() => setMenuOpen(false)} whileTap={{ scale:0.88 }}
-                    className="mn-icon-btn" aria-label="بستن">
+                    className="mn-icon-btn" aria-label={tr("بستن")}>
                     <X size={14} className={themeMode === 'dark' ? 'text-white/55' : 'text-slate-600'} />
                   </motion.button>
                 </div>
@@ -300,9 +303,9 @@ export default function MobileAppShell({
                     {displayName ? displayName[0].toUpperCase() : 'CN'}
                   </div>
                   <div className="min-w-0">
-                    <p className={`text-sm font-bold truncate ${themeMode === 'dark' ? 'text-white' : 'text-slate-900'}`}>{displayName ?? 'کاربر مهمان'}</p>
+                    <p className={`text-sm font-bold truncate ${themeMode === 'dark' ? 'text-white' : 'text-slate-900'}`}>{displayName ?? tr("کاربر مهمان")}</p>
                     <p className={`text-[11px] mt-0.5 ${themeMode === 'dark' ? 'text-white/50' : 'text-slate-600'}`}>
-                      {currentUser ? 'حساب کاربری فعال' : 'ورود یا ثبت‌نام'}
+                      {currentUser ? tr("حساب کاربری فعال") : tr("ورود یا ثبت‌نام")}
                     </p>
                   </div>
                 </div>
@@ -310,7 +313,7 @@ export default function MobileAppShell({
               {/* Nav */}
               <nav className="flex-1 overflow-y-auto px-4 py-2 space-y-1">
                 <div className={`mb-2 rounded-2xl border p-3 text-[11px] ${themeMode === 'dark' ? 'border-white/10 bg-white/[0.04] text-white/60' : 'border-slate-200 bg-white/90 text-slate-600'}`}>
-                  برای دسترسی سریع به بخش‌های اصلی، از این منو استفاده کنید.
+                  {tr("برای دسترسی سریع به بخش‌های اصلی، از این منو استفاده کنید.")}
                 </div>
                 {MENU_LINKS.map((item, i) => {
                   const isActive = currentPage === item.page;
@@ -341,7 +344,7 @@ export default function MobileAppShell({
                   onClick={() => { onNavigate('evaluation'); setMenuOpen(false); }}
                   className="w-full rounded-xl py-3 text-sm font-black text-white"
                   style={{ background:'linear-gradient(135deg,#6366f1,#8b5cf6)' }}>
-                  شروع ارزیابی رایگان
+                  {tr("شروع ارزیابی رایگان")}
                 </button>
               </div>
             </motion.div>

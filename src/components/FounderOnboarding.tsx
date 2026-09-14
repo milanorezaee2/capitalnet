@@ -8,6 +8,9 @@ import { supabase } from '../lib/supabaseApi'
 import { useSettings } from '../hooks/useSettings'
 import { normalizeEvalFormConfig } from '../utils/evalFormConfigRuntime'
 
+import { t } from '@/i18n';
+
+
 function FallbackEvaluationContent({ evalConfig }: { evalConfig: ReturnType<typeof normalizeEvalFormConfig> }) {
   return (
     <div style={{ minHeight: '100vh', background: '#030712', color: '#fff', padding: '48px 24px' }}>
@@ -174,7 +177,7 @@ export default function FounderOnboarding() {
       if (currentStep === 1) {
         const selected = form?.querySelector('input[name="profile_type"]:checked') as HTMLInputElement
         if (!selected) {
-          if (step1Error) step1Error.textContent = 'لطفاً نوع پروفایل را انتخاب کنید'
+          if (step1Error) step1Error.textContent = t("لطفاً نوع پروفایل را انتخاب کنید")
           return false
         }
         profileType = normalizeProfileType(selected.value)
@@ -195,16 +198,16 @@ export default function FounderOnboarding() {
         }
 
         if (!value) {
-          setError(field, 'این فیلد الزامی است')
+          setError(field, t("این فیلد الزامی است"))
           valid = false
         } else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          setError(field, 'ایمیل معتبر وارد کنید')
+          setError(field, t("ایمیل معتبر وارد کنید"))
           valid = false
         } else if (field.name === 'phone') {
           // اعتبارسنجی شماره تلفن: ۱۰ تا ۱۵ رقم با یا بدون + و فاصله
           const digits = value.replace(/[\s\-().]/g, '')
           if (!/^\+?[0-9]{10,15}$/.test(digits)) {
-            setError(field, 'شماره تماس معتبر نیست (مثال: ۰۹۱۲۱۲۳۴۵۶۷ یا +98912...)')
+            setError(field, t("شماره تماس معتبر نیست (مثال: ۰۹۱۲۱۲۳۴۵۶۷ یا +98912...)"))
             valid = false
           } else {
             setError(field, '')
@@ -240,9 +243,9 @@ export default function FounderOnboarding() {
       const successText = document.getElementById('cn-success-message')
       const successTitle = document.getElementById('cn-success-title')
       const successButton = document.getElementById('cn-success-button')
-      if (successText) successText.textContent = message || evalConfig.success_subtitle || 'درخواست شما با موفقیت ارسال شد.'
-      if (successTitle) successTitle.textContent = evalConfig.success_title || 'ارسال با موفقیت انجام شد!'
-      if (successButton) successButton.textContent = evalConfig.success_btn || 'بازگشت فوری به صفحه اصلی'
+      if (successText) successText.textContent = message || evalConfig.success_subtitle || t("درخواست شما با موفقیت ارسال شد.")
+      if (successTitle) successTitle.textContent = evalConfig.success_title || t("ارسال با موفقیت انجام شد!")
+      if (successButton) successButton.textContent = evalConfig.success_btn || t("بازگشت فوری به صفحه اصلی")
       currentStep = 5
       showStep(currentStep)
       setTimeout(() => {
@@ -256,7 +259,7 @@ export default function FounderOnboarding() {
 
       if (submitBtn) {
         (submitBtn as HTMLButtonElement).disabled = true
-        submitBtn.textContent = 'در حال ارسال...'
+        submitBtn.textContent = t("در حال ارسال...")
       }
 
       try {
@@ -304,17 +307,17 @@ export default function FounderOnboarding() {
 
         const result = await insertLead(leadData)
         if (result) {
-          addUserAction(result.id, 'درخواست ارزیابی', 'درخواست ارزیابی با موفقیت ثبت شد.', { source: 'founder_onboarding' })
-          showSuccessStep('ارسال با موفقیت انجام شد. تیم ما به زودی با شما تماس می‌گیرد.')
+          addUserAction(result.id, t("درخواست ارزیابی"), t("درخواست ارزیابی با موفقیت ثبت شد."), { source: 'founder_onboarding' })
+          showSuccessStep(t("ارسال با موفقیت انجام شد. تیم ما به زودی با شما تماس می‌گیرد."))
         }
       } catch (error) {
         console.error('Submit error:', error)
         const msg = error instanceof Error ? error.message : String(error)
-        alert('خطا در ارسال فرم:\n' + msg)
+        alert(t("خطا در ارسال فرم:\n") + msg)
       } finally {
         if (submitBtn) {
           (submitBtn as HTMLButtonElement).disabled = false
-          submitBtn.textContent = 'ارسال نهایی'
+          submitBtn.textContent = t("ارسال نهایی")
         }
       }
     })
@@ -328,13 +331,13 @@ export default function FounderOnboarding() {
       if (!file || !filePreview) return
       const lowerName = String(file.name || '').toLowerCase()
       if (file.type !== 'application/pdf' || !lowerName.endsWith('.pdf')) {
-        filePreview.textContent = 'فقط فایل PDF مجاز است'
+        filePreview.textContent = t("فقط فایل PDF مجاز است")
         filePreview.classList.add('show')
         if (fileInput) (fileInput as HTMLInputElement).value = ''
         return
       }
       if (file.size > MAX_UPLOAD_SIZE) {
-        filePreview.textContent = 'حجم فایل نباید بیشتر از 20MB باشد'
+        filePreview.textContent = t("حجم فایل نباید بیشتر از 20MB باشد")
         filePreview.classList.add('show')
         if (fileInput) (fileInput as HTMLInputElement).value = ''
         return
@@ -410,11 +413,11 @@ export default function FounderOnboarding() {
     <div className="cn-onboard-wrapper" id="cn-onboard" style={{ position: 'relative', zIndex: 1 }}>
       <div className="cn-progress-wrap">
         <div className="cn-progress-steps">
-          <div className="cn-progress-step active">پروفایل</div>
-          <div className="cn-progress-step">اطلاعات</div>
-          <div className="cn-progress-step">جزئیات</div>
-          <div className="cn-progress-step">مستندات</div>
-          <div className="cn-progress-step">تأیید</div>
+          <div className="cn-progress-step active">{t("پروفایل")}</div>
+          <div className="cn-progress-step">{t("اطلاعات")}</div>
+          <div className="cn-progress-step">{t("جزئیات")}</div>
+          <div className="cn-progress-step">{t("مستندات")}</div>
+          <div className="cn-progress-step">{t("تأیید")}</div>
         </div>
         <div className="cn-progress-bar"><div className="cn-progress-fill" id="cn-progress-fill"></div></div>
       </div>
@@ -465,10 +468,10 @@ export default function FounderOnboarding() {
               subtitleAlign={evalConfig.step2_subtitle_align}
             />
             <div className="cn-field-grid">
-              <div className="cn-field"><label className="cn-label">نام و نام خانوادگی <span>*</span></label><input className="cn-input" name="full_name" type="text" required placeholder="مثل: علی رضایی" /><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">ایمیل کاری <span>*</span></label><input className="cn-input" name="email" type="email" required placeholder="name@company.com" /><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">شماره تماس / WhatsApp <span>*</span></label><input className="cn-input" name="phone" type="tel" required placeholder="۰۹۱۲۱۲۳۴۵۶۷ یا +98912..." /><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">لینکدین / وب‌سایت</label><input className="cn-input" name="linkedin" type="url" placeholder="https://linkedin.com/in/..." /></div>
+              <div className="cn-field"><label className="cn-label">{t("نام و نام خانوادگی")} <span>*</span></label><input className="cn-input" name="full_name" type="text" required placeholder={t("مثل: علی رضایی")} /><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("ایمیل کاری")} <span>*</span></label><input className="cn-input" name="email" type="email" required placeholder="name@company.com" /><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("شماره تماس / WhatsApp")} <span>*</span></label><input className="cn-input" name="phone" type="tel" required placeholder={t("۰۹۱۲۱۲۳۴۵۶۷ یا +98912...")} /><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("لینکدین / وب‌سایت")}</label><input className="cn-input" name="linkedin" type="url" placeholder="https://linkedin.com/in/..." /></div>
             </div>
           </div>
           <div className="cn-step" data-step="3" data-show="founder">
@@ -481,12 +484,12 @@ export default function FounderOnboarding() {
               subtitleAlign={evalConfig.step3f_subtitle_align}
             />
             <div className="cn-field-grid">
-              <div className="cn-field"><label className="cn-label">نام شرکت <span>*</span></label><input className="cn-input" name="company_name" type="text" required placeholder="نام استارتاپ" /><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">حوزه فعالیت <span>*</span></label><select className="cn-select" name="sector" required><option value="">انتخاب کنید</option>{evalConfig.sector_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">مرحله فعلی <span>*</span></label><select className="cn-select" name="stage" required><option value="">انتخاب کنید</option>{evalConfig.stage_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">مبلغ سرمایه مورد نیاز <span>*</span></label><select className="cn-select" name="capital_required" required><option value="">انتخاب کنید</option>{evalConfig.capital_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("نام شرکت")} <span>*</span></label><input className="cn-input" name="company_name" type="text" required placeholder={t("نام استارتاپ")} /><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("حوزه فعالیت")} <span>*</span></label><select className="cn-select" name="sector" required><option value="">{t("انتخاب کنید")}</option>{evalConfig.sector_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("مرحله فعلی")} <span>*</span></label><select className="cn-select" name="stage" required><option value="">{t("انتخاب کنید")}</option>{evalConfig.stage_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("مبلغ سرمایه مورد نیاز")} <span>*</span></label><select className="cn-select" name="capital_required" required><option value="">{t("انتخاب کنید")}</option>{evalConfig.capital_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
             </div>
-            <div className="cn-field"><label className="cn-label">توضیح کوتاه درباره استارتاپ <span>*</span></label><textarea className="cn-textarea" name="one_liner" rows={3} required placeholder="چه مشکلی را برای چه کسی حل می‌کنید؟"></textarea><span className="cn-error"></span></div>
+            <div className="cn-field"><label className="cn-label">{t("توضیح کوتاه درباره استارتاپ")} <span>*</span></label><textarea className="cn-textarea" name="one_liner" rows={3} required placeholder={t("چه مشکلی را برای چه کسی حل می‌کنید؟")}></textarea><span className="cn-error"></span></div>
           </div>
           <div className="cn-step" data-step="3" data-show="investor">
             <StepHeader
@@ -498,10 +501,10 @@ export default function FounderOnboarding() {
               subtitleAlign={evalConfig.step3i_subtitle_align}
             />
             <div className="cn-field-grid">
-              <div className="cn-field"><label className="cn-label">نام صندوق / سازمان <span>*</span></label><input className="cn-input" name="org_name" type="text" required placeholder="نام VC یا شرکت" /><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">Ticket Size معمول <span>*</span></label><select className="cn-select" name="ticket_size" required><option value="">انتخاب کنید</option>{evalConfig.ticket_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">Stage مورد علاقه <span>*</span></label><select className="cn-select" name="stage_pref" required><option value="">انتخاب کنید</option>{evalConfig.stage_pref_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
-              <div className="cn-field"><label className="cn-label">جغرافیای هدف</label><input className="cn-input" name="geo_pref" type="text" placeholder="مثل: اروپا، MENA، آمریکا" /></div>
+              <div className="cn-field"><label className="cn-label">{t("نام صندوق / سازمان")} <span>*</span></label><input className="cn-input" name="org_name" type="text" required placeholder={t("نام VC یا شرکت")} /><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("Ticket Size معمول")} <span>*</span></label><select className="cn-select" name="ticket_size" required><option value="">{t("انتخاب کنید")}</option>{evalConfig.ticket_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("Stage مورد علاقه")} <span>*</span></label><select className="cn-select" name="stage_pref" required><option value="">{t("انتخاب کنید")}</option>{evalConfig.stage_pref_options.map((option) => <option key={option} value={option}>{option}</option>)}</select><span className="cn-error"></span></div>
+              <div className="cn-field"><label className="cn-label">{t("جغرافیای هدف")}</label><input className="cn-input" name="geo_pref" type="text" placeholder={t("مثل: اروپا، MENA، آمریکا")} /></div>
             </div>
           </div>
           <div className="cn-step" data-step="4">
@@ -514,17 +517,17 @@ export default function FounderOnboarding() {
               subtitleAlign={evalConfig.step4_subtitle_align}
             />
             <div className="cn-field">
-              <label className="cn-label">آپلود Pitch Deck / Business Plan</label>
+              <label className="cn-label">{t("آپلود Pitch Deck / Business Plan")}</label>
               <div className="cn-upload-area" id="cn-upload-area">
-                <p className="cn-upload-text">فایل PDF را اینجا رها کنید یا کلیک کنید</p>
-                <p className="cn-upload-hint">حداکثر 20MB</p>
+                <p className="cn-upload-text">{t("فایل PDF را اینجا رها کنید یا کلیک کنید")}</p>
+                <p className="cn-upload-hint">{t("حداکثر 20MB")}</p>
                 <input type="file" id="cn-file-input" name="deck" accept="application/pdf,.pdf" hidden />
               </div>
               <div className="cn-file-preview" id="cn-file-preview"></div>
             </div>
             <div className="cn-confirm-section">
               <div className="cn-confirm-panel">
-                <p><strong>چقدر برای قدم بعدی آماده‌اید؟</strong></p>
+                <p><strong>{t("چقدر برای قدم بعدی آماده‌اید؟")}</strong></p>
                 <div className="cn-radio-group">
                   {evalConfig.confidence_options.map((option) => (
                     <label key={option.value} className="cn-radio-item">
@@ -550,11 +553,11 @@ export default function FounderOnboarding() {
                 <span className="cn-error"></span>
               </div>
               <div className="cn-field">
-                <label className="cn-label">توضیحات تکمیلی</label>
-                <textarea className="cn-textarea" name="message" rows={4} placeholder="هر نکته مهمی که فکر می‌کنید باید بدانیم..."></textarea>
+                <label className="cn-label">{t("توضیحات تکمیلی")}</label>
+                <textarea className="cn-textarea" name="message" rows={4} placeholder={t("هر نکته مهمی که فکر می‌کنید باید بدانیم...")}></textarea>
               </div>
               <div className="cn-confirm-checkbox-panel">
-                <label className="cn-confirm-checkbox"><input type="checkbox" name="confirm_accuracy" value="1" required /><span>تأیید می‌کنم اطلاعات ارائه‌شده صحیح است و با قوانین موافقم.</span></label>
+                <label className="cn-confirm-checkbox"><input type="checkbox" name="confirm_accuracy" value="1" required /><span>{t("تأیید می‌کنم اطلاعات ارائه‌شده صحیح است و با قوانین موافقم.")}</span></label>
                 <span className="cn-error"></span>
               </div>
             </div>
@@ -574,10 +577,10 @@ export default function FounderOnboarding() {
           </div>
         </form>
         <div className="cn-nav">
-          <button type="button" className="cn-btn cn-btn-secondary" id="cn-prev-btn" style={{ display: 'none' }}>مرحله قبل</button>
+          <button type="button" className="cn-btn cn-btn-secondary" id="cn-prev-btn" style={{ display: 'none' }}>{t("مرحله قبل")}</button>
           <div className="cn-nav-spacer"></div>
-          <button type="button" className="cn-btn cn-btn-primary" id="cn-next-btn">ادامه</button>
-          <button type="submit" className="cn-btn cn-btn-submit" id="cn-submit-btn" style={{ display: 'none' }} form="cn-onboard-form">ارسال نهایی</button>
+          <button type="button" className="cn-btn cn-btn-primary" id="cn-next-btn">{t("ادامه")}</button>
+          <button type="submit" className="cn-btn cn-btn-submit" id="cn-submit-btn" style={{ display: 'none' }} form="cn-onboard-form">{t("ارسال نهایی")}</button>
         </div>
       </div>
     </div>

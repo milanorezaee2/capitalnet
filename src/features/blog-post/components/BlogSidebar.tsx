@@ -11,6 +11,9 @@ import PopularPosts from './PopularPosts';
 import type { TocItem, BlogAuthorFull } from '../types';
 import type { AppBlogPost } from '../../../lib/blogApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   tocItems: TocItem[];
   author: BlogAuthorFull;
@@ -39,16 +42,16 @@ export default function BlogSidebar({
   );
 
   return (
-    <aside aria-label="نوار کناری" className="space-y-6">
+    <aside aria-label={t("نوار کناری")} className="space-y-6">
       {/* Search */}
       <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-4">
         <label htmlFor="sidebar-search" className="sr-only">
-          جستجو در مقالات
+          {t("جستجو در مقالات")}
         </label>
         <div className="relative">
           <Search
             size={15}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30"
+            className="absolute end-3 top-1/2 -translate-y-1/2 text-white/30"
             aria-hidden="true"
           />
           <input
@@ -56,8 +59,8 @@ export default function BlogSidebar({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="جستجو..."
-            className="w-full text-sm bg-white/5 border border-white/10 rounded-xl pr-9 pl-3 py-2.5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+            placeholder={t("جستجو...")}
+            className="w-full text-sm bg-white/5 border border-white/10 rounded-xl pe-9 ps-3 py-2.5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/40"
           />
         </div>
 
@@ -68,7 +71,7 @@ export default function BlogSidebar({
               <li key={p.id}>
                 <button
                   onClick={() => { setQuery(''); onNavigate(p.slug); }}
-                  className="w-full text-right text-xs text-white/60 hover:text-teal-300 transition-colors p-1.5 rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="w-full text-end text-xs text-white/60 hover:text-teal-300 transition-colors p-1.5 rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-teal-500/30"
                 >
                   {p.title}
                 </button>
@@ -100,14 +103,14 @@ export default function BlogSidebar({
             id="latest-sidebar-heading"
             className="text-sm font-bold text-white mb-4"
           >
-            آخرین مقالات
+            {t("آخرین مقالات")}
           </h3>
           <ul className="space-y-3" role="list">
             {latestPosts.slice(0, 4).map((p) => (
               <li key={p.id}>
                 <button
                   onClick={() => onNavigate(p.slug)}
-                  className="w-full text-right text-xs font-medium text-white/65 hover:text-teal-300 transition-colors line-clamp-2 leading-snug focus:outline-none focus:ring-2 focus:ring-teal-500/30 rounded-lg p-1"
+                  className="w-full text-end text-xs font-medium text-white/65 hover:text-teal-300 transition-colors line-clamp-2 leading-snug focus:outline-none focus:ring-2 focus:ring-teal-500/30 rounded-lg p-1"
                 >
                   {p.title}
                 </button>
@@ -119,25 +122,25 @@ export default function BlogSidebar({
 
       {/* Newsletter */}
       <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-5">
-        <h3 className="text-sm font-bold text-white mb-3">خبرنامه</h3>
+        <h3 className="text-sm font-bold text-white mb-3">{t("خبرنامه")}</h3>
         <p className="text-xs text-white/45 mb-3 leading-relaxed">
-          آخرین مقالات را در ایمیل خود دریافت کنید.
+          {t("آخرین مقالات را در ایمیل خود دریافت کنید.")}
         </p>
         <form
           onSubmit={(e) => e.preventDefault()}
-          aria-label="خبرنامه سایدبار"
+          aria-label={t("خبرنامه سایدبار")}
           className="space-y-2"
         >
           <input
             type="email"
-            placeholder="ایمیل شما"
+            placeholder={t("ایمیل شما")}
             className="w-full text-xs bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/40"
           />
           <button
             type="submit"
             className="w-full text-xs bg-teal-500 hover:bg-teal-400 text-black font-bold py-2.5 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500/50"
           >
-            عضویت
+            {t("عضویت")}
           </button>
         </form>
       </div>
@@ -153,7 +156,7 @@ export default function BlogSidebar({
             className="flex items-center gap-2 text-sm font-bold text-white mb-4"
           >
             <Tag size={14} className="text-teal-400" aria-hidden="true" />
-            برچسب‌ها
+            {t("برچسب‌ها")}
           </h3>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
@@ -173,9 +176,9 @@ export default function BlogSidebar({
       <div
         className="rounded-2xl border border-dashed border-white/10 p-6 text-center"
         role="complementary"
-        aria-label="محل تبلیغات"
+        aria-label={t("محل تبلیغات")}
       >
-        <p className="text-xs text-white/20">محل تبلیغات</p>
+        <p className="text-xs text-white/20">{t("محل تبلیغات")}</p>
         <p className="text-[10px] text-white/12 mt-1">300 × 250</p>
       </div>
     </aside>

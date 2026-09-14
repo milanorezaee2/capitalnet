@@ -6,6 +6,9 @@ import { Mail, Send, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import type { Newsletter } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface NewsletterProps {
   newsletter: Newsletter;
 }
@@ -38,7 +41,7 @@ export const NewsletterSection = ({ newsletter }: NewsletterProps) => {
           />
 
           {/* Decorative pattern */}
-          <div className="absolute top-0 right-0 w-48 h-48 opacity-5">
+          <div className="absolute top-0 end-0 w-48 h-48 opacity-5">
             <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-bl-full" />
           </div>
 
@@ -82,14 +85,14 @@ export const NewsletterSection = ({ newsletter }: NewsletterProps) => {
                     rotate: isFocused ? 360 : 0,
                   }}
                   transition={{ duration: 0.3 }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"
+                  className="absolute end-4 top-1/2 -translate-y-1/2 text-slate-400"
                 >
                   <Mail size={20} />
                 </motion.div>
 
                 {/* Input */}
                 <motion.input
-                  aria-label="ایمیل"
+                  aria-label={t("ایمیل")}
                   placeholder={newsletter.placeholder}
                   type="email"
                   value={email}
@@ -97,7 +100,7 @@ export const NewsletterSection = ({ newsletter }: NewsletterProps) => {
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
                   whileFocus={{ scale: 1.02 }}
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 pr-12 pl-4 py-4 text-white outline-none placeholder:text-slate-400 transition-all focus:border-cyan-400/50 focus:bg-white/10"
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 pe-12 ps-4 py-4 text-white outline-none placeholder:text-slate-400 transition-all focus:border-cyan-400/50 focus:bg-white/10"
                   required
                 />
 

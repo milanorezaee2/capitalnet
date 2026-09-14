@@ -60,7 +60,7 @@ export default function SocialFloatWidget({ settings }: SocialFloatWidgetProps) 
 
   return (
     <div
-      className="social-float-widget fixed bottom-8 right-8 z-50 flex flex-col items-center gap-2.5"
+      className="social-float-widget fixed bottom-8 end-8 z-50 flex flex-col items-center gap-2.5"
       dir="ltr"
     >
       <AnimatePresence>

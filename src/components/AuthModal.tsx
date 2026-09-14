@@ -18,6 +18,9 @@ import {
 import { supabase } from '../lib/supabaseApi';
 import { upsertUserProfile, recordLogin } from '../lib/usersApi';
 
+import { t } from '@/i18n';
+
+
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
 export interface AuthUser {
@@ -58,14 +61,14 @@ function InputField({
     <div>
       <label className="block text-sm font-semibold text-slate-300 mb-1.5">{label}</label>
       <div className="relative">
-        <Icon size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+        <Icon size={16} className="absolute end-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
         <input
           type={type}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={placeholder}
           autoComplete={autoComplete}
-          className="w-full pr-9 pl-10 py-2.5 rounded-xl text-sm text-white outline-none transition-all duration-200 placeholder-slate-600"
+          className="w-full pe-9 ps-10 py-2.5 rounded-xl text-sm text-white outline-none transition-all duration-200 placeholder-slate-600"
           style={{
             background: 'rgba(255,255,255,0.05)',
             border: '1px solid rgba(255,255,255,0.10)',
@@ -74,7 +77,7 @@ function InputField({
           onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.10)')}
         />
         {rightSlot && (
-          <div className="absolute left-3 top-1/2 -translate-y-1/2">{rightSlot}</div>
+          <div className="absolute start-3 top-1/2 -translate-y-1/2">{rightSlot}</div>
         )}
       </div>
     </div>
@@ -157,7 +160,7 @@ export default function AuthModal({
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginEmail.trim() || !loginPassword.trim()) {
-      setError('ایمیل و رمز عبور را وارد کنید');
+      setError(t("ایمیل و رمز عبور را وارد کنید"));
       return;
     }
     setLoading(true);
@@ -172,9 +175,9 @@ export default function AuthModal({
         authError?.message.includes('Email not confirmed') ||
         authError?.message.includes('email_not_confirmed')
       ) {
-        setError('ایمیل شما هنوز تأیید نشده است. لطفاً ایمیل خود را بررسی کنید');
+        setError(t("ایمیل شما هنوز تأیید نشده است. لطفاً ایمیل خود را بررسی کنید"));
       } else {
-        setError('ایمیل یا رمز عبور اشتباه است');
+        setError(t("ایمیل یا رمز عبور اشتباه است"));
       }
       return;
     }
@@ -212,15 +215,15 @@ export default function AuthModal({
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!signupName.trim() || !signupEmail.trim() || !signupPassword.trim()) {
-      setError('نام، ایمیل و رمز عبور الزامی هستند');
+      setError(t("نام، ایمیل و رمز عبور الزامی هستند"));
       return;
     }
     if (signupPassword.length < 6) {
-      setError('رمز عبور باید حداقل ۶ کاراکتر باشد');
+      setError(t("رمز عبور باید حداقل ۶ کاراکتر باشد"));
       return;
     }
     if (signupPassword !== signupConfirm) {
-      setError('رمز عبور و تکرار آن مطابقت ندارند');
+      setError(t("رمز عبور و تکرار آن مطابقت ندارند"));
       return;
     }
     setLoading(true);
@@ -244,7 +247,7 @@ export default function AuthModal({
         authError.message.includes('already registered') ||
         authError.message.includes('User already registered')
       ) {
-        setError('این ایمیل قبلاً ثبت شده است');
+        setError(t("این ایمیل قبلاً ثبت شده است"));
       } else if (
         authError.message.includes('rate limit') ||
         authError.message.includes('over_email_send_rate_limit')
@@ -254,20 +257,20 @@ export default function AuthModal({
         setLoginEmail(signupEmail.trim());
         setLoginPassword(signupPassword);
         keepSuccessOnTabSwitch.current = true;
-        setSuccessMsg('حساب ساخته شد. اطلاعات ورود آماده است. روی «ورود به حساب» کلیک کنید.');
+        setSuccessMsg(t("حساب ساخته شد. اطلاعات ورود آماده است. روی «ورود به حساب» کلیک کنید."));
         setTab('login');
         return;
       } else if (authError.message.includes('Invalid email')) {
-        setError('فرمت ایمیل صحیح نیست');
+        setError(t("فرمت ایمیل صحیح نیست"));
       } else if (authError.message.includes('Password should be')) {
-        setError('رمز عبور باید حداقل ۶ کاراکتر باشد');
+        setError(t("رمز عبور باید حداقل ۶ کاراکتر باشد"));
       } else if (
         authError.message.includes('signup is disabled') ||
         authError.message.includes('Signups not allowed')
       ) {
-        setError('ثبت‌نام در حال حاضر غیرفعال است. با پشتیبانی تماس بگیرید');
+        setError(t("ثبت‌نام در حال حاضر غیرفعال است. با پشتیبانی تماس بگیرید"));
       } else {
-        setError(`خطا: ${authError.message}`);
+        setError(t('خطا: {message}', { message: authError.message }));
       }
       return;
     }
@@ -317,8 +320,8 @@ export default function AuthModal({
     const needsConfirmation = !data.session;
     setSuccessMsg(
       needsConfirmation
-        ? 'ثبت‌نام موفق! یک ایمیل تأیید برای شما ارسال شد. پس از تأیید ایمیل، می‌توانید وارد شوید.'
-        : 'حساب ساخته شد. اطلاعات ورود آماده است. روی «ورود به حساب» کلیک کنید.'
+        ? t("ثبت‌نام موفق! یک ایمیل تأیید برای شما ارسال شد. پس از تأیید ایمیل، می‌توانید وارد شوید.")
+        : t("حساب ساخته شد. اطلاعات ورود آماده است. روی «ورود به حساب» کلیک کنید.")
     );
     setTab('login');
   };
@@ -347,7 +350,6 @@ export default function AuthModal({
               exit={{ opacity: 0, y: 20, scale: 0.97 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="relative w-full max-w-sm"
-              dir="rtl"
             >
               {/* Glow ring */}
               <div
@@ -363,7 +365,7 @@ export default function AuthModal({
                 <div className="flex items-center justify-between px-6 pt-6 pb-4">
                   <div>
                     <h2 className="text-lg font-bold text-white">
-                      {tab === 'login' ? 'ورود به حساب کاربری' : 'ایجاد حساب کاربری'}
+                      {tab === 'login' ? t("ورود به حساب کاربری") : t("ایجاد حساب کاربری")}
                     </h2>
                     <p className="text-xs text-slate-500 mt-0.5">Capital Network</p>
                   </div>
@@ -371,7 +373,7 @@ export default function AuthModal({
                     type="button"
                     onClick={onClose}
                     className="flex items-center justify-center w-8 h-8 rounded-full text-slate-500 hover:text-white hover:bg-white/10 transition-colors"
-                    aria-label="بستن"
+                    aria-label={t("بستن")}
                   >
                     <X size={18} />
                   </button>
@@ -390,7 +392,7 @@ export default function AuthModal({
                     style={tab === 'login' ? { background: 'rgba(56,189,248,0.15)', color: '#7dd3fc' } : {}}
                   >
                     <LogIn size={15} />
-                    ورود
+                    {t("ورود")}
                   </button>
                   <button
                     type="button"
@@ -403,7 +405,7 @@ export default function AuthModal({
                     style={tab === 'signup' ? { background: 'rgba(56,189,248,0.15)', color: '#7dd3fc' } : {}}
                   >
                     <UserPlus size={15} />
-                    ثبت‌نام
+                    {t("ثبت‌نام")}
                   </button>
                 </div>
 
@@ -421,7 +423,7 @@ export default function AuthModal({
                         className="space-y-4"
                       >
                         <InputField
-                          label="ایمیل"
+                          label={t("ایمیل")}
                           icon={Mail}
                           type="email"
                           value={loginEmail}
@@ -430,7 +432,7 @@ export default function AuthModal({
                           autoComplete="email"
                         />
                         <InputField
-                          label="رمز عبور"
+                          label={t("رمز عبور")}
                           icon={Lock}
                           type={showLoginPw ? 'text' : 'password'}
                           value={loginPassword}
@@ -449,11 +451,11 @@ export default function AuthModal({
                         />
                         {error && <ErrorBanner message={error} />}
                         {successMsg && <SuccessBanner message={successMsg} />}
-                        <SubmitButton loading={loading} label="ورود به حساب" />
+                        <SubmitButton loading={loading} label={t("ورود به حساب")} />
                         <p className="text-center text-xs text-slate-600 pt-1">
-                          حساب ندارید؟{' '}
+                          {t("حساب ندارید؟")}{' '}
                           <button type="button" onClick={() => setTab('signup')} className="text-sky-400 hover:text-sky-300 transition-colors">
-                            ثبت‌نام کنید
+                            {t("ثبت‌نام کنید")}
                           </button>
                         </p>
                       </motion.form>
@@ -468,57 +470,57 @@ export default function AuthModal({
                         className="space-y-4"
                       >
                         <InputField
-                          label="نام و نام خانوادگی *"
+                          label={t("نام و نام خانوادگی *")}
                           icon={User}
                           type="text"
                           value={signupName}
                           onChange={setSignupName}
-                          placeholder="نام کامل"
+                          placeholder={t("نام کامل")}
                           autoComplete="name"
                         />
                         <InputField
-                          label="ایمیل *"
+                          label={t("ایمیل *")}
                           icon={Mail}
                           type="email"
                           value={signupEmail}
                           onChange={setSignupEmail}
-                          placeholder="ایمیل شما"
+                          placeholder={t("ایمیل شما")}
                           autoComplete="email"
                         />
                         <InputField
-                          label="شماره تلفن"
+                          label={t("شماره تلفن")}
                           icon={Phone}
                           type="tel"
                           value={signupPhone}
                           onChange={setSignupPhone}
-                          placeholder="شماره تلفن"
+                          placeholder={t("شماره تلفن")}
                           autoComplete="tel"
                         />
                         <InputField
-                          label="نام شرکت"
+                          label={t("نام شرکت")}
                           icon={Building2}
                           type="text"
                           value={signupCompany}
                           onChange={setSignupCompany}
-                          placeholder="نام شرکت"
+                          placeholder={t("نام شرکت")}
                           autoComplete="organization"
                         />
                         <InputField
-                          label="سمت / موقعیت شغلی"
+                          label={t("سمت / موقعیت شغلی")}
                           icon={Briefcase}
                           type="text"
                           value={signupPosition}
                           onChange={setSignupPosition}
-                          placeholder="سمت شغلی"
+                          placeholder={t("سمت شغلی")}
                           autoComplete="organization-title"
                         />
                         <InputField
-                          label="رمز عبور"
+                          label={t("رمز عبور")}
                           icon={Lock}
                           type={showSignupPw ? 'text' : 'password'}
                           value={signupPassword}
                           onChange={setSignupPassword}
-                          placeholder="حداقل ۶ کاراکتر"
+                          placeholder={t("حداقل ۶ کاراکتر")}
                           autoComplete="new-password"
                           rightSlot={
                             <button
@@ -531,7 +533,7 @@ export default function AuthModal({
                           }
                         />
                         <InputField
-                          label="تکرار رمز عبور"
+                          label={t("تکرار رمز عبور")}
                           icon={Lock}
                           type={showConfirmPw ? 'text' : 'password'}
                           value={signupConfirm}
@@ -550,11 +552,11 @@ export default function AuthModal({
                         />
                         {error && <ErrorBanner message={error} />}
                         {successMsg && <SuccessBanner message={successMsg} />}
-                        <SubmitButton loading={loading} label="ایجاد حساب" />
+                        <SubmitButton loading={loading} label={t("ایجاد حساب")} />
                         <p className="text-center text-xs text-slate-600 pt-1">
-                          حساب دارید؟{' '}
+                          {t("حساب دارید؟")}{' '}
                           <button type="button" onClick={() => setTab('login')} className="text-sky-400 hover:text-sky-300 transition-colors">
-                            وارد شوید
+                            {t("وارد شوید")}
                           </button>
                         </p>
                       </motion.form>
@@ -611,7 +613,7 @@ function SubmitButton({ loading, label }: { loading: boolean; label: string }) {
       {loading ? (
         <span className="w-4 h-4 border-2 border-sky-200/30 border-t-sky-800 rounded-full animate-spin" />
       ) : null}
-      {loading ? 'لطفاً صبر کنید...' : label}
+      {loading ? t("لطفاً صبر کنید...") : label}
     </button>
   );
 }

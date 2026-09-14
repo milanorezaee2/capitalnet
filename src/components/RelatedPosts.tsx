@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Eye, Clock } from 'lucide-react';
 import type { BlogPost, BlogCategory } from '../types/blog';
 
+import { t, formatNumber } from '@/i18n';
+
+
 interface RelatedPostsProps {
   currentPost: BlogPost;
   allPosts: BlogPost[];
@@ -87,9 +90,9 @@ export function RelatedPosts({ currentPost, allPosts, onNavigate }: RelatedPosts
         <div className="mb-8">
           <h2 className="text-2xl md:text-3xl font-black text-white mb-2 flex items-center gap-3">
             <ArrowLeft size={28} className="text-teal-400" />
-            مقالات مرتبط
+            {t("مقالات مرتبط")}
           </h2>
-          <p className="text-white/60">مقالاتی که ممکن است مورد علاقه شما باشد</p>
+          <p className="text-white/60">{t("مقالاتی که ممکن است مورد علاقه شما باشد")}</p>
         </div>
 
         <motion.div variants={vStagger} initial="hidden" animate="show" className="grid gap-6 md:grid-cols-3">
@@ -98,7 +101,7 @@ export function RelatedPosts({ currentPost, allPosts, onNavigate }: RelatedPosts
               key={post.id}
               variants={vFadeUp}
               onClick={() => onNavigate(post.slug)}
-              className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-white/5 to-white/2 border border-white/10 hover:border-teal-500/50 transition-all p-6 text-left h-full"
+              className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-white/5 to-white/2 border border-white/10 hover:border-teal-500/50 transition-all p-6 text-start h-full"
             >
               {/* Background gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-teal-500/0 to-amber-500/0 group-hover:from-teal-500/10 group-hover:to-amber-500/10 transition-all duration-300" />
@@ -135,7 +138,7 @@ export function RelatedPosts({ currentPost, allPosts, onNavigate }: RelatedPosts
                 <div className="flex items-center justify-between text-xs text-white/50 pt-4 border-t border-white/10">
                   <div className="flex items-center gap-2">
                     <Eye size={12} />
-                    {(post.views || 0).toLocaleString()}
+                    {formatNumber(post.views || 0)}
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock size={12} />
@@ -210,7 +213,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-8">
-      <h3 className="text-sm font-bold text-white mb-4">مطالب این مقاله</h3>
+      <h3 className="text-sm font-bold text-white mb-4">{t("مطالب این مقاله")}</h3>
       <nav className="space-y-2">
         {headings.map((heading) => (
           <a
@@ -261,7 +264,7 @@ export function RelatedAuthors({ currentAuthor, allPosts, onNavigate }: RelatedA
         onClick={() => onNavigate(currentAuthor.name)}
         className="w-full btn-gold text-sm font-semibold py-2 rounded-lg"
       >
-        مشاهده تمام مقالات
+        {t("مشاهده تمام مقالات")}
       </button>
     </aside>
   );

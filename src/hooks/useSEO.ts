@@ -4,6 +4,9 @@
 
 import { useEffect } from 'react';
 
+import { t } from '@/i18n';
+
+
 // ── Types ──────────────────────────────────────────────────────────────────────
 
 /** اطلاعات زنده صفحه از settings (برای غنی‌سازی schema) */
@@ -169,8 +172,8 @@ function buildOrganizationNode(d: PageSchemaData, siteName: string): Record<stri
       'Financial Modeling',
       'Pitch Deck',
       'Term Sheet Negotiation',
-      'جذب سرمایه',
-      'استارتاپ',
+      t("جذب سرمایه"),
+      t("استارتاپ"),
     ],
     areaServed: ['IR', 'Middle East', 'Global'],
   };
@@ -241,7 +244,7 @@ function buildHomeSchemas(
     '@type':      'WebSite',
     '@id':        `${BASE_URL}/#website`,
     name:         SITE_NAME,
-    alternateName: 'کپیتال نتورک',
+    alternateName: t("کپیتال نتورک"),
     url:           BASE_URL,
     description:   desc,
     inLanguage:    LANG,
@@ -282,7 +285,7 @@ function buildHomeSchemas(
   };
 
   const breadcrumb = buildBreadcrumb([
-    { name: 'خانه', url: `${BASE_URL}/` },
+    { name: t("خانه"), url: `${BASE_URL}/` },
   ]);
 
   // اضافه کردن FAQ اگر موجود باشد
@@ -299,8 +302,8 @@ function buildHomeSchemas(
       '@type':     'FAQPage',
       '@id':       `${BASE_URL}/#faq`,
       url:         `${BASE_URL}/`,
-      name:        'سوالات متداول جذب سرمایه',
-      description: 'پاسخ به سوالات رایج درباره فرآیند جذب سرمایه و خدمات Capital Network',
+      name:        t("سوالات متداول جذب سرمایه"),
+      description: t("پاسخ به سوالات رایج درباره فرآیند جذب سرمایه و خدمات Capital Network"),
       mainEntity:  d.faqItems.slice(0, 10).map(faq => ({
         '@type':        'Question',
         name:            faq.q,
@@ -350,7 +353,7 @@ function buildServicesSchemas(
       },
       hasOfferCatalog: card.features?.length > 0 ? {
         '@type': 'OfferCatalog',
-        name:    `ویژگی‌های ${card.title}`,
+        name:    t('ویژگی‌های {title}', { title: card.title }),
         itemListElement: card.features.map((f, j) => ({
           '@type': 'Offer',
           position: j + 1,
@@ -405,8 +408,8 @@ function buildServicesSchemas(
   };
 
   const breadcrumb = buildBreadcrumb([
-    { name: 'خانه',  url: `${BASE_URL}/` },
-    { name: 'خدمات', url: PAGE_URL },
+    { name: t("خانه"),  url: `${BASE_URL}/` },
+    { name: t("خدمات"), url: PAGE_URL },
   ]);
 
   return [
@@ -416,7 +419,7 @@ function buildServicesSchemas(
       '@context':       'https://schema.org',
       '@type':          'ItemList',
       '@id':            `${PAGE_URL}#service-list`,
-      name:             'خدمات Capital Network',
+      name:             t("خدمات Capital Network"),
       description:      desc,
       url:              PAGE_URL,
       numberOfItems:    serviceListItems.length,
@@ -439,7 +442,7 @@ function buildProcessSchemas(
 ): object[] {
   const PAGE_URL  = `${BASE_URL}/process`;
   const steps     = (d.processSteps ?? []).slice(0, 8);
-  const avgDays   = d.avgDays ?? '30-40 روز';
+  const avgDays   = d.avgDays ?? t("30-40 روز");
 
   const howToSteps = steps.map((step, i) => ({
     '@type':      'HowToStep',
@@ -473,7 +476,7 @@ function buildProcessSchemas(
       '@type':    'MonetaryAmount',
       currency:   'USD',
       value:      '0',
-      description: 'مشاوره اولیه رایگان',
+      description: t("مشاوره اولیه رایگان"),
     },
     supply: [
       { '@type': 'HowToSupply', name: 'Pitch Deck' },
@@ -488,29 +491,29 @@ function buildProcessSchemas(
       {
         '@type':    'HowToStep',
         position:   1,
-        name:       'ارزیابی اولیه',
-        text:       'تیم Capital Network استارتاپ شما را ارزیابی می‌کند',
+        name:       t("ارزیابی اولیه"),
+        text:       t("تیم Capital Network استارتاپ شما را ارزیابی می‌کند"),
         url:       `${PAGE_URL}#step-1`,
       },
       {
         '@type':    'HowToStep',
         position:   2,
-        name:       'آماده‌سازی مستندات',
-        text:       'Pitch Deck، مدل مالی و مستندات VC-Ready آماده می‌شوند',
+        name:       t("آماده‌سازی مستندات"),
+        text:       t("Pitch Deck، مدل مالی و مستندات VC-Ready آماده می‌شوند"),
         url:       `${PAGE_URL}#step-2`,
       },
       {
         '@type':    'HowToStep',
         position:   3,
-        name:       'معرفی به سرمایه‌گذاران',
-        text:       'معرفی هدفمند به VCهای مناسب از شبکه ۱۲۸+ سرمایه‌گذار',
+        name:       t("معرفی به سرمایه‌گذاران"),
+        text:       t("معرفی هدفمند به VCهای مناسب از شبکه ۱۲۸+ سرمایه‌گذار"),
         url:       `${PAGE_URL}#step-3`,
       },
       {
         '@type':    'HowToStep',
         position:   4,
-        name:       'پشتیبانی مذاکره تا Term Sheet',
-        text:       'پشتیبانی کامل تا بستن قرارداد و دریافت Term Sheet',
+        name:       t("پشتیبانی مذاکره تا Term Sheet"),
+        text:       t("پشتیبانی کامل تا بستن قرارداد و دریافت Term Sheet"),
         url:       `${PAGE_URL}#step-4`,
       },
     ],
@@ -529,8 +532,8 @@ function buildProcessSchemas(
   };
 
   const breadcrumb = buildBreadcrumb([
-    { name: 'خانه',    url: `${BASE_URL}/` },
-    { name: 'فرآیند',  url: PAGE_URL },
+    { name: t("خانه"),    url: `${BASE_URL}/` },
+    { name: t("فرآیند"),  url: PAGE_URL },
   ]);
 
   return [howToSchema, webPage, breadcrumb];
@@ -565,7 +568,7 @@ function buildAboutSchemas(
   const orgEnriched = {
     ...org,
     '@context': 'https://schema.org',
-    slogan:     d.missionText ?? 'شریک استراتژیک استارتاپ‌ها در مسیر جذب سرمایه',
+    slogan:     d.missionText ?? t("شریک استراتژیک استارتاپ‌ها در مسیر جذب سرمایه"),
     ...(teamPersons.length > 0 ? { employee: teamPersons } : {}),
   };
 
@@ -589,8 +592,8 @@ function buildAboutSchemas(
   };
 
   const breadcrumb = buildBreadcrumb([
-    { name: 'خانه',      url: `${BASE_URL}/` },
-    { name: 'درباره ما', url: PAGE_URL },
+    { name: t("خانه"),      url: `${BASE_URL}/` },
+    { name: t("درباره ما"), url: PAGE_URL },
   ]);
 
   const schemas: object[] = [orgEnriched, aboutPage, { ...breadcrumb, '@id': `${PAGE_URL}#breadcrumb` }];
@@ -600,8 +603,8 @@ function buildAboutSchemas(
       '@context':  'https://schema.org',
       '@type':     'ItemList',
       '@id':       `${PAGE_URL}#team-list`,
-      name:        'تیم Capital Network',
-      description: 'اعضای کلیدی تیم Capital Network',
+      name:        t("تیم Capital Network"),
+      description: t("اعضای کلیدی تیم Capital Network"),
       url:          PAGE_URL,
       numberOfItems: teamPersons.length,
       itemListElement: teamPersons.map((p, i) => ({
@@ -651,7 +654,7 @@ function buildContactSchemas(
       telephone:      d.telephone,
       hoursAvailable: {
         '@type':       'OpeningHoursSpecification',
-        description:    d.workingHours ?? 'شنبه تا چهارشنبه ۹ صبح تا ۶ عصر',
+        description:    d.workingHours ?? t("شنبه تا چهارشنبه ۹ صبح تا ۶ عصر"),
       },
       areaServed: 'IR',
     });
@@ -663,7 +666,7 @@ function buildContactSchemas(
       contactType:   'sales',
       telephone:      d.whatsapp,
       contactOption: 'TollFree',
-      description:   'واتساپ — پاسخگویی سریع',
+      description:   t("واتساپ — پاسخگویی سریع"),
     });
   }
 
@@ -725,8 +728,8 @@ function buildContactSchemas(
   };
 
   const breadcrumb = buildBreadcrumb([
-    { name: 'خانه',       url: `${BASE_URL}/` },
-    { name: 'تماس با ما', url: PAGE_URL },
+    { name: t("خانه"),       url: `${BASE_URL}/` },
+    { name: t("تماس با ما"), url: PAGE_URL },
   ]);
 
   // Organization enriched با contact points
@@ -770,8 +773,8 @@ function buildEvaluationSchemas(
     breadcrumb:  { '@id': `${PAGE_URL}#breadcrumb` },
     potentialAction: {
       '@type':    'ApplyAction',
-      name:       'درخواست ارزیابی استارتاپ',
-      description: 'درخواست ارزیابی رایگان استارتاپ توسط تیم Capital Network',
+      name:       t("درخواست ارزیابی استارتاپ"),
+      description: t("درخواست ارزیابی رایگان استارتاپ توسط تیم Capital Network"),
       target: {
         '@type':     'EntryPoint',
         urlTemplate: PAGE_URL,
@@ -787,9 +790,9 @@ function buildEvaluationSchemas(
       },
       result: {
         '@type':       'Service',
-        name:          'ارزیابی آمادگی برای جذب سرمایه',
+        name:          t("ارزیابی آمادگی برای جذب سرمایه"),
         provider:     { '@id': `${BASE_URL}/#organization` },
-        description:  'ارزیابی جامع آمادگی استارتاپ برای جذب سرمایه از VCهای Tier-1',
+        description:  t("ارزیابی جامع آمادگی استارتاپ برای جذب سرمایه از VCهای Tier-1"),
       },
     },
   };
@@ -798,7 +801,7 @@ function buildEvaluationSchemas(
     '@context':   'https://schema.org',
     '@type':      'Service',
     '@id':        `${PAGE_URL}#evaluation-service`,
-    name:         'ارزیابی رایگان آمادگی برای جذب سرمایه',
+    name:         t("ارزیابی رایگان آمادگی برای جذب سرمایه"),
     alternateName: 'Free Startup Investment Readiness Evaluation',
     url:           PAGE_URL,
     description:  desc,
@@ -812,22 +815,22 @@ function buildEvaluationSchemas(
     areaServed: ['IR', 'Middle East'],
     offers: {
       '@type':       'Offer',
-      name:          'ارزیابی رایگان',
+      name:          t("ارزیابی رایگان"),
       price:         '0',
       priceCurrency: 'IRR',
       availability:  'https://schema.org/InStock',
       validFrom:      new Date().toISOString().split('T')[0],
       seller:        { '@id': `${BASE_URL}/#organization` },
-      description:   'ارزیابی اولیه رایگان آمادگی برای جذب سرمایه',
+      description:   t("ارزیابی اولیه رایگان آمادگی برای جذب سرمایه"),
     },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name:    'آنچه در ارزیابی بررسی می‌شود',
+      name:    t("آنچه در ارزیابی بررسی می‌شود"),
       itemListElement: [
-        { '@type': 'Offer', position: 1, name: 'بررسی Market Fit' },
-        { '@type': 'Offer', position: 2, name: 'ارزیابی تیم و مدل کسب‌وکار' },
-        { '@type': 'Offer', position: 3, name: 'آمادگی مستندات (Pitch Deck، مدل مالی)' },
-        { '@type': 'Offer', position: 4, name: 'تعیین استراتژی جذب سرمایه' },
+        { '@type': 'Offer', position: 1, name: t("بررسی Market Fit") },
+        { '@type': 'Offer', position: 2, name: t("ارزیابی تیم و مدل کسب‌وکار") },
+        { '@type': 'Offer', position: 3, name: t("آمادگی مستندات (Pitch Deck، مدل مالی)") },
+        { '@type': 'Offer', position: 4, name: t("تعیین استراتژی جذب سرمایه") },
       ],
     },
     review: {
@@ -839,15 +842,15 @@ function buildEvaluationSchemas(
       },
       author: {
         '@type': 'Person',
-        name:    'موسس استارتاپ',
+        name:    t("موسس استارتاپ"),
       },
-      reviewBody: 'فرآیند ارزیابی سریع و دقیق بود و دید واضحی نسبت به آمادگی‌مان پیدا کردیم.',
+      reviewBody: t("فرآیند ارزیابی سریع و دقیق بود و دید واضحی نسبت به آمادگی‌مان پیدا کردیم."),
     },
   };
 
   const breadcrumb = buildBreadcrumb([
-    { name: 'خانه',            url: `${BASE_URL}/` },
-    { name: 'درخواست ارزیابی', url: PAGE_URL },
+    { name: t("خانه"),            url: `${BASE_URL}/` },
+    { name: t("درخواست ارزیابی"), url: PAGE_URL },
   ]);
 
   return [

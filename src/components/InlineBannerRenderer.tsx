@@ -20,6 +20,9 @@ import { ExternalLink, X } from 'lucide-react';
 import type { InlineBanner, BannerPage, BannerCorner } from '../lib/settingsApi';
 import { BANNER_TEMPLATES } from '../lib/settingsApi';
 
+import { t as tr } from '@/i18n';
+
+
 // ─────────────────────────────────────────────────────────────────────────────
 // CSS position helper for each corner
 // ─────────────────────────────────────────────────────────────────────────────
@@ -78,12 +81,12 @@ function BannerCard({ banner, onDismiss, compact = false }: {
   const inner = (
     <div className="relative overflow-hidden rounded-2xl" style={{ background: tpl.gradient }}>
       {/* glow blobs */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl pointer-events-none"
+      <div className="absolute -top-10 -end-10 w-40 h-40 rounded-full blur-3xl pointer-events-none"
         style={{ background: ac, opacity: 0.20 }} />
-      <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full blur-2xl pointer-events-none"
+      <div className="absolute -bottom-8 -start-8 w-32 h-32 rounded-full blur-2xl pointer-events-none"
         style={{ background: ac, opacity: 0.10 }} />
       {/* shimmer top line */}
-      <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+      <div className="absolute top-0 start-0 end-0 h-px pointer-events-none"
         style={{ background: `linear-gradient(90deg,transparent,${ac}90,transparent)` }} />
 
       {/* ── image header strip (full-width) ── */}
@@ -96,11 +99,11 @@ function BannerCard({ banner, onDismiss, compact = false }: {
             onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
           />
           {/* fade overlay at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 h-12 pointer-events-none"
+          <div className="absolute bottom-0 start-0 end-0 h-12 pointer-events-none"
             style={{ background: `linear-gradient(to bottom, transparent, ${bgFirstHex})` }} />
           {/* badge over image */}
           {badge && (
-            <span className="absolute top-2 right-2 font-black px-2.5 py-0.5 rounded-full backdrop-blur-sm"
+            <span className="absolute top-2 end-2 font-black px-2.5 py-0.5 rounded-full backdrop-blur-sm"
               style={{ fontSize: 10, background: `${ac}cc`, color: '#fff', border: `1px solid ${ac}` }}>
               {badge}
             </span>
@@ -108,11 +111,11 @@ function BannerCard({ banner, onDismiss, compact = false }: {
           {/* dismiss button over image */}
           <button
             onClick={e => { e.stopPropagation(); e.preventDefault(); onDismiss(); }}
-            className="absolute top-2 left-2 rounded-full flex items-center justify-center transition-all"
+            className="absolute top-2 start-2 rounded-full flex items-center justify-center transition-all"
             style={{ width: 26, height: 26, background: 'rgba(0,0,0,0.45)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.15)' }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.7)'; (e.currentTarget as HTMLElement).style.color = '#fff'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.45)'; (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.7)'; }}
-            aria-label="بستن"
+            aria-label={tr("بستن")}
           >
             <X size={12} />
           </button>
@@ -122,7 +125,6 @@ function BannerCard({ banner, onDismiss, compact = false }: {
       {/* ── body row ── */}
       <div
         className={`relative flex items-center gap-3 ${compact ? 'px-3 py-2.5' : 'px-4 py-3'}`}
-        dir="rtl"
       >
         {/* icon box — only when no full-width image */}
         {!(hasImg && !compact) && (
@@ -200,7 +202,7 @@ function BannerCard({ banner, onDismiss, compact = false }: {
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.55)'; (e.currentTarget as HTMLElement).style.color = '#fff'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.28)'; (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.55)'; }}
-            aria-label="بستن"
+            aria-label={tr("بستن")}
           >
             <X size={compact ? 11 : 13} />
           </button>
@@ -362,7 +364,7 @@ export default function InlineBannerRenderer({ banners, page, section }: InlineB
   if (inlineVisible.length === 0) return null;
 
   return (
-    <div className="w-full my-5 px-4 space-y-2" dir="rtl">
+    <div className="w-full my-5 px-4 space-y-2">
       {inlineVisible.map((banner, idx) => {
         const corner = banner.corner ?? 'top-right';
         const wrapStyle = cornerToInlineStyle(corner);

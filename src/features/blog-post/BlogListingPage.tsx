@@ -30,6 +30,9 @@ import { FinancialBackground } from '../../components/FinancialBackground';
 // ─── Design-system CSS (bp-* scoped classes) ────────────────────────────────
 import './design-system/blog-post.css';
 
+import { t as tr, formatNumber } from '@/i18n';
+
+
 // ─── Category meta — colours as CSS values, NOT Tailwind strings ──────────────
 const CATEGORY_META: Record<string, {
   label: string;
@@ -99,11 +102,11 @@ function normalizeCategory(category: string | null | undefined): string {
 
 function normalizePost(post: AppBlogPost): ListingPost {
   const tags = Array.isArray(post.tags) ? post.tags : [];
-  const publishedAt = post.published_at ? new Date(post.published_at).toLocaleDateString('fa-IR') : 'بهمن ۱۴۰۳';
+  const publishedAt = post.published_at ? new Date(post.published_at).toLocaleDateString('fa-IR') : tr("بهمن ۱۴۰۳");
 
   return {
     id: post.id,
-    title: post.title || 'بدون عنوان',
+    title: post.title || tr("بدون عنوان"),
     slug: post.slug || '',
     category: normalizeCategory(post.category),
     tags,
@@ -111,10 +114,10 @@ function normalizePost(post: AppBlogPost): ListingPost {
     content: post.content || '',
     author: {
       name: post.author_name || 'Capital Network',
-      role: post.author_role || 'نویسنده',
+      role: post.author_role || tr("نویسنده"),
     },
     publishedAt,
-    readTime: post.read_time || '۵ دقیقه خواندن',
+    readTime: post.read_time || tr("۵ دقیقه خواندن"),
     featured: Boolean(post.featured),
     views: post.views ?? 0,
     likes: post.likes ?? 0,
@@ -174,7 +177,7 @@ function PostCard({ post, onRead, priority }: { post: ListingPost; onRead: (s: s
       onKeyDown={(e) => e.key === 'Enter' && onRead(post.slug)}
       tabIndex={0}
       role="link"
-      aria-label={`خواندن: ${post.title}`}
+      aria-label={t('خواندن: {title}', { title: post.title })}
       itemScope
       itemType="https://schema.org/BlogPosting"
       style={{
@@ -223,7 +226,7 @@ function PostCard({ post, onRead, priority }: { post: ListingPost; onRead: (s: s
               background: 'rgba(251,191,36,0.92)', color: '#000',
               padding: '3px 8px', borderRadius: 999,
             }}>
-              <Star size={9} fill="currentColor" />ویژه
+              <Star size={9} fill="currentColor" />{tr("ویژه")}
             </span>
           </div>
         )}
@@ -301,7 +304,7 @@ function PostRow({ post, onRead }: { post: ListingPost; onRead: (s: string) => v
       onKeyDown={(e) => e.key === 'Enter' && onRead(post.slug)}
       tabIndex={0}
       role="link"
-      aria-label={`خواندن: ${post.title}`}
+      aria-label={t('خواندن: {title}', { title: post.title })}
       style={{
         display: 'flex', gap: 14, alignItems: 'center',
         borderRadius: 16, border: '1px solid rgba(255,255,255,0.08)',
@@ -359,7 +362,7 @@ function FeaturedCard({ post, onRead }: { post: ListingPost; onRead: (s: string)
       onKeyDown={(e) => e.key === 'Enter' && onRead(post.slug)}
       tabIndex={0}
       role="link"
-      aria-label={`مقاله ویژه: ${post.title}`}
+      aria-label={t('مقاله ویژه: {title}', { title: post.title })}
       style={{
         position: 'relative', borderRadius: 24, overflow: 'hidden', cursor: 'pointer',
         minHeight: 420, border: '1px solid rgba(255,255,255,0.1)',
@@ -399,7 +402,7 @@ function FeaturedCard({ post, onRead }: { post: ListingPost; onRead: (s: string)
           {post.featured && (
             <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, fontWeight: 700,
               background: 'rgba(251,191,36,0.9)', color: '#000', padding: '4px 10px', borderRadius: 999 }}>
-              <Star size={10} fill="currentColor" />ویژه
+              <Star size={10} fill="currentColor" />{tr("ویژه")}
             </span>
           )}
         </div>
@@ -450,20 +453,20 @@ function Pagination({ page, total, onChange }: { page: number; total: number; on
   };
 
   return (
-    <nav aria-label="صفحه‌بندی" style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 40 }}>
+    <nav aria-label={tr("صفحه‌بندی")} style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 40 }}>
       <button onClick={() => onChange(page - 1)} disabled={page === 1}
-        style={{ ...btnBase, opacity: page === 1 ? 0.3 : 1 }} aria-label="صفحه قبل">
+        style={{ ...btnBase, opacity: page === 1 ? 0.3 : 1 }} aria-label={tr("صفحه قبل")}>
         <ArrowRight size={15} />
       </button>
       {pages.map((p) => (
         <button key={p} onClick={() => onChange(p)}
           style={p === page ? btnActive : btnBase}
-          aria-label={`صفحه ${p}`} aria-current={p === page ? 'page' : undefined}>
+          aria-label={tr("صفحه {p}", { p })} aria-current={p === page ? 'page' : undefined}>
           {p}
         </button>
       ))}
       <button onClick={() => onChange(page + 1)} disabled={page === total}
-        style={{ ...btnBase, opacity: page === total ? 0.3 : 1 }} aria-label="صفحه بعد">
+        style={{ ...btnBase, opacity: page === total ? 0.3 : 1 }} aria-label={tr("صفحه بعد")}>
         <ArrowLeft size={15} />
       </button>
     </nav>
@@ -532,8 +535,8 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
 
   useEffect(() => {
     document.title = category === 'all'
-      ? 'وبلاگ | Capital Network'
-      : `${CATEGORY_META[category]?.label ?? category} | وبلاگ`;
+      ? tr("وبلاگ | Capital Network")
+      : tr('{label} | وبلاگ', { label: CATEGORY_META[category]?.label ?? category });
   }, [category]);
 
   // ── Shared style tokens ──────────────────────────────────────────────────
@@ -550,10 +553,10 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0d1829', color: '#fff', direction: 'rtl', position: 'relative' }}>
+    <div style={{ minHeight: '100vh', background: '#0d1829', color: '#fff', position: 'relative' }}>
       <FinancialBackground />
       <a href="#blog-main" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)' }}>
-        رفتن به مقالات
+        {tr("رفتن به مقالات")}
       </a>
 
       {/* ── Banner: top of blog page ── */}
@@ -569,10 +572,10 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
           style={{ marginBottom: 36 }}
         >
           <h1 style={{ fontSize: 'clamp(24px,4vw,38px)', fontWeight: 900, color: '#f0f6fc', marginBottom: 6 }}>
-            وبلاگ
+            {tr("وبلاگ")}
           </h1>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>
-            مقالات تخصصی در حوزه سرمایه‌گذاری، استراتژی و مدل‌سازی مالی
+            {tr("مقالات تخصصی در حوزه سرمایه‌گذاری، استراتژی و مدل‌سازی مالی")}
           </p>
         </motion.div>
 
@@ -588,14 +591,14 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
                 type="search"
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); reset(); }}
-                placeholder="جستجو در مقالات..."
-                aria-label="جستجو"
+                placeholder={tr("جستجو در مقالات...")}
+                aria-label={tr("جستجو")}
                 style={input}
               />
               {search && (
                 <button onClick={() => { setSearch(''); reset(); }}
                   style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.4)', padding: 0 }}
-                  aria-label="پاک کردن">
+                  aria-label={tr("پاک کردن")}>
                   <X size={14} />
                 </button>
               )}
@@ -605,13 +608,13 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
             <select
               value={sort}
               onChange={(e) => { setSort(e.target.value as SortKey); reset(); }}
-              aria-label="مرتب‌سازی"
+              aria-label={tr("مرتب‌سازی")}
               style={{ ...surface, padding: '11px 14px', fontSize: 13, color: 'rgba(255,255,255,0.7)', cursor: 'pointer', fontFamily: 'inherit' }}
             >
-              <option value="newest" style={{ background: '#0d1117' }}>جدیدترین</option>
-              <option value="oldest" style={{ background: '#0d1117' }}>قدیمی‌ترین</option>
-              <option value="views"  style={{ background: '#0d1117' }}>پربازدیدترین</option>
-              <option value="likes"  style={{ background: '#0d1117' }}>محبوب‌ترین</option>
+              <option value="newest" style={{ background: '#0d1117' }}>{tr("جدیدترین")}</option>
+              <option value="oldest" style={{ background: '#0d1117' }}>{tr("قدیمی‌ترین")}</option>
+              <option value="views"  style={{ background: '#0d1117' }}>{tr("پربازدیدترین")}</option>
+              <option value="likes"  style={{ background: '#0d1117' }}>{tr("محبوب‌ترین")}</option>
             </select>
 
             {/* View toggle */}
@@ -619,7 +622,7 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
               {(['grid', 'list'] as const).map((v) => (
                 <button key={v} onClick={() => setView(v)}
                   aria-pressed={view === v}
-                  aria-label={v === 'grid' ? 'نمای شبکه' : 'نمای فهرست'}
+                  aria-label={v === 'grid' ? tr("نمای شبکه") : tr("نمای فهرست")}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 6, padding: '11px 16px', fontSize: 13,
                     background: view === v ? 'rgba(20,184,166,0.15)' : 'rgba(255,255,255,0.04)',
@@ -629,14 +632,14 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
                     transition: 'all .15s ease',
                   }}>
                   {v === 'grid' ? <Grid3X3 size={14} /> : <List size={14} />}
-                  {v === 'grid' ? 'شبکه' : 'فهرست'}
+                  {v === 'grid' ? tr("شبکه") : tr("فهرست")}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Row 2: Category pills */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }} role="group" aria-label="دسته‌بندی">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }} role="group" aria-label={tr("دسته‌بندی")}>
             {allCategories.map((cat) => {
               const active = category === cat;
               const meta = CATEGORY_META[cat];
@@ -654,7 +657,7 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
                     ...(active && meta ? { background: `linear-gradient(90deg, ${meta.from}22, ${meta.to}18)`, borderColor: meta.from } : {}),
                   }}
                 >
-                  {cat === 'all' ? 'همه' : CATEGORY_META[cat]?.label ?? cat}
+                  {cat === 'all' ? tr("همه") : CATEGORY_META[cat]?.label ?? cat}
                 </button>
               );
             })}
@@ -662,11 +665,11 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
 
           {/* Row 3: Tag cloud */}
           {allTags.length > 0 && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }} role="group" aria-label="برچسب">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }} role="group" aria-label={tr("برچسب")}>
               {tag && (
                 <button onClick={() => handleTag('')}
                   style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, background: 'rgba(20,184,166,0.15)', color: '#2dd4bf', border: '1px solid rgba(20,184,166,0.3)', padding: '3px 10px', borderRadius: 999, cursor: 'pointer', fontFamily: 'inherit' }}
-                  aria-label="حذف فیلتر برچسب">
+                  aria-label={tr("حذف فیلتر برچسب")}>
                   <X size={10} />{tag}
                 </button>
               )}
@@ -688,7 +691,7 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
 
         {/* Result count */}
         <p role="status" aria-live="polite" style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginBottom: 24 }}>
-          {loading ? 'در حال بارگذاری...' : `${filtered.length} مقاله`}
+          {loading ? tr("در حال بارگذاری...") : tr('{count} مقاله', { count: formatNumber(filtered.length) })}
         </p>
 
         {/* ── Main content ───────────────────────────────────────────────── */}
@@ -700,8 +703,8 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
           ) : filtered.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '80px 20px' }}>
               <TrendingUp size={40} style={{ margin: '0 auto 16px', color: 'rgba(255,255,255,0.2)' }} />
-              <p style={{ fontSize: 16, fontWeight: 700, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>مقاله‌ای یافت نشد</p>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.25)' }}>فیلترها را تغییر دهید یا جستجوی جدیدی انجام دهید.</p>
+              <p style={{ fontSize: 16, fontWeight: 700, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>{tr("مقاله‌ای یافت نشد")}</p>
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.25)' }}>{tr("فیلترها را تغییر دهید یا جستجوی جدیدی انجام دهید.")}</p>
             </div>
           ) : (
             <>

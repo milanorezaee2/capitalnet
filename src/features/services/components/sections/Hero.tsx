@@ -4,6 +4,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, Shield, Home, Activity, BarChart2, TrendingUp, TrendingDown, Zap, Lock } from 'lucide-react';
 import type { HeroContent } from '../../types/enterprise';
 
+import { t as tr } from '@/i18n';
+
+
 export interface HeroProps {
   content: HeroContent;
   onNavigate?: (page: string) => void;
@@ -545,7 +548,7 @@ const LiveDashboardPanel = () => {
           style={{ background: 'rgba(139,92,246,0.05)' }}>
           <Shield size={11} className="text-violet-400 shrink-0" />
           <p className="text-[10px] text-white/40 leading-none">
-            رمزنگاری end-to-end · پشتیبان‌گیری لحظه‌ای · ۹۹.۹۹٪ uptime
+            {tr("رمزنگاری end-to-end · پشتیبان‌گیری لحظه‌ای · ۹۹.۹۹٪ uptime")}
           </p>
         </div>
       </div>
@@ -593,14 +596,14 @@ export const Hero = ({ content, onNavigate }: HeroProps) => {
           className="group inline-flex items-center gap-2.5 rounded-xl border border-white/12 bg-white/[0.06] px-5 py-2.5 text-sm font-semibold text-slate-200 transition-all hover:bg-white/10 hover:border-white/20 hover:text-white"
         >
           <Home size={15} className="text-cyan-400 transition-transform group-hover:-translate-x-0.5" />
-          بازگشت به صفحه اصلی
+          {tr("بازگشت به صفحه اصلی")}
         </button>
         <button
           type="button"
           onClick={handleContact}
           className="group inline-flex items-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-5 py-2.5 text-sm font-semibold text-cyan-300 transition-all hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:text-white"
         >
-          تماس با ما
+          {tr("تماس با ما")}
           <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
         </button>
       </motion.div>
@@ -684,7 +687,7 @@ export const Hero = ({ content, onNavigate }: HeroProps) => {
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-7 py-3.5 text-sm font-bold text-white transition-all hover:bg-white/10 hover:-translate-y-0.5"
               >
-                تماس با ما
+                {tr("تماس با ما")}
               </a>
             </motion.div>
 

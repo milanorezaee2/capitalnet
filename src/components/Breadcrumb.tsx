@@ -12,6 +12,9 @@ import { useEffect } from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { ChevronLeft, Home } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 export interface BreadcrumbItem {
   /** Human-readable label shown in the UI */
   label: string;
@@ -76,16 +79,14 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       variants={vFadeIn}
       initial="hidden"
       animate="show"
-      aria-label="مسیر صفحه"
+      aria-label={t("مسیر صفحه")}
       className="mb-6"
-      dir="rtl"
     >
       <div className="inline-flex items-center gap-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-2.5 shadow-sm">
         <ol
           className="flex items-center gap-1 flex-wrap list-none m-0 p-0"
           itemScope
-          itemType="https://schema.org/BreadcrumbList"
-        >
+          itemType="https://schema.org/BreadcrumbList">
           {items.map((item, index) => {
             const isLast = index === items.length - 1;
             const isFirst = index === 0;
@@ -112,8 +113,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                   <span
                     className="flex items-center gap-1.5 text-sm font-semibold text-white"
                     aria-current="page"
-                    itemProp="name"
-                  >
+                    itemProp="name">
                     {isFirst && (
                       <Home size={14} className="text-teal-400 flex-shrink-0" aria-hidden="true" />
                     )}
@@ -135,8 +135,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                   /* Non-clickable intermediate item */
                   <span
                     className="flex items-center gap-1.5 text-sm text-white/55"
-                    itemProp="name"
-                  >
+                    itemProp="name">
                     {isFirst && (
                       <Home size={14} className="text-teal-400/70 flex-shrink-0" aria-hidden="true" />
                     )}

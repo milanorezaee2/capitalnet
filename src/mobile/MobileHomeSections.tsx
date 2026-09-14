@@ -10,6 +10,9 @@ import type { SiteSettings } from '../lib/settingsApi';
 import type { Testimonial } from '../lib/testimonialsApi';
 import { fetchActiveTestimonials } from '../lib/testimonialsApi';
 
+import { t as tr } from '@/i18n';
+
+
 type Nav = (page: string, slug?: string, cat?: string) => void;
 
 const fv = {
@@ -45,7 +48,7 @@ const REGIONS = [
 export function MnGlobalNetwork({ settings, themeMode = 'dark' }: { settings: SiteSettings; themeMode?: 'dark' | 'light' }) {
   return (
     <section className="py-6 space-y-4">
-      <SectionDivider label="شبکه جهانی" themeMode={themeMode} />
+      <SectionDivider label={tr("شبکه جهانی")} themeMode={themeMode} />
       <motion.div {...fv} className="px-5 space-y-2">
         <h2 className={`text-xl font-black ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{settings.home_network_title}</h2>
         <p className={`mobile-justified-text text-sm leading-relaxed ${themeMode === 'light' ? 'text-slate-600' : 'text-mn-muted'}`}>{settings.home_network_desc}</p>
@@ -80,7 +83,7 @@ export function MnServices({ settings, themeMode = 'dark' }: { settings: SiteSet
   const cards = settings.services_cards ?? [];
   return (
     <section className="py-6 space-y-4">
-      <SectionDivider label="خدمات" themeMode={themeMode} />
+      <SectionDivider label={tr("خدمات")} themeMode={themeMode} />
       <motion.div {...fv} className="px-5 space-y-1">
         <span className="mn-badge">{settings.home_services_badge}</span>
         <h2 className={`text-xl font-black pt-2 ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{settings.home_services_title}</h2>
@@ -99,7 +102,7 @@ export function MnServices({ settings, themeMode = 'dark' }: { settings: SiteSet
               <div className="flex-1 min-w-0">
                 <p className={`text-sm font-black leading-snug ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{c.title}</p>
                 {c.popular && (
-                  <span className="text-[10px] font-bold text-mn-accent">محبوب‌ترین</span>
+                  <span className="text-[10px] font-bold text-mn-accent">{tr("محبوب‌ترین")}</span>
                 )}
               </div>
             </div>
@@ -128,7 +131,7 @@ export function MnWhyUs({ settings, themeMode = 'dark' }: { settings: SiteSettin
   const items = settings.home_why_us ?? [];
   return (
     <section className="py-6 space-y-4">
-      <SectionDivider label="چرا ما" themeMode={themeMode} />
+      <SectionDivider label={tr("چرا ما")} themeMode={themeMode} />
       <motion.div {...fv} className="px-5 space-y-1">
         <h2 className={`text-xl font-black ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{settings.home_why_us_title}</h2>
         <p className={`mobile-justified-text text-sm leading-relaxed ${themeMode === 'light' ? 'text-slate-600' : 'text-mn-muted'}`}>{settings.home_why_us_desc}</p>
@@ -158,7 +161,7 @@ export function MnProcessSteps({ settings, themeMode = 'dark' }: { settings: Sit
   const steps = settings.home_process_steps ?? [];
   return (
     <section className="py-6 space-y-4">
-      <SectionDivider label="فرآیند" themeMode={themeMode} />
+      <SectionDivider label={tr("فرآیند")} themeMode={themeMode} />
       <motion.div {...fv} className="px-5 space-y-1">
         <span className="mn-badge">{settings.home_process_section_badge}</span>
         <h2 className={`text-xl font-black pt-2 ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{settings.home_process_section_title}</h2>
@@ -166,7 +169,7 @@ export function MnProcessSteps({ settings, themeMode = 'dark' }: { settings: Sit
       </motion.div>
       <div className="relative px-5 space-y-0">
         {/* connector */}
-        <div className="absolute right-[38px] top-5 bottom-5 w-[2px] rounded-full"
+        <div className="absolute end-[38px] top-5 bottom-5 w-[2px] rounded-full"
           style={{ background: 'linear-gradient(180deg,rgba(99,102,241,0.5),rgba(16,185,129,0.15))' }} />
         {steps.map((s: any, i: number) => {
           const c = STEP_COLORS[i % STEP_COLORS.length];
@@ -189,9 +192,9 @@ export function MnProcessSteps({ settings, themeMode = 'dark' }: { settings: Sit
       </div>
       <div className="px-5">
         <p className={`text-xs text-center ${themeMode === 'light' ? 'text-slate-600' : 'text-mn-muted'}`}>
-          میانگین فرآیند:{' '}
+          {tr("میانگین فرآیند:")}{' '}
           <span className="text-mn-accent font-bold">{settings.home_process_avg_days}</span>
-          {' '}روز
+          {' '}{tr("روز")}
         </p>
       </div>
     </section>
@@ -206,7 +209,7 @@ export function MnClientShowcase({ settings, themeMode = 'dark' }: { settings: S
 
   return (
     <section className="py-6 space-y-4">
-      <SectionDivider label="نمونه‌کارها" themeMode={themeMode} />
+      <SectionDivider label={tr("نمونه‌کارها")} themeMode={themeMode} />
       <motion.div {...fv} className="px-5 space-y-1">
         <span className="mn-badge">{settings.home_showcase_badge}</span>
         <h2 className={`text-xl font-black pt-2 ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{settings.home_showcase_title}</h2>
@@ -216,7 +219,7 @@ export function MnClientShowcase({ settings, themeMode = 'dark' }: { settings: S
         {all.map((card: any, i: number) => (
           <motion.div key={i} {...fv} transition={{ ...fv.transition, delay: i * 0.06 }}
             className={`${hoverCardClass} mn-card p-4 space-y-2 overflow-hidden relative`}>
-            <div className="absolute -top-6 -left-6 h-16 w-16 rounded-full blur-2xl opacity-20 pointer-events-none"
+            <div className="absolute -top-6 -start-6 h-16 w-16 rounded-full blur-2xl opacity-20 pointer-events-none"
               style={{ background: card.accentColor ?? '#6366f1' }} />
             <p className="text-[10px] font-black tracking-widest uppercase"
               style={{ color: card.accentColor ?? '#6366f1' }}>
@@ -249,15 +252,15 @@ export function MnTestimonials({ settings, themeMode = 'dark' }: { settings: Sit
   }, []);
 
   const fallback: Testimonial[] = [
-    { id:'1', name:'علی رضایی',   role:'بنیان‌گذار', company:'StartupX',    text:'تیم کپیتال نتورک در کمتر از ۶ ماه ما را به سه VC Tier-1 متصل کردند.', is_active:true, sort_order:1, avatar_url:null, created_at:'' },
-    { id:'2', name:'فاطمه محمدی', role:'CTO',         company:'TechFlow',    text:'Pitch Deck شان بسیار حرفه‌ای بود. VC های مختلف از روش آن‌ها تعریف کردند.', is_active:true, sort_order:2, avatar_url:null, created_at:'' },
-    { id:'3', name:'رضا کریمی',   role:'CEO',         company:'DataHub',     text:'در عرض ۴۵ روز به Term Sheet رسیدیم.', is_active:true, sort_order:3, avatar_url:null, created_at:'' },
+    { id:'1', name:tr("علی رضایی"),   role:tr("بنیان‌گذار"), company:'StartupX',    text:tr("تیم کپیتال نتورک در کمتر از ۶ ماه ما را به سه VC Tier-1 متصل کردند."), is_active:true, sort_order:1, avatar_url:null, created_at:'' },
+    { id:'2', name:tr("فاطمه محمدی"), role:'CTO',         company:'TechFlow',    text:tr("Pitch Deck شان بسیار حرفه‌ای بود. VC های مختلف از روش آن‌ها تعریف کردند."), is_active:true, sort_order:2, avatar_url:null, created_at:'' },
+    { id:'3', name:tr("رضا کریمی"),   role:'CEO',         company:'DataHub',     text:tr("در عرض ۴۵ روز به Term Sheet رسیدیم."), is_active:true, sort_order:3, avatar_url:null, created_at:'' },
   ];
   const list = items.length > 0 ? items : fallback;
 
   return (
     <section className="py-6 space-y-4">
-      <SectionDivider label="نظرات مشتریان" themeMode={themeMode} />
+      <SectionDivider label={tr("نظرات مشتریان")} themeMode={themeMode} />
       <motion.div {...fv} className="px-5 space-y-1">
         <span className="mn-badge">{settings.home_testimonials_badge}</span>
         <h2 className={`text-xl font-black pt-2 ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{settings.home_testimonials_heading}</h2>
@@ -308,7 +311,7 @@ export function MnBlogPreview({ settings, onNavigate, themeMode = 'dark' }: { se
   const posts: BlogPost[] = (typeof blogPosts !== 'undefined' ? blogPosts : []).filter((p: BlogPost) => p.featured).slice(0, 3);
   return (
     <section className="py-6 space-y-4">
-      <SectionDivider label="مقالات" themeMode={themeMode} />
+      <SectionDivider label={tr("مقالات")} themeMode={themeMode} />
       <motion.div {...fv} className="flex items-center justify-between px-5">
         <div>
           <span className="mn-badge">{settings.home_blog_preview_badge}</span>
@@ -340,7 +343,7 @@ export function MnBlogPreview({ settings, onNavigate, themeMode = 'dark' }: { se
               <div className={`flex items-center justify-between mt-3 pt-3 border-t ${themeMode === 'light' ? 'border-slate-200' : 'border-white/[0.05]'}`}>
                 <span className={`text-[10px] ${themeMode === 'light' ? 'text-slate-500' : 'text-mn-muted'}`}>{post.author.name}</span>
                 <span className={`flex items-center gap-1 text-[10px] ${themeMode === 'light' ? 'text-slate-500' : 'text-mn-muted'}`}>
-                  <Eye size={10} />{post.views?.toLocaleString('fa-IR') ?? '۰'}
+                  <Eye size={10} />{post.views?.toLocaleString('fa-IR') ?? tr("۰")}
                 </span>
               </div>
             </motion.article>
@@ -358,7 +361,7 @@ export function MnFAQ({ settings, onNavigate, themeMode = 'dark' }: { settings: 
 
   return (
     <section className="py-6 space-y-4">
-      <SectionDivider label="سوالات متداول" themeMode={themeMode} />
+      <SectionDivider label={tr("سوالات متداول")} themeMode={themeMode} />
       <motion.div {...fv} className="px-5 space-y-1">
         <span className="mn-badge">{settings.home_faq_badge}</span>
         <h2 className={`text-xl font-black pt-2 ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{settings.home_faq_title}</h2>
@@ -367,7 +370,7 @@ export function MnFAQ({ settings, onNavigate, themeMode = 'dark' }: { settings: 
         {items.map((item: any, i: number) => (
           <div key={i} className={`${hoverCardClass} mn-card overflow-hidden transition-all duration-300 ${open === i ? 'border-mn-accent/30' : ''}`}>
             <button type="button" onClick={() => setOpen(open === i ? null : i)}
-              className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-right">
+              className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-end">
               <span className={`text-sm font-bold leading-snug flex-1 ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{item.q}</span>
               <motion.div animate={{ rotate: open === i ? 180 : 0 }} transition={{ duration: 0.2 }}
                 className={`shrink-0 flex h-7 w-7 items-center justify-center rounded-full border ${themeMode === 'light' ? 'border-slate-200 bg-slate-100' : 'border-white/10 bg-white/[0.04]'}`}>
@@ -388,7 +391,7 @@ export function MnFAQ({ settings, onNavigate, themeMode = 'dark' }: { settings: 
         <button type="button" onClick={() => onNavigate?.('contact')}
           className={`${hoverButtonClass} mn-btn-ghost inline-flex items-center gap-2 mx-auto`}>
           <MessageCircle size={14} />
-          سوال دیگری دارید؟
+          {tr("سوال دیگری دارید؟")}
         </button>
       </div>
     </section>

@@ -2,10 +2,13 @@
 // Renders a dynamically-created service sub-page from the localStorage store.
 // Each section type is rendered with a matching visual style.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Home, ChevronRight } from 'lucide-react';
 import { loadSubPages, SECTION_META, type ServiceSubPage, type SubPageSection } from '../data/serviceSubPageStore';
+
+import { t as tr, useLanguage, deepTranslate } from '@/i18n';
+
 
 // ─── Fade-in wrapper ─────────────────────────────────────────────────────────
 const FadeIn = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
@@ -38,9 +41,9 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
         style={{ background: 'linear-gradient(135deg,#050d1a 0%,#0d1829 100%)' }}>
         {/* Background glow */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10 blur-[80px]"
+          <div className="absolute top-0 end-0 w-96 h-96 rounded-full opacity-10 blur-[80px]"
             style={{ background: color }} />
-          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-8 blur-[60px]"
+          <div className="absolute bottom-0 start-0 w-64 h-64 rounded-full opacity-8 blur-[60px]"
             style={{ background: '#7c3aed' }} />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto w-full">
@@ -95,7 +98,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
           )}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {(['uses', 'audience', 'value', 'advantages'] as const).map((key) => {
-              const labels: Record<string, string> = { uses: 'کاربردها', audience: 'مخاطبان', value: 'ارزش‌ها', advantages: 'مزیت‌ها' };
+              const labels: Record<string, string> = { uses: tr("کاربردها"), audience: tr("مخاطبان"), value: 'ارزش‌ها', advantages: tr("مزیت‌ها") };
               const items = (d[key] as string[]) ?? [];
               if (!items.length) return null;
               return (
@@ -122,7 +125,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#111c2d' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="ویژگی‌ها" color={color} />
+            <SectionTitle title={tr("ویژگی‌ها")} color={color} />
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {items.map((f, i) => (
                 <FadeIn key={i} delay={i * 0.05}>
@@ -147,7 +150,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#0d1829' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="مزایا" color={color} />
+            <SectionTitle title={tr("مزایا")} color={color} />
             <div className="grid md:grid-cols-2 gap-5">
               {items.map((b, i) => (
                 <FadeIn key={i} delay={i * 0.07}>
@@ -172,7 +175,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#111c2d' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title={d.title as string || 'چرا ما؟'} subtitle={d.description as string} color={color} />
+            <SectionTitle title={d.title as string || tr("چرا ما؟")} subtitle={d.description as string} color={color} />
             <div className="grid md:grid-cols-3 gap-5">
               {items.map((item, i) => (
                 <FadeIn key={i} delay={i * 0.07}>
@@ -194,7 +197,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#0d1829' }}>
           <div className="max-w-3xl mx-auto">
-            <SectionTitle title="فرآیند کار" color={color} />
+            <SectionTitle title={tr("فرآیند کار")} color={color} />
             <div className="space-y-4">
               {steps.map((step, i) => (
                 <FadeIn key={i} delay={i * 0.08}>
@@ -244,7 +247,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#0d1829' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="نظرات مشتریان" color={color} />
+            <SectionTitle title={tr("نظرات مشتریان")} color={color} />
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {items.map((t, i) => (
                 <FadeIn key={i} delay={i * 0.07}>
@@ -274,7 +277,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#111c2d' }}>
           <div className="max-w-3xl mx-auto">
-            <SectionTitle title="سوالات متداول" color={color} />
+            <SectionTitle title={tr("سوالات متداول")} color={color} />
             <div className="space-y-3">
               {items.map((faq, i) => (
                 <FaqItem key={i} question={faq.question} answer={faq.answer} color={color} />
@@ -290,7 +293,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16 text-center" style={{ background: '#0d1829' }}>
           <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl font-black text-white mb-4">{String(d.title || 'آماده شروع هستید؟')}</h2>
+            <h2 className="text-3xl font-black text-white mb-4">{String(d.title || tr("آماده شروع هستید؟"))}</h2>
             {!!d.description && <p className="text-slate-400 mb-8">{String(d.description)}</p>}
             <div className="flex flex-wrap gap-4 justify-center">
               {!!d.primaryLabel && (
@@ -317,17 +320,17 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#111c2d' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="قیمت‌گذاری" color={color} />
+            <SectionTitle title={tr("قیمت‌گذاری")} color={color} />
             <div className="grid md:grid-cols-3 gap-5">
               {plans.map((plan, i) => (
                 <FadeIn key={i} delay={i * 0.07}>
                   <div className="p-6 rounded-2xl h-full flex flex-col" style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(255,255,255,0.08)` }}>
                     <h3 className="text-white font-bold text-lg mb-1">{plan.name}</h3>
-                    <p className="text-3xl font-black mb-3" style={{ color }}>{plan.price} <span className="text-sm font-normal text-slate-400">{plan.currency || 'تومان'}</span></p>
+                    <p className="text-3xl font-black mb-3" style={{ color }}>{plan.price} <span className="text-sm font-normal text-slate-400">{plan.currency || tr("تومان")}</span></p>
                     {plan.description && <p className="text-slate-400 text-sm leading-relaxed flex-1 mb-4">{plan.description}</p>}
                     <a href="/evaluation" className="w-full text-center rounded-xl py-2.5 text-sm font-bold transition-all"
                       style={{ background: color + '20', color }}>
-                      {plan.ctaLabel || 'انتخاب پلن'}
+                      {plan.ctaLabel || tr("انتخاب پلن")}
                     </a>
                   </div>
                 </FadeIn>
@@ -343,7 +346,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#0d1829' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="تیم ما" color={color} />
+            <SectionTitle title={tr("تیم ما")} color={color} />
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
               {members.map((m, i) => (
                 <FadeIn key={i} delay={i * 0.07}>
@@ -382,7 +385,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
           <div className="max-w-5xl mx-auto">
             <div className={`grid gap-4 grid-cols-2 md:grid-cols-${Math.min(cols, 4)}`}>
               {images.map((url, i) => (
-                <img key={i} src={url} alt={`تصویر ${i + 1}`}
+                <img key={i} src={url} alt={t('تصویر {n}', { n: i + 1 })}
                   className="w-full h-48 object-cover rounded-xl"
                   style={{ border: '1px solid rgba(255,255,255,0.07)' }} />
               ))}
@@ -398,7 +401,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
           <div className="max-w-3xl mx-auto">
             {d.url ? (
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                <iframe src={String(d.url)} title={d.caption ? String(d.caption) : 'ویدیو'}
+                <iframe src={String(d.url)} title={d.caption ? String(d.caption) : tr("ویدیو")}
                   className="absolute inset-0 w-full h-full rounded-2xl"
                   style={{ border: '1px solid rgba(255,255,255,0.07)' }}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -406,7 +409,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
               </div>
             ) : (
               <div className="h-48 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                <p className="text-slate-500 text-sm">ویدیویی تنظیم نشده</p>
+                <p className="text-slate-500 text-sm">{tr("ویدیویی تنظیم نشده")}</p>
               </div>
             )}
             {d.caption && <p className="text-center text-slate-400 text-sm mt-3">{String(d.caption)}</p>}
@@ -433,7 +436,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#0d1829' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="خروجی‌ها" color={color} />
+            <SectionTitle title={tr("خروجی‌ها")} color={color} />
             <div className="space-y-3">
               {items.map((item, i) => (
                 <FadeIn key={i} delay={i * 0.05}>
@@ -458,13 +461,13 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-16 px-6 md:px-16" style={{ background: '#111c2d' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="تکنولوژی‌ها" color={color} />
+            <SectionTitle title={tr("تکنولوژی‌ها")} color={color} />
             <div className="flex flex-wrap gap-3 justify-center">
               {items.map((t, i) => (
                 <span key={i} className="px-4 py-2 rounded-xl text-sm font-semibold"
                   style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.75)' }}>
                   {t.name}{t.version ? ` v${t.version}` : ''}
-                  {t.category && <span className="ml-2 text-[10px] opacity-50">{t.category}</span>}
+                  {t.category && <span className="ms-2 text-[10px] opacity-50">{t.category}</span>}
                 </span>
               ))}
             </div>
@@ -477,15 +480,15 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-16 px-6 md:px-16" style={{ background: '#0d1829' }}>
           <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-2xl font-black text-white mb-3">{d.title as string || 'خبرنامه'}</h2>
+            <h2 className="text-2xl font-black text-white mb-3">{d.title as string || tr("خبرنامه")}</h2>
             <p className="text-slate-400 text-sm mb-6">{d.description as string}</p>
             <div className="flex gap-3">
-              <input type="email" placeholder={(d.placeholder as string) || 'ایمیل شما...'}
+              <input type="email" placeholder={(d.placeholder as string) || tr("ایمیل شما...")}
                 className="flex-1 px-4 py-2.5 rounded-xl text-sm text-white bg-white/5 border border-white/10 focus:outline-none focus:border-[color:var(--c)]"
                 style={{ '--c': color } as React.CSSProperties} />
               <button className="px-5 py-2.5 rounded-xl text-sm font-bold text-slate-950 shrink-0"
                 style={{ background: color }}>
-                {(d.buttonLabel as string) || 'عضویت'}
+                {(d.buttonLabel as string) || tr("عضویت")}
               </button>
             </div>
           </div>
@@ -497,7 +500,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#111c2d' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="نمونه‌کارها" color={color} />
+            <SectionTitle title={tr("نمونه‌کارها")} color={color} />
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {items.map((item, i) => (
                 <FadeIn key={i} delay={i * 0.06}>
@@ -528,7 +531,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#0d1829' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="مطالعات موردی" color={color} />
+            <SectionTitle title={tr("مطالعات موردی")} color={color} />
             <div className="space-y-5">
               {items.map((cs, i) => (
                 <FadeIn key={i} delay={i * 0.07}>
@@ -542,9 +545,9 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
                       </div>
                     </div>
                     <div className="grid md:grid-cols-3 gap-4">
-                      {cs.challenge && <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">چالش</p><p className="text-slate-400 text-xs leading-relaxed">{cs.challenge}</p></div>}
-                      {cs.solution && <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">راه‌حل</p><p className="text-slate-400 text-xs leading-relaxed">{cs.solution}</p></div>}
-                      {cs.results && <div><p className="text-[10px] font-bold uppercase tracking-widest" style={{ color }}>نتایج</p><p className="text-xs mt-1 leading-relaxed" style={{ color: color + 'cc' }}>{cs.results}</p></div>}
+                      {cs.challenge && <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">{tr("چالش")}</p><p className="text-slate-400 text-xs leading-relaxed">{cs.challenge}</p></div>}
+                      {cs.solution && <div><p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">{tr("راه‌حل")}</p><p className="text-slate-400 text-xs leading-relaxed">{cs.solution}</p></div>}
+                      {cs.results && <div><p className="text-[10px] font-bold uppercase tracking-widest" style={{ color }}>{tr("نتایج")}</p><p className="text-xs mt-1 leading-relaxed" style={{ color: color + 'cc' }}>{cs.results}</p></div>}
                     </div>
                   </div>
                 </FadeIn>
@@ -581,13 +584,13 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#0d1829' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title={d.title as string || 'جدول مقایسه'} subtitle={d.description as string} color={color} />
+            <SectionTitle title={d.title as string || tr("جدول مقایسه")} subtitle={d.description as string} color={color} />
             <div className="overflow-x-auto rounded-2xl" style={{ border: '1px solid rgba(255,255,255,0.07)' }}>
               <table className="w-full text-sm">
                 <thead>
                   <tr style={{ background: color + '15' }}>
                     {columns.map((col, i) => (
-                      <th key={i} className={`px-5 py-3.5 text-xs font-bold uppercase tracking-widest ${i === 0 ? 'text-right' : 'text-center'}`}
+                      <th key={i} className={`px-5 py-3.5 text-xs font-bold uppercase tracking-widest ${i === 0 ? 'text-start' : 'text-center'}`}
                         style={{ color: i === 0 ? 'rgba(255,255,255,0.5)' : color }}>
                         {col}
                       </th>
@@ -606,7 +609,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
       return (
         <section className="py-20 px-6 md:px-16" style={{ background: '#111c2d' }}>
           <div className="max-w-5xl mx-auto">
-            <SectionTitle title="دسته‌بندی‌ها" color={color} />
+            <SectionTitle title={tr("دسته‌بندی‌ها")} color={color} />
             <div className="grid md:grid-cols-3 gap-5">
               {items.map((cat, i) => (
                 <FadeIn key={i} delay={i * 0.07}>
@@ -633,7 +636,7 @@ function FaqItem({ question, answer, color }: { question: string; answer: string
   return (
     <div className="rounded-xl overflow-hidden" style={{ border: `1px solid rgba(255,255,255,${open ? '0.12' : '0.07'})` }}>
       <button onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-5 py-4 text-right transition-all"
+        className="w-full flex items-center justify-between px-5 py-4 text-end transition-all"
         style={{ background: open ? color + '10' : 'rgba(255,255,255,0.04)' }}>
         <span className="text-sm font-semibold text-white">{question}</span>
         <ChevronRight size={16} style={{ color, transform: open ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.25s' }} />
@@ -654,7 +657,14 @@ interface ServiceSubPageViewProps {
 }
 
 export default function ServiceSubPageView({ slug, onBack }: ServiceSubPageViewProps) {
-  const [page, setPage] = useState<ServiceSubPage | null | 'loading'>('loading');
+  const [rawPage, setPage] = useState<ServiceSubPage | null | 'loading'>('loading');
+  const { lang } = useLanguage();
+
+  // زیرصفحه‌های خدمات به فارسی ذخیره شده‌اند؛ ترجمهٔ عمیق برای نسخهٔ انگلیسی
+  const page = useMemo(
+    () => (rawPage && rawPage !== 'loading' ? deepTranslate(rawPage) : rawPage),
+    [rawPage, lang]
+  );
 
   useEffect(() => {
     const pages = loadSubPages();
@@ -674,12 +684,12 @@ export default function ServiceSubPageView({ slug, onBack }: ServiceSubPageViewP
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-6" style={{ background: '#0d1829' }}>
         <p className="text-6xl mb-6">🔍</p>
-        <h1 className="text-2xl font-black text-white mb-3">صفحه یافت نشد</h1>
-        <p className="text-slate-400 mb-8">صفحه‌ای با این آدرس وجود ندارد یا حذف شده است.</p>
+        <h1 className="text-2xl font-black text-white mb-3">{tr("صفحه یافت نشد")}</h1>
+        <p className="text-slate-400 mb-8">{tr("صفحه‌ای با این آدرس وجود ندارد یا حذف شده است.")}</p>
         <button onClick={onBack}
           className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white"
           style={{ background: 'linear-gradient(135deg,#00BCD4,#00838F)' }}>
-          <ArrowLeft size={15} /> بازگشت به خدمات
+          <ArrowLeft size={15} /> {tr("بازگشت به خدمات")}
         </button>
       </div>
     );
@@ -689,16 +699,16 @@ export default function ServiceSubPageView({ slug, onBack }: ServiceSubPageViewP
   const visibleSections = page.sections.filter(s => s.visible);
 
   return (
-    <div className="min-h-screen" style={{ background: '#0d1829', color: '#e2e8f0' }} dir="rtl">
+    <div className="min-h-screen" style={{ background: '#0d1829', color: '#e2e8f0' }}>
       {/* Breadcrumb nav */}
       <div className="bg-[#050d1a]/80 border-b border-white/[0.06] px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
           <button onClick={() => { window.history.pushState(null, '', '/'); window.dispatchEvent(new PopStateEvent('popstate')); }}
             className="hover:text-white transition-colors flex items-center gap-1">
-            <Home size={11} /> خانه
+            <Home size={11} /> {tr("خانه")}
           </button>
           <ChevronRight size={10} className="opacity-40" />
-          <button onClick={onBack} className="hover:text-white transition-colors">خدمات</button>
+          <button onClick={onBack} className="hover:text-white transition-colors">{tr("خدمات")}</button>
           <ChevronRight size={10} className="opacity-40" />
           <span style={{ color }}>{page.name}</span>
         </div>
@@ -714,7 +724,7 @@ export default function ServiceSubPageView({ slug, onBack }: ServiceSubPageViewP
       {/* Fallback if no sections */}
       {visibleSections.length === 0 && (
         <div className="py-32 text-center">
-          <p className="text-slate-600 text-sm">این صفحه هنوز محتوایی ندارد.</p>
+          <p className="text-slate-600 text-sm">{tr("این صفحه هنوز محتوایی ندارد.")}</p>
         </div>
       )}
     </div>

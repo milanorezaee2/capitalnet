@@ -14,6 +14,9 @@ import { fetchUserMessages } from '../lib/messagesApi';
 import type { ContactMessage } from '../lib/messagesApi';
 import { supabase } from '../lib/supabaseApi';
 
+import { t } from '@/i18n';
+
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type DashTab = 'overview' | 'leads' | 'messages' | 'profile';
@@ -84,23 +87,23 @@ function OverviewTab({
       >
         <Avatar name={user.name ?? user.email} size={52} />
         <div>
-          <p className="text-white font-bold text-base">{user.name ?? 'کاربر عزیز'}</p>
+          <p className="text-white font-bold text-base">{user.name ?? t("کاربر عزیز")}</p>
           <p className="text-slate-400 text-sm">{user.email}</p>
-          <p className="text-teal-400 text-xs mt-1">به پنل شخصی خود خوش آمدید</p>
+          <p className="text-teal-400 text-xs mt-1">{t("به پنل شخصی خود خوش آمدید")}</p>
         </div>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {[
-          { label: 'درخواست‌های ارسالی', value: leads.length, color: '#00BCD4', onClick: () => onNavigate('leads') },
-          { label: 'تأیید شده',          value: approvedLeads, color: '#22c55e', onClick: () => onNavigate('leads') },
-          { label: 'پیام‌های شما',       value: messages.length, color: '#a78bfa', onClick: () => onNavigate('messages') },
+          { label: t("درخواست‌های ارسالی"), value: leads.length, color: '#00BCD4', onClick: () => onNavigate('leads') },
+          { label: t("تأیید شده"),          value: approvedLeads, color: '#22c55e', onClick: () => onNavigate('leads') },
+          { label: t("پیام‌های شما"),       value: messages.length, color: '#a78bfa', onClick: () => onNavigate('messages') },
         ].map(s => (
           <button
             key={s.label}
             onClick={s.onClick}
-            className="rounded-xl p-4 text-right transition-all hover:opacity-80 active:scale-[0.98]"
+            className="rounded-xl p-4 text-end transition-all hover:opacity-80 active:scale-[0.98]"
             style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${s.color}20` }}
           >
             <p className="text-2xl font-black" style={{ color: s.color }}>{s.value}</p>
@@ -112,14 +115,14 @@ function OverviewTab({
       {/* Notifications */}
       {(newLeads > 0 || repliedMsgs > 0) && (
         <div className="space-y-2">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">اعلان‌ها</p>
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t("اعلان‌ها")}</p>
           {newLeads > 0 && (
             <div
               className="flex items-center gap-3 p-3 rounded-xl"
               style={{ background: 'rgba(0,188,212,0.08)', border: '1px solid rgba(0,188,212,0.2)' }}
             >
               <Bell size={14} className="text-teal-400 flex-shrink-0" />
-              <p className="text-sm text-teal-200">{newLeads} درخواست ارزیابی شما در انتظار بررسی است</p>
+              <p className="text-sm text-teal-200">{newLeads} {t("درخواست ارزیابی شما در انتظار بررسی است")}</p>
             </div>
           )}
           {repliedMsgs > 0 && (
@@ -128,7 +131,7 @@ function OverviewTab({
               style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}
             >
               <MessageSquare size={14} className="text-green-400 flex-shrink-0" />
-              <p className="text-sm text-green-200">{repliedMsgs} پیام شما پاسخ داده شده است</p>
+              <p className="text-sm text-green-200">{repliedMsgs} {t("پیام شما پاسخ داده شده است")}</p>
             </div>
           )}
         </div>
@@ -138,9 +141,9 @@ function OverviewTab({
       {leads.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">آخرین درخواست‌ها</p>
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t("آخرین درخواست‌ها")}</p>
             <button onClick={() => onNavigate('leads')} className="text-xs text-teal-400 hover:text-teal-300 flex items-center gap-1">
-              همه <ChevronLeft size={12} />
+              {t("همه")} <ChevronLeft size={12} />
             </button>
           </div>
           <div className="space-y-2">
@@ -151,7 +154,7 @@ function OverviewTab({
                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
               >
                 <div>
-                  <p className="text-sm text-white font-medium">{lead.company_name ?? lead.org_name ?? 'درخواست ارزیابی'}</p>
+                  <p className="text-sm text-white font-medium">{lead.company_name ?? lead.org_name ?? t("درخواست ارزیابی")}</p>
                   <p className="text-xs text-slate-500">{new Date(lead.created_at).toLocaleDateString('fa-IR')}</p>
                 </div>
                 <StatusBadge status={lead.status} />
@@ -178,12 +181,11 @@ function LeadsTab({ leads, loading }: { leads: Lead[]; loading: boolean }) {
     return (
       <div className="text-center py-16">
         <FileText size={36} className="text-slate-700 mx-auto mb-3" />
-        <p className="text-slate-400 text-sm">هنوز درخواست ارزیابی ارسال نکرده‌اید</p>
+        <p className="text-slate-400 text-sm">{t("هنوز درخواست ارزیابی ارسال نکرده‌اید")}</p>
         <a
           href="/evaluation"
-          className="mt-3 inline-block text-teal-400 text-sm hover:underline"
-        >
-          ارسال درخواست ارزیابی
+          className="mt-3 inline-block text-teal-400 text-sm hover:underline">
+          {t("ارسال درخواست ارزیابی")}
         </a>
       </div>
     );
@@ -191,7 +193,7 @@ function LeadsTab({ leads, loading }: { leads: Lead[]; loading: boolean }) {
 
   return (
     <div className="space-y-3">
-      <p className="text-xs text-slate-500">{leads.length} درخواست ثبت‌شده</p>
+      <p className="text-xs text-slate-500">{leads.length} {t("درخواست ثبت‌شده")}</p>
       {leads.map(lead => (
         <div
           key={lead.id}
@@ -201,10 +203,10 @@ function LeadsTab({ leads, loading }: { leads: Lead[]; loading: boolean }) {
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="text-sm font-semibold text-white">
-                {lead.company_name ?? lead.org_name ?? 'درخواست ارزیابی'}
+                {lead.company_name ?? lead.org_name ?? t("درخواست ارزیابی")}
               </p>
               <p className="text-xs text-slate-500 mt-0.5">
-                {lead.profile_type === 'founder' ? '🚀 فاندر' : '💼 سرمایه‌گذار'}
+                {lead.profile_type === 'founder' ? t("🚀 فاندر") : t("💼 سرمایه‌گذار")}
                 {' · '}
                 {lead.stage ?? lead.stage_pref ?? '—'}
               </p>
@@ -215,7 +217,7 @@ function LeadsTab({ leads, loading }: { leads: Lead[]; loading: boolean }) {
           {/* Progress bar */}
           <div>
             <div className="flex justify-between text-xs text-slate-600 mb-1">
-              <span>پیشرفت بررسی</span>
+              <span>{t("پیشرفت بررسی")}</span>
               <span>{lead.status === 'new' ? '25%' : lead.status === 'in_review' ? '60%' : lead.status === 'approved' ? '100%' : '0%'}</span>
             </div>
             <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
@@ -235,11 +237,11 @@ function LeadsTab({ leads, loading }: { leads: Lead[]; loading: boolean }) {
               {lead.deck_url && (
                 <a href={lead.deck_url} target="_blank" rel="noopener noreferrer"
                   className="text-teal-400 hover:text-teal-300 transition-colors">
-                  دانلود Pitch Deck
+                  {t("دانلود Pitch Deck")}
                 </a>
               )}
               {lead.admin_notes && (
-                <span className="text-teal-400">یادداشت ادمین موجود است</span>
+                <span className="text-teal-400">{t("یادداشت ادمین موجود است")}</span>
               )}
             </div>
           </div>
@@ -263,12 +265,11 @@ function MessagesTab({ messages, loading }: { messages: ContactMessage[]; loadin
     return (
       <div className="text-center py-16">
         <MessageSquare size={36} className="text-slate-700 mx-auto mb-3" />
-        <p className="text-slate-400 text-sm">هنوز پیامی ارسال نکرده‌اید</p>
+        <p className="text-slate-400 text-sm">{t("هنوز پیامی ارسال نکرده‌اید")}</p>
         <a
           href="/contact"
-          className="mt-3 inline-block text-teal-400 text-sm hover:underline"
-        >
-          ارسال پیام به تیم
+          className="mt-3 inline-block text-teal-400 text-sm hover:underline">
+          {t("ارسال پیام به تیم")}
         </a>
       </div>
     );
@@ -276,7 +277,7 @@ function MessagesTab({ messages, loading }: { messages: ContactMessage[]; loadin
 
   return (
     <div className="space-y-3">
-      <p className="text-xs text-slate-500">{messages.length} پیام ارسال‌شده</p>
+      <p className="text-xs text-slate-500">{messages.length} {t("پیام ارسال‌شده")}</p>
       {messages.map(msg => {
         const statusCfg = MSG_STATUS_CFG[msg.status] ?? MSG_STATUS_CFG['read'];
         return (
@@ -287,7 +288,7 @@ function MessagesTab({ messages, loading }: { messages: ContactMessage[]; loadin
           >
             <div className="flex items-start justify-between gap-2">
               <p className="text-sm font-medium text-white line-clamp-1">
-                {msg.subject ?? 'پیام تماس'}
+                {msg.subject ?? t("پیام تماس")}
               </p>
               <span
                 className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
@@ -302,7 +303,7 @@ function MessagesTab({ messages, loading }: { messages: ContactMessage[]; loadin
                 className="p-3 rounded-lg text-xs text-green-200"
                 style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.15)' }}
               >
-                <p className="font-semibold text-green-400 mb-1">پاسخ تیم CapNet:</p>
+                <p className="font-semibold text-green-400 mb-1">{t("پاسخ تیم CapNet:")}</p>
                 {msg.admin_reply}
               </div>
             )}
@@ -319,11 +320,11 @@ function MessagesTab({ messages, loading }: { messages: ContactMessage[]; loadin
 // ── Profile tab ───────────────────────────────────────────────────────────────
 function ProfileTab({ user, onLogout }: { user: AuthUser; onLogout: () => void }) {
   const rows = [
-    { icon: <User size={15} />,      label: 'نام',           value: user.name ?? '—' },
-    { icon: <Mail size={15} />,      label: 'ایمیل',         value: user.email },
-    { icon: <Phone size={15} />,     label: 'تلفن',           value: '—' },
-    { icon: <Building2 size={15} />, label: 'شرکت',          value: '—' },
-    { icon: <Briefcase size={15} />, label: 'سمت',            value: '—' },
+    { icon: <User size={15} />,      label: t("نام"),           value: user.name ?? '—' },
+    { icon: <Mail size={15} />,      label: t("ایمیل"),         value: user.email },
+    { icon: <Phone size={15} />,     label: t("تلفن"),           value: '—' },
+    { icon: <Building2 size={15} />, label: t("شرکت"),          value: '—' },
+    { icon: <Briefcase size={15} />, label: t("سمت"),            value: '—' },
   ];
 
   return (
@@ -332,7 +333,7 @@ function ProfileTab({ user, onLogout }: { user: AuthUser; onLogout: () => void }
         style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <Avatar name={user.name ?? user.email} size={56} />
         <div>
-          <p className="text-white font-bold">{user.name ?? 'کاربر'}</p>
+          <p className="text-white font-bold">{user.name ?? t("کاربر")}</p>
           <p className="text-slate-400 text-sm">{user.email}</p>
         </div>
       </div>
@@ -356,7 +357,7 @@ function ProfileTab({ user, onLogout }: { user: AuthUser; onLogout: () => void }
         style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', border: '1px solid rgba(239,68,68,0.2)' }}
       >
         <LogOut size={15} />
-        خروج از حساب کاربری
+        {t("خروج از حساب کاربری")}
       </button>
     </div>
   );
@@ -414,10 +415,10 @@ export default function UserDashboard({ user, onClose, onLogout }: UserDashboard
   };
 
   const tabs: Array<{ id: DashTab; label: string; icon: React.ReactNode; badge?: number }> = [
-    { id: 'overview',  label: 'خلاصه',        icon: <User size={15} /> },
-    { id: 'leads',     label: 'درخواست‌ها',   icon: <FileText size={15} />, badge: leads.length },
-    { id: 'messages',  label: 'پیام‌ها',      icon: <MessageSquare size={15} />, badge: messages.filter(m => m.status === 'replied').length },
-    { id: 'profile',   label: 'پروفایل',      icon: <User size={15} /> },
+    { id: 'overview',  label: t("خلاصه"),        icon: <User size={15} /> },
+    { id: 'leads',     label: t("درخواست‌ها"),   icon: <FileText size={15} />, badge: leads.length },
+    { id: 'messages',  label: t("پیام‌ها"),      icon: <MessageSquare size={15} />, badge: messages.filter(m => m.status === 'replied').length },
+    { id: 'profile',   label: t("پروفایل"),      icon: <User size={15} /> },
   ];
 
   return (
@@ -445,7 +446,6 @@ export default function UserDashboard({ user, onClose, onLogout }: UserDashboard
             backdropFilter: 'blur(24px)',
             maxHeight: 'calc(100vh - 80px)',
           }}
-          dir="rtl"
         >
           {/* Header */}
           <div
@@ -453,7 +453,7 @@ export default function UserDashboard({ user, onClose, onLogout }: UserDashboard
             style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
           >
             <div>
-              <h2 className="text-base font-bold text-white">پنل کاربری</h2>
+              <h2 className="text-base font-bold text-white">{t("پنل کاربری")}</h2>
               <p className="text-xs text-slate-500 mt-0.5">{user.email}</p>
             </div>
             <div className="flex items-center gap-2">
@@ -493,7 +493,7 @@ export default function UserDashboard({ user, onClose, onLogout }: UserDashboard
                 <span className="hidden sm:inline">{tab.label}</span>
                 {tab.badge !== undefined && tab.badge > 0 && (
                   <span
-                    className="absolute -top-1 -left-1 w-4 h-4 rounded-full text-[9px] font-black flex items-center justify-center"
+                    className="absolute -top-1 -start-1 w-4 h-4 rounded-full text-[9px] font-black flex items-center justify-center"
                     style={{ background: '#00BCD4', color: '#000' }}
                   >
                     {tab.badge}

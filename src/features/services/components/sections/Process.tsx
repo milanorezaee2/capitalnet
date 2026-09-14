@@ -2,6 +2,9 @@
 import { motion } from 'framer-motion';
 import type { ProcessStep } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface ProcessProps {
   steps: ProcessStep[];
 }
@@ -15,7 +18,7 @@ export const Process = ({ steps }: ProcessProps) => (
         viewport={{ once: true }}
         className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-amber-500"
       >
-        روش کار
+        {t("روش کار")}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
@@ -23,12 +26,12 @@ export const Process = ({ steps }: ProcessProps) => (
         viewport={{ once: true }}
         className="mb-16 text-4xl font-black text-white md:text-5xl"
       >
-        فرآیند انجام پروژه
+        {t("فرآیند انجام پروژه")}
       </motion.h2>
 
       <div className="relative">
         {/* vertical line */}
-        <div className="absolute top-0 bottom-0 right-[19px] w-px bg-white/6 md:right-auto md:left-1/2" />
+        <div className="absolute top-0 bottom-0 end-[19px] w-px bg-white/6 md:end-auto md:start-1/2" />
 
         <div className="space-y-0">
           {steps.map((step, i) => {

@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import { Check, X, ArrowRight } from 'lucide-react';
 import type { ComparisonContent } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 export interface ComparisonProps {
   comparison: ComparisonContent;
 }
@@ -31,11 +34,11 @@ export const Comparison = ({ comparison }: ComparisonProps) => {
         />
         <h2 className="text-4xl font-black text-white md:text-5xl">
           <span className="bg-gradient-to-r from-white via-pink-100 to-white bg-clip-text text-transparent">
-            مقایسه
+            {t("مقایسه")}
           </span>
         </h2>
         <p className="mt-4 text-lg leading-relaxed text-slate-300">
-          مقایسه پلن‌های مختلف.
+          {t("مقایسه پلن‌های مختلف.")}
         </p>
       </motion.div>
 
@@ -61,7 +64,7 @@ export const Comparison = ({ comparison }: ComparisonProps) => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 + 0.3 }}
-                    className="px-6 py-5 text-right text-lg font-black text-white"
+                    className="px-6 py-5 text-end text-lg font-black text-white"
                   >
                     {column}
                   </motion.th>

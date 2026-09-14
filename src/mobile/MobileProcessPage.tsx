@@ -2,6 +2,9 @@ import { motion } from 'framer-motion';
 import { Clock, ArrowLeft } from 'lucide-react';
 import type { SiteSettings } from '../lib/settingsApi';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   settings: SiteSettings;
   onNavigate: (page: string) => void;
@@ -53,9 +56,9 @@ export default function MobileProcessPage({ settings, onNavigate, themeMode = 'd
           <Clock size={18} className="text-purple-400" />
         </div>
         <div>
-          <p className={`text-sm font-black ${isLight ? 'text-slate-900' : 'text-white'}`}>میانگین زمان فرآیند</p>
+          <p className={`text-sm font-black ${isLight ? 'text-slate-900' : 'text-white'}`}>{t("میانگین زمان فرآیند")}</p>
           <p className={`text-xs mt-0.5 ${isLight ? 'text-slate-600' : 'text-white/50'}`}>
-            از ارزیابی تا دریافت سرمایه: <span className="text-purple-400 font-bold">{avgDays} روز</span>
+            {t("از ارزیابی تا دریافت سرمایه:")} <span className="text-purple-400 font-bold">{avgDays} {t("روز")}</span>
           </p>
         </div>
       </motion.div>
@@ -64,7 +67,7 @@ export default function MobileProcessPage({ settings, onNavigate, themeMode = 'd
       <motion.div variants={stagger} className="relative">
         {/* Vertical connector line */}
         <div
-          className="absolute right-[19px] top-5 bottom-5 w-[2px] rounded-full"
+          className="absolute end-[19px] top-5 bottom-5 w-[2px] rounded-full"
           style={{ background: 'linear-gradient(180deg, rgba(139,92,246,0.5) 0%, rgba(6,182,212,0.15) 100%)' }}
         />
 
@@ -116,14 +119,14 @@ export default function MobileProcessPage({ settings, onNavigate, themeMode = 'd
           className="flex-1 rounded-xl py-3 text-sm font-black text-slate-900"
           style={{ background: 'linear-gradient(135deg, #8b5cf6, #06b6d4)' }}
         >
-          شروع ارزیابی
+          {t("شروع ارزیابی")}
         </button>
         <button
           type="button"
           onClick={() => onNavigate('services')}
           className={`flex items-center gap-1.5 rounded-xl px-4 py-3 text-sm font-bold border ${isLight ? 'border-slate-200 bg-slate-100 text-slate-700' : 'border-white/10 bg-white/[0.03] text-white/70'}`}
         >
-          خدمات
+          {t("خدمات")}
           <ArrowLeft size={13} />
         </button>
       </motion.div>

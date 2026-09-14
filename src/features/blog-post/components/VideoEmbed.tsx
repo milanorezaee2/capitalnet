@@ -6,6 +6,9 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   url: string;
   title?: string;
@@ -37,7 +40,7 @@ function getEmbedInfo(url: string): { kind: 'youtube' | 'vimeo' | 'mp4' | 'unkno
   return { kind: 'unknown', embedUrl: url };
 }
 
-export default function VideoEmbed({ url, title = 'ویدئو', poster, ratio = '16/9' }: Props) {
+export default function VideoEmbed({ url, title = t("ویدئو"), poster, ratio = '16/9' }: Props) {
   const { kind, embedUrl } = getEmbedInfo(url);
   const [active, setActive] = useState(false);
 
@@ -66,7 +69,7 @@ export default function VideoEmbed({ url, title = 'ویدئو', poster, ratio = 
   if (kind === 'unknown') {
     return (
       <div className="my-6 rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm text-white/40 text-center">
-        ویدئو قابل نمایش نیست.
+        {t("ویدئو قابل نمایش نیست.")}
       </div>
     );
   }
@@ -79,7 +82,7 @@ export default function VideoEmbed({ url, title = 'ویدئو', poster, ratio = 
           <button
             onClick={() => setActive(true)}
             className="absolute inset-0 w-full h-full group flex items-center justify-center bg-black focus:outline-none focus:ring-2 focus:ring-teal-500/40"
-            aria-label={`پخش ویدئو: ${title}`}
+            aria-label={t("پخش ویدئو: {title}", { title })}
           >
             {poster && (
               <img
@@ -91,7 +94,7 @@ export default function VideoEmbed({ url, title = 'ویدئو', poster, ratio = 
               />
             )}
             <div className="relative z-10 w-16 h-16 rounded-full bg-teal-500/90 flex items-center justify-center shadow-2xl group-hover:bg-teal-400/90 group-hover:scale-110 transition-all duration-200">
-              <Play size={28} className="text-white mr-1" fill="currentColor" aria-hidden="true" />
+              <Play size={28} className="text-white me-1" fill="currentColor" aria-hidden="true" />
             </div>
             <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" aria-hidden="true" />
           </button>

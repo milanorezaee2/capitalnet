@@ -9,6 +9,9 @@ import { motion } from 'framer-motion';
 import { useBlogPostCtx } from '../context/BlogPostContext';
 import { useReadingProgress } from '../hooks';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   title: string;
   url: string;
@@ -20,7 +23,7 @@ function Tip({ label, children }: { label: string; children: React.ReactNode }) 
     <div className="relative group">
       {children}
       <div
-        className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 ml-0 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 whitespace-nowrap text-xs bg-[#161b22] text-white/80 border border-white/10 px-2.5 py-1 rounded-lg"
+        className="pointer-events-none absolute end-full top-1/2 -translate-y-1/2 ms-0 me-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 whitespace-nowrap text-xs bg-[#161b22] text-white/80 border border-white/10 px-2.5 py-1 rounded-lg"
         role="tooltip"
       >
         {label}
@@ -53,10 +56,10 @@ export default function StickyLeftSidebar({ title, url }: Props) {
   return (
     <aside
       className="hidden lg:flex flex-col items-center gap-3 bp-sticky-left bp-no-print"
-      aria-label="ابزارهای مقاله"
+      aria-label={t("ابزارهای مقاله")}
     >
       {/* Progress ring */}
-      <div className="w-10 h-10 flex items-center justify-center" title={`${progress}% خوانده شد`}>
+      <div className="w-10 h-10 flex items-center justify-center" title={t("{progress}% خوانده شد", { progress })}>
         <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
           <circle cx="20" cy="20" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2.5" />
           <circle
@@ -79,12 +82,12 @@ export default function StickyLeftSidebar({ title, url }: Props) {
       <div className="w-px h-5 bg-white/8" aria-hidden="true" />
 
       {/* Bookmark */}
-      <Tip label={isBookmarked ? 'حذف از نشانک' : 'ذخیره'}>
+      <Tip label={isBookmarked ? t("حذف از نشانک") : t("ذخیره")}>
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={toggleBookmark}
           className={`${BTN} ${isBookmarked ? '!text-amber-400 !border-amber-500/30 !bg-amber-500/10' : ''}`}
-          aria-label={isBookmarked ? 'حذف از نشانک' : 'ذخیره مقاله'}
+          aria-label={isBookmarked ? t("حذف از نشانک") : t("ذخیره مقاله")}
           aria-pressed={isBookmarked}
         >
           {isBookmarked
@@ -94,14 +97,14 @@ export default function StickyLeftSidebar({ title, url }: Props) {
       </Tip>
 
       {/* Like */}
-      <Tip label="پسندیدن">
+      <Tip label={t("پسندیدن")}>
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => vote('like')}
           className={`${BTN} flex-col gap-0.5 relative ${
             userVote === 'like' ? '!text-teal-400 !border-teal-500/30 !bg-teal-500/10' : ''
           }`}
-          aria-label="پسندیدن"
+          aria-label={t("پسندیدن")}
           aria-pressed={userVote === 'like'}
         >
           <ThumbsUp size={16} fill={userVote === 'like' ? 'currentColor' : 'none'} aria-hidden="true" />
@@ -112,24 +115,24 @@ export default function StickyLeftSidebar({ title, url }: Props) {
       </Tip>
 
       {/* Share */}
-      <Tip label="اشتراک‌گذاری">
+      <Tip label={t("اشتراک‌گذاری")}>
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={shareNative}
           className={BTN}
-          aria-label="اشتراک‌گذاری"
+          aria-label={t("اشتراک‌گذاری")}
         >
           <Share2 size={16} aria-hidden="true" />
         </motion.button>
       </Tip>
 
       {/* Print */}
-      <Tip label="چاپ">
+      <Tip label={t("چاپ")}>
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => window.print()}
           className={BTN}
-          aria-label="چاپ مقاله"
+          aria-label={t("چاپ مقاله")}
         >
           <Printer size={16} aria-hidden="true" />
         </motion.button>
@@ -138,12 +141,12 @@ export default function StickyLeftSidebar({ title, url }: Props) {
       <div className="w-px h-5 bg-white/8" aria-hidden="true" />
 
       {/* Scroll to top */}
-      <Tip label="بازگشت به بالا">
+      <Tip label={t("بازگشت به بالا")}>
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className={BTN}
-          aria-label="بازگشت به بالا"
+          aria-label={t("بازگشت به بالا")}
         >
           <ArrowUp size={16} aria-hidden="true" />
         </motion.button>

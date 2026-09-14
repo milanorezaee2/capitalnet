@@ -9,6 +9,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import type { FaqItem } from '../types';
 
+import { t } from '@/i18n';
+
+
 interface Props {
   items: FaqItem[];
 }
@@ -41,7 +44,7 @@ export default function FAQSection({ items }: Props) {
         className="flex items-center gap-2 text-2xl font-black text-white mb-6 pb-3 border-b border-white/10"
       >
         <HelpCircle size={22} className="text-teal-400" aria-hidden="true" />
-        سوالات متداول
+        {t("سوالات متداول")}
       </h2>
 
       <dl className="space-y-3">
@@ -63,7 +66,7 @@ export default function FAQSection({ items }: Props) {
                 <button
                   id={headingId}
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-right focus:outline-none focus:ring-2 focus:ring-teal-500/40 rounded-2xl"
+                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-end focus:outline-none focus:ring-2 focus:ring-teal-500/40 rounded-2xl"
                   aria-expanded={isOpen}
                   aria-controls={bodyId}
                 >

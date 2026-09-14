@@ -142,6 +142,8 @@ import { ServicePage } from './features/services';
 
 import { FinancialBackground } from './components/FinancialBackground';
 
+import { t as __t, deepTranslate, formatNumber } from '@/i18n';
+
 
 
 // ── Minimal Suspense fallback — spinner that matches site dark bg ──────────────
@@ -204,15 +206,15 @@ function fsToStyle(size: FontSize): React.CSSProperties {
 
 const ALIGN_CLASS: Record<string, string> = {
 
-  right:  'text-right',
+  right:  'text-start',
 
   center: 'text-center',
 
-  left:   'text-left',
+  left:   'text-end',
 
 };
 
-const ac = (align?: string) => ALIGN_CLASS[align ?? 'right'] ?? 'text-right';
+const ac = (align?: string) => ALIGN_CLASS[align ?? 'right'] ?? 'text-start';
 
 
 
@@ -786,15 +788,15 @@ function usePageLinks(): Array<{ label: string; page: PageKey }> {
 
   return [
 
-    { label: t.nav.services, page: 'services' },
+    { label: t('nav.services'), page: 'services' },
 
-    { label: t.nav.process,  page: 'process'  },
+    { label: t('nav.process'),  page: 'process'  },
 
-    { label: t.nav.blog,     page: 'blog'     },
+    { label: t('nav.blog'),     page: 'blog'     },
 
-    { label: t.nav.contact,  page: 'contact'  },
+    { label: t('nav.contact'),  page: 'contact'  },
 
-    { label: t.nav.about,    page: 'about'    },
+    { label: t('nav.about'),    page: 'about'    },
 
   ];
 
@@ -818,9 +820,14 @@ function getInitialPage(): { page: PageKey; category?: BlogFilter; postSlug?: st
 
     const cleaned = value.replace(/^\/|\/$/g, '');
 
-    if (!cleaned || cleaned === 'fa') return '';
+    // پیشوند زبان (fa/ یا en/) جزئی از مسیر صفحه نیست
+    if (!cleaned || cleaned === 'fa' || cleaned === 'en') return '';
 
-    return cleaned.startsWith('fa/') ? cleaned.slice(3) : cleaned;
+    if (cleaned.startsWith('fa/')) return cleaned.slice(3);
+
+    if (cleaned.startsWith('en/')) return cleaned.slice(3);
+
+    return cleaned;
 
   };
 
@@ -950,17 +957,17 @@ function useBlogCategories(): Record<BlogCategory, { label: string; icon: React.
 
   return {
 
-    investment:         { label: t.blogCategories.investment,      icon: <TrendingUp size={18} />, color: 'text-teal-400'   },
+    investment:         { label: t('blogCategories.investment'),      icon: <TrendingUp size={18} />, color: 'text-teal-400'   },
 
-    strategy:           { label: t.blogCategories.strategy,        icon: <Target size={18} />,     color: 'text-amber-400'  },
+    strategy:           { label: t('blogCategories.strategy'),        icon: <Target size={18} />,     color: 'text-amber-400'  },
 
-    'case-study':       { label: t.blogCategories.caseStudy,       icon: <Star size={18} />,       color: 'text-purple-400' },
+    'case-study':       { label: t('blogCategories.caseStudy'),       icon: <Star size={18} />,       color: 'text-purple-400' },
 
-    'market-analysis':  { label: t.blogCategories.marketAnalysis,  icon: <Zap size={18} />,        color: 'text-blue-400'   },
+    'market-analysis':  { label: t('blogCategories.marketAnalysis'),  icon: <Zap size={18} />,        color: 'text-blue-400'   },
 
-    negotiation:        { label: t.blogCategories.negotiation,     icon: <Shield size={18} />,     color: 'text-rose-400'   },
+    negotiation:        { label: t('blogCategories.negotiation'),     icon: <Shield size={18} />,     color: 'text-rose-400'   },
 
-    'financial-modeling': { label: t.blogCategories.financialModeling, icon: <Layers size={18} />, color: 'text-green-400'  },
+    'financial-modeling': { label: t('blogCategories.financialModeling'), icon: <Layers size={18} />, color: 'text-green-400'  },
 
   };
 
@@ -984,117 +991,7 @@ const blogPosts: BlogPost[] = [
 
     excerpt: 'ساختار داستان سرمایه‌گذاری، نکات استراتژیک و ماتریکس‌های مالی که سرمایه‌گذار را قانع می‌کند.',
 
-    content: `یک Pitch Deck VC-Ready فقط مجموعه‌ای از اسلایدها نیست؛ بلکه داستان استراتژیک کسب‌وکار شماست که باید در کمتر از ۱۰ دقیقه، سرمایه‌گذار را قانع کند. در این راهنما، ساختار استاندارد و نکات کلیدی را بررسی می‌کنیم.
-
-
-
-**ساختار استاندارد Pitch Deck**
-
-
-
-یک Deck حرفه‌ای معمولاً ۱۰ تا ۱۲ اسلاید دارد و هر اسلاید باید هدف مشخصی داشته باشد:
-
-
-
-۱. **اسلاید عنوان**: نام شرکت، تگ‌لاین و لوگو. ساده و متمرکز.
-
-
-
-۲. **مشکل**: چه مشکلی را حل می‌کنید؟ با آمار و ارقام واقعی.
-
-
-
-۳. **راه‌حل**: محصول یا خدمت شما چگونه مشکل را حل می‌کند؟
-
-
-
-۴. **بازار**: اندازه بازار (TAM, SAM, SOM) با داده‌های معتبر.
-
-
-
-۵. **مدل کسب‌وکار**: چگونه درآمد کسب می‌کنید؟
-
-
-
-۶. **ترکشن**: دستاوردها، کاربران، درآمد و شاخص‌های کلیدی.
-
-
-
-۷. **رقبا**: چه کسانی رقیب شما هستند و چه تفاوتی دارید؟
-
-
-
-۸. **مزیت رقابتی**: چرا شما برنده می‌شوید؟
-
-
-
-۹. **تیم**: چه کسی پشت این پروژه است؟
-
-
-
-۱۰. **پیش‌بینی مالی**: ۳ تا ۵ سال آینده.
-
-
-
-۱۱. **درخواست**: چقدر سرمایه نیاز دارید و برای چه چیزی؟
-
-
-
-**نکات استراتژیک**
-
-
-
-- **داستان‌گویی**: با مشکل شروع کنید و راه‌حل را به عنوان پاسخ معرفی کنید.
-
-- **سادگی**: از اصطلاحات فنی پیچیده پرهیز کنید.
-
-- **داده‌محور**: هر ادعایی با داده پشتیبانی شود.
-
-- **تمرکز**: روی یک پیام اصلی تمرکز کنید.
-
-
-
-**ماتریکس‌های مالی کلیدی**
-
-
-
-سرمایه‌گذاران به این شاخص‌ها توجه ویژه دارند:
-
-
-
-- CAC (هزینه جذب مشتری)
-
-- LTV (ارزش طول عمر مشتری)
-
-- Churn Rate (نرخ ریزش مشتری)
-
-- MRR/ARR (درآمد ماهانه/سالانه تکرارپذیر)
-
-- Gross Margin (حاشیه سود خالص)
-
-
-
-**اشتباهات رایج**
-
-
-
-- بیش از حد فنی بودن
-
-- عدم تمرکز روی مشتری
-
-- عدم ارائه داده‌های واقعی
-
-- اسلایدهای شلوغ و گیج‌کننده
-
-- عدم آمادگی برای سوالات دشوار
-
-
-
-**نتیجه‌گیری**
-
-
-
-یک Pitch Deck VC-Ready نیاز به زمان، تمرین و بازبینی دارد. اما اگر این اصول را رعایت کنید، شانس خود را برای جذب سرمایه به شدت افزایش می‌دهید.`,
+    content: __t("یک Pitch Deck VC-Ready فقط مجموعه‌ای از اسلایدها نیست؛ بلکه داستان استراتژیک کسب‌وکار شماست که باید در کمتر از ۱۰ دقیقه، سرمایه‌گذار را قانع کند. در این راهنما، ساختار استاندارد و نکات کلیدی را بررسی می‌کنیم.\n\n\n\n**ساختار استاندارد Pitch Deck**\n\n\n\nیک Deck حرفه‌ای معمولاً ۱۰ تا ۱۲ اسلاید دارد و هر اسلاید باید هدف مشخصی داشته باشد:\n\n\n\n۱. **اسلاید عنوان**: نام شرکت، تگ‌لاین و لوگو. ساده و متمرکز.\n\n\n\n۲. **مشکل**: چه مشکلی را حل می‌کنید؟ با آمار و ارقام واقعی.\n\n\n\n۳. **راه‌حل**: محصول یا خدمت شما چگونه مشکل را حل می‌کند؟\n\n\n\n۴. **بازار**: اندازه بازار (TAM, SAM, SOM) با داده‌های معتبر.\n\n\n\n۵. **مدل کسب‌وکار**: چگونه درآمد کسب می‌کنید؟\n\n\n\n۶. **ترکشن**: دستاوردها، کاربران، درآمد و شاخص‌های کلیدی.\n\n\n\n۷. **رقبا**: چه کسانی رقیب شما هستند و چه تفاوتی دارید؟\n\n\n\n۸. **مزیت رقابتی**: چرا شما برنده می‌شوید؟\n\n\n\n۹. **تیم**: چه کسی پشت این پروژه است؟\n\n\n\n۱۰. **پیش‌بینی مالی**: ۳ تا ۵ سال آینده.\n\n\n\n۱۱. **درخواست**: چقدر سرمایه نیاز دارید و برای چه چیزی؟\n\n\n\n**نکات استراتژیک**\n\n\n\n- **داستان‌گویی**: با مشکل شروع کنید و راه‌حل را به عنوان پاسخ معرفی کنید.\n\n- **سادگی**: از اصطلاحات فنی پیچیده پرهیز کنید.\n\n- **داده‌محور**: هر ادعایی با داده پشتیبانی شود.\n\n- **تمرکز**: روی یک پیام اصلی تمرکز کنید.\n\n\n\n**ماتریکس‌های مالی کلیدی**\n\n\n\nسرمایه‌گذاران به این شاخص‌ها توجه ویژه دارند:\n\n\n\n- CAC (هزینه جذب مشتری)\n\n- LTV (ارزش طول عمر مشتری)\n\n- Churn Rate (نرخ ریزش مشتری)\n\n- MRR/ARR (درآمد ماهانه/سالانه تکرارپذیر)\n\n- Gross Margin (حاشیه سود خالص)\n\n\n\n**اشتباهات رایج**\n\n\n\n- بیش از حد فنی بودن\n\n- عدم تمرکز روی مشتری\n\n- عدم ارائه داده‌های واقعی\n\n- اسلایدهای شلوغ و گیج‌کننده\n\n- عدم آمادگی برای سوالات دشوار\n\n\n\n**نتیجه‌گیری**\n\n\n\nیک Pitch Deck VC-Ready نیاز به زمان، تمرین و بازبینی دارد. اما اگر این اصول را رعایت کنید، شانس خود را برای جذب سرمایه به شدت افزایش می‌دهید."),
 
     author: { name: 'علی رضایی', role: 'Senior VC Advisor' },
 
@@ -1122,87 +1019,7 @@ const blogPosts: BlogPost[] = [
 
     excerpt: 'تشخیص سیگنال‌های رشد، نقاط ورود و آماده‌سازی زمان‌بندی برای تماس با سرمایه‌گذار.',
 
-    content: `زمان‌بندی صحیح برای شروع مذاکرات با VCها یکی از حیاتی‌ترین تصمیمات در مسیر جذب سرمایه است. خیلی زود شروع کردن می‌تواند به از دست دادن ارزش سهام منجر شود و خیلی دیر شروع کردن، فرصت‌های رشد را از بین می‌برد.
-
-
-
-**سیگنال‌های آمادگی برای جذب سرمایه**
-
-
-
-قبل از تماس با VCها، باید این سیگنال‌ها را داشته باشید:
-
-
-
-۱. **ترکشن واقعی**: رشد مداوم کاربران یا درآمد در ۳ تا ۶ ماه گذشته
-
-
-
-۲. **مدل کسب‌وکار تاییدشده**: درآمدزایی از محصول یا خدمت شما
-
-
-
-۳. **تیم کامل**: تیمی که نقش‌های کلیدی را پوشش می‌دهد
-
-
-
-۴. **شناخت بازار**: درک عمیق از مشتریان و رقبا
-
-
-
-۵. **چشم‌انداز روشن**: برنامه مشخص برای استفاده از سرمایه
-
-
-
-**نقاط ورود به بازار سرمایه‌گذاری**
-
-
-
-- **Seed Stage**: وقتی محصول را ساخته‌اید و ترکشن اولیه دارید
-
-- **Series A**: وقتی مدل کسب‌وکار تایید شده و نیاز به مقیاس‌دهی دارید
-
-- **Series B**: وقتی در بازار تثبیت شده و آماده گسترش هستید
-
-
-
-**آماده‌سازی زمان‌بندی**
-
-
-
-یک فرآیند جذب سرمایه معمولاً ۳ تا ۶ ماه طول می‌کشد. بنابراین:
-
-
-
-- ۶ ماه قبل: آماده‌سازی Deck و مدل مالی
-
-- ۳ ماه قبل: شناسایی VCهای هدف
-
-- ۲ ماه قبل: شروع تماس‌های اولیه
-
-- ۱ ماه قبل: جلسات Pitch و مذاکرات
-
-
-
-**اشتباهات رایج در زمان‌بندی**
-
-
-
-- شروع مذاکرات بدون ترکشن
-
-- انتظار برای "زمان مناسب" که هرگز نمی‌رسد
-
-- شروع همزمان با چندین VC بدون آمادگی
-
-- عدم برنامه‌ریزی برای زمان طولانی فرآیند
-
-
-
-**نتیجه‌گیری**
-
-
-
-زمان مناسب برای جذب سرمایه زمانی است که ترکیبی از ترکشن، تیم و چشم‌انداز داشته باشید. با برنامه‌ریزی دقیق و آمادگی کامل، می‌توانید فرآیند را بهینه کنید و بهترین نتیجه را بگیرید.`,
+    content: __t("زمان‌بندی صحیح برای شروع مذاکرات با VCها یکی از حیاتی‌ترین تصمیمات در مسیر جذب سرمایه است. خیلی زود شروع کردن می‌تواند به از دست دادن ارزش سهام منجر شود و خیلی دیر شروع کردن، فرصت‌های رشد را از بین می‌برد.\n\n\n\n**سیگنال‌های آمادگی برای جذب سرمایه**\n\n\n\nقبل از تماس با VCها، باید این سیگنال‌ها را داشته باشید:\n\n\n\n۱. **ترکشن واقعی**: رشد مداوم کاربران یا درآمد در ۳ تا ۶ ماه گذشته\n\n\n\n۲. **مدل کسب‌وکار تاییدشده**: درآمدزایی از محصول یا خدمت شما\n\n\n\n۳. **تیم کامل**: تیمی که نقش‌های کلیدی را پوشش می‌دهد\n\n\n\n۴. **شناخت بازار**: درک عمیق از مشتریان و رقبا\n\n\n\n۵. **چشم‌انداز روشن**: برنامه مشخص برای استفاده از سرمایه\n\n\n\n**نقاط ورود به بازار سرمایه‌گذاری**\n\n\n\n- **Seed Stage**: وقتی محصول را ساخته‌اید و ترکشن اولیه دارید\n\n- **Series A**: وقتی مدل کسب‌وکار تایید شده و نیاز به مقیاس‌دهی دارید\n\n- **Series B**: وقتی در بازار تثبیت شده و آماده گسترش هستید\n\n\n\n**آماده‌سازی زمان‌بندی**\n\n\n\nیک فرآیند جذب سرمایه معمولاً ۳ تا ۶ ماه طول می‌کشد. بنابراین:\n\n\n\n- ۶ ماه قبل: آماده‌سازی Deck و مدل مالی\n\n- ۳ ماه قبل: شناسایی VCهای هدف\n\n- ۲ ماه قبل: شروع تماس‌های اولیه\n\n- ۱ ماه قبل: جلسات Pitch و مذاکرات\n\n\n\n**اشتباهات رایج در زمان‌بندی**\n\n\n\n- شروع مذاکرات بدون ترکشن\n\n- انتظار برای \"زمان مناسب\" که هرگز نمی‌رسد\n\n- شروع همزمان با چندین VC بدون آمادگی\n\n- عدم برنامه‌ریزی برای زمان طولانی فرآیند\n\n\n\n**نتیجه‌گیری**\n\n\n\nزمان مناسب برای جذب سرمایه زمانی است که ترکیبی از ترکشن، تیم و چشم‌انداز داشته باشید. با برنامه‌ریزی دقیق و آمادگی کامل، می‌توانید فرآیند را بهینه کنید و بهترین نتیجه را بگیرید."),
 
     author: { name: 'فاطمه محمدی', role: 'Investment Strategist' },
 
@@ -1230,117 +1047,7 @@ const blogPosts: BlogPost[] = [
 
     excerpt: 'چک‌لیست شروط کلیدی term sheet و تاکتیک‌های محافظت از مالکیت مؤسسین در مذاکره.',
 
-    content: `مذاکره با سرمایه‌گذاران یکی از حساس‌ترین مراحل جذب سرمایه است. در اینجا چک‌لیست کامل شروط کلیدی Term Sheet و تاکتیک‌های محافظت از مالکیت مؤسسین را بررسی می‌کنیم.
-
-
-
-**شروط کلیدی Term Sheet**
-
-
-
-۱. **Valuation (ارزش‌گذاری)**:
-
-- Pre-money Valuation: ارزش شرکت قبل از سرمایه
-
-- Post-money Valuation: ارزش شرکت بعد از سرمایه
-
-- نکته: روی Valuation واقعی مذاکره کنید، نه اعداد خیالی
-
-
-
-۲. **Liquidation Preference (اولویت نقدینگی)**:
-
-- 1x Non-participating: استاندارد و عادلانه
-
-- 2x Participating: خطرناک برای مؤسسین
-
-- نکته: از 1x Non-participating دفاع کنید
-
-
-
-۳. **Anti-dilution (ضد رقیق شدن)**:
-
-- Full Ratchet: خطرناک برای مؤسسین
-
-- Weighted Average: متعادل‌تر
-
-- نکته: Weighted Average را ترجیح دهید
-
-
-
-۴. **Board Seats (کرسی‌های هیئت مدیره)**:
-
-- تعداد کرسی‌ها و حق انتخاب
-
-- نکته: تعادل قدرت را حفظ کنید
-
-
-
-۵. **Vesting (واگذاری سهام)**:
-
-- 4 سال با Cliff 1 سال: استاندارد
-
-- نکته: از Cliff طولانی‌تر پرهیز کنید
-
-
-
-**تاکتیک‌های محافظت از مالکیت**
-
-
-
-۱. **آمادگی کامل**:
-
-- تمام شروط را قبل از جلسه مطالعه کنید
-
-- مشاور حقوقی داشته باشید
-
-
-
-۲. **تفکر بلندمدت**:
-
-- فقط روی Valuation تمرکز نکنید
-
-- سایر شروط را در نظر بگیرید
-
-
-
-۳. **انعطاف‌پذیری هوشمند**:
-
-- روی شروط حیاتی ایستادگی کنید
-
-- روی موارد کم‌اهمیت انعطاف نشان دهید
-
-
-
-۴. **شفافیت**:
-
-- واقعیت‌های کسب‌وکار را صادقانه بیان کنید
-
-- از اغراق پرهیز کنید
-
-
-
-**اشتباهات رایج در مذاکره**
-
-
-
-- پذیرش اولین پیشنهاد بدون بررسی
-
-- تمرکز فقط روی Valuation
-
-- عدم مشاوره حقوقی
-
-- عدم درک پیامدهای بلندمدت
-
-- عجله در بستن قرارداد
-
-
-
-**نتیجه‌گیری**
-
-
-
-مذاکره موفق با سرمایه‌گذار نیاز به آمادگی، دانش و استراتژی دارد. با درک شروط کلیدی و تاکتیک‌های صحیح، می‌توانید شرایط عادلانه‌تری برای خود و شرکتتان به دست آورید.`,
+    content: __t("مذاکره با سرمایه‌گذاران یکی از حساس‌ترین مراحل جذب سرمایه است. در اینجا چک‌لیست کامل شروط کلیدی Term Sheet و تاکتیک‌های محافظت از مالکیت مؤسسین را بررسی می‌کنیم.\n\n\n\n**شروط کلیدی Term Sheet**\n\n\n\n۱. **Valuation (ارزش‌گذاری)**:\n\n- Pre-money Valuation: ارزش شرکت قبل از سرمایه\n\n- Post-money Valuation: ارزش شرکت بعد از سرمایه\n\n- نکته: روی Valuation واقعی مذاکره کنید، نه اعداد خیالی\n\n\n\n۲. **Liquidation Preference (اولویت نقدینگی)**:\n\n- 1x Non-participating: استاندارد و عادلانه\n\n- 2x Participating: خطرناک برای مؤسسین\n\n- نکته: از 1x Non-participating دفاع کنید\n\n\n\n۳. **Anti-dilution (ضد رقیق شدن)**:\n\n- Full Ratchet: خطرناک برای مؤسسین\n\n- Weighted Average: متعادل‌تر\n\n- نکته: Weighted Average را ترجیح دهید\n\n\n\n۴. **Board Seats (کرسی‌های هیئت مدیره)**:\n\n- تعداد کرسی‌ها و حق انتخاب\n\n- نکته: تعادل قدرت را حفظ کنید\n\n\n\n۵. **Vesting (واگذاری سهام)**:\n\n- 4 سال با Cliff 1 سال: استاندارد\n\n- نکته: از Cliff طولانی‌تر پرهیز کنید\n\n\n\n**تاکتیک‌های محافظت از مالکیت**\n\n\n\n۱. **آمادگی کامل**:\n\n- تمام شروط را قبل از جلسه مطالعه کنید\n\n- مشاور حقوقی داشته باشید\n\n\n\n۲. **تفکر بلندمدت**:\n\n- فقط روی Valuation تمرکز نکنید\n\n- سایر شروط را در نظر بگیرید\n\n\n\n۳. **انعطاف‌پذیری هوشمند**:\n\n- روی شروط حیاتی ایستادگی کنید\n\n- روی موارد کم‌اهمیت انعطاف نشان دهید\n\n\n\n۴. **شفافیت**:\n\n- واقعیت‌های کسب‌وکار را صادقانه بیان کنید\n\n- از اغراق پرهیز کنید\n\n\n\n**اشتباهات رایج در مذاکره**\n\n\n\n- پذیرش اولین پیشنهاد بدون بررسی\n\n- تمرکز فقط روی Valuation\n\n- عدم مشاوره حقوقی\n\n- عدم درک پیامدهای بلندمدت\n\n- عجله در بستن قرارداد\n\n\n\n**نتیجه‌گیری**\n\n\n\nمذاکره موفق با سرمایه‌گذار نیاز به آمادگی، دانش و استراتژی دارد. با درک شروط کلیدی و تاکتیک‌های صحیح، می‌توانید شرایط عادلانه‌تری برای خود و شرکتتان به دست آورید."),
 
     author: { name: 'علی رضایی', role: 'Senior VC Advisor' },
 
@@ -1368,111 +1075,7 @@ const blogPosts: BlogPost[] = [
 
     excerpt: 'چالش: تماس‌های پراکنده و decks ضعیف — راهکار: بازنویسی روایت، مدل مالی روشن و هدف‌گذاری هوشمند؛ نتیجه: Term Sheet در ۶ هفته.',
 
-    content: `این مطالعه موردی نشان می‌دهد چگونه یک استارتاپ fintech با استراتژی صحیح، در عرض ۶ هفته از وضعیت نامشخص به Term Sheet رسید.
-
-
-
-**چالش اولیه**
-
-
-
-استارتاپ PayTech (نام مستعار) یک پلتفرم پرداخت نوین بود که با چالش‌های زیر روبرو بود:
-
-
-
-- تماس‌های پراکنده با VCها بدون استراتژی
-
-- Pitch Deck ضعیف و بدون داستان منسجم
-
-- عدم شفافیت در مدل مالی
-
-- عدم تمرکز روی VCهای مرتبط
-
-- زمان از دست رفته: ۳ ماه بدون نتیجه
-
-
-
-**راهکار اجرا شده**
-
-
-
-۱. **بازنویسی کامل روایت**:
-
-- تمرکز روی مشکل و راه‌حل
-
-- استفاده از داده‌های واقعی
-
-- ساده‌سازی پیام اصلی
-
-
-
-۲. **مدل مالی شفاف**:
-
-- پیش‌بینی ۳ ساله با سناریوهای مختلف
-
-- شاخص‌های کلیدی واضح و قابل اندازه‌گیری
-
-- فرضیات واقع‌بینانه
-
-
-
-۳. **هدف‌گذاری هوشمند**:
-
-- شناسایی ۲۰ VC مرتبط با حوزه fintech
-
-- اولویت‌بندی بر اساس Thesis و چکسایز
-
-- استراتژی تماس شخصی‌سازی شده
-
-
-
-۴. **آماده‌سازی Pitch**:
-
-- تمرین مکرر با تیم
-
-- آمادگی برای سوالات دشوار
-
-- Deck حرفه‌ای و متمرکز
-
-
-
-**نتایج به دست آمده**
-
-
-
-- **کاهش زمان**: از ۳ ماه به ۶ هفته
-
-- **افزایش نرخ دعوت به جلسه**: از ۱۵٪ به ۵۰٪
-
-- **جلسات موفق**: ۸ جلسه از ۱۰ تماس
-
-- **Term Sheet**: ۳ پیشنهاد از VCهای Tier-1
-
-- **ارزش‌گذاری**: ۲۰٪ بالاتر از انتظار اولیه
-
-
-
-**درس‌های کلیدی**
-
-
-
-۱. استراتژی مهم‌تر از سرعت است
-
-۲. آمادگی کامل قبل از تماس ضروری است
-
-۳. تمرکز روی VCهای مرتبط نتایج بهتری می‌دهد
-
-۴. داده‌های واقعی اعتماد می‌سازد
-
-۵. تمرین و آمادگی برای Pitch حیاتی است
-
-
-
-**نتیجه‌گیری**
-
-
-
-با استراتژی صحیح و آمادگی کامل، می‌توان زمان جذب سرمایه را به شدت کاهش داد و نتایج بهتری گرفت. این مطالعه موردی نشان می‌دهد که کیفیت مهم‌تر از کمیت است.`,
+    content: __t("این مطالعه موردی نشان می‌دهد چگونه یک استارتاپ fintech با استراتژی صحیح، در عرض ۶ هفته از وضعیت نامشخص به Term Sheet رسید.\n\n\n\n**چالش اولیه**\n\n\n\nاستارتاپ PayTech (نام مستعار) یک پلتفرم پرداخت نوین بود که با چالش‌های زیر روبرو بود:\n\n\n\n- تماس‌های پراکنده با VCها بدون استراتژی\n\n- Pitch Deck ضعیف و بدون داستان منسجم\n\n- عدم شفافیت در مدل مالی\n\n- عدم تمرکز روی VCهای مرتبط\n\n- زمان از دست رفته: ۳ ماه بدون نتیجه\n\n\n\n**راهکار اجرا شده**\n\n\n\n۱. **بازنویسی کامل روایت**:\n\n- تمرکز روی مشکل و راه‌حل\n\n- استفاده از داده‌های واقعی\n\n- ساده‌سازی پیام اصلی\n\n\n\n۲. **مدل مالی شفاف**:\n\n- پیش‌بینی ۳ ساله با سناریوهای مختلف\n\n- شاخص‌های کلیدی واضح و قابل اندازه‌گیری\n\n- فرضیات واقع‌بینانه\n\n\n\n۳. **هدف‌گذاری هوشمند**:\n\n- شناسایی ۲۰ VC مرتبط با حوزه fintech\n\n- اولویت‌بندی بر اساس Thesis و چکسایز\n\n- استراتژی تماس شخصی‌سازی شده\n\n\n\n۴. **آماده‌سازی Pitch**:\n\n- تمرین مکرر با تیم\n\n- آمادگی برای سوالات دشوار\n\n- Deck حرفه‌ای و متمرکز\n\n\n\n**نتایج به دست آمده**\n\n\n\n- **کاهش زمان**: از ۳ ماه به ۶ هفته\n\n- **افزایش نرخ دعوت به جلسه**: از ۱۵٪ به ۵۰٪\n\n- **جلسات موفق**: ۸ جلسه از ۱۰ تماس\n\n- **Term Sheet**: ۳ پیشنهاد از VCهای Tier-1\n\n- **ارزش‌گذاری**: ۲۰٪ بالاتر از انتظار اولیه\n\n\n\n**درس‌های کلیدی**\n\n\n\n۱. استراتژی مهم‌تر از سرعت است\n\n۲. آمادگی کامل قبل از تماس ضروری است\n\n۳. تمرکز روی VCهای مرتبط نتایج بهتری می‌دهد\n\n۴. داده‌های واقعی اعتماد می‌سازد\n\n۵. تمرین و آمادگی برای Pitch حیاتی است\n\n\n\n**نتیجه‌گیری**\n\n\n\nبا استراتژی صحیح و آمادگی کامل، می‌توان زمان جذب سرمایه را به شدت کاهش داد و نتایج بهتری گرفت. این مطالعه موردی نشان می‌دهد که کیفیت مهم‌تر از کمیت است."),
 
     author: { name: 'فاطمه محمدی', role: 'Investment Strategist' },
 
@@ -1500,125 +1103,7 @@ const blogPosts: BlogPost[] = [
 
     excerpt: 'بررسی روندهای سرمایه‌گذاری خطرپذیر در منطقه، فرصت‌های نوظهور و پیش‌بینی‌های ۱۴۰۴.',
 
-    content: `بازار سرمایه‌گذاری خطرپذیر در خاورمیانه در سال ۱۴۰۳ تحولات قابل توجهی را تجربه کرد. در این تحلیل، روندهای کلیدی، فرصت‌های نوظهور و پیش‌بینی‌های ۱۴۰۴ را بررسی می‌کنیم.
-
-
-
-**وضعیت کلی بازار در ۱۴۰۳**
-
-
-
-- **حجم سرمایه‌گذاری**: رشد ۲۵٪ نسبت به سال قبل
-
-- **تعداد معاملات**: افزایش ۳۰٪ در تعداد Dealها
-
-- **میانگین حجم معامله**: از ۲ میلیون به ۲.۵ میلیون دلار
-
-- **کشورهای پیشرو**: امارات، عربستان، مصر، ترکیه
-
-
-
-**روندهای کلیدی**
-
-
-
-۱. **تمرکز بر Fintech**:
-
-- ۳۵٪ از کل سرمایه‌گذاری به Fintech اختصاص شد
-
-- پرداخت دیجیتال، بانکداری نوین و DeFi محبوب‌ترین حوزه‌ها
-
-- رشد ۴۰٪ نسبت به سال قبل
-
-
-
-۲. **ظهور E-commerce**:
-
-- ۲۰٪ از سرمایه‌گذاری به E-commerce
-
-- پلتفرم‌های B2B و B2C مورد توجه قرار گرفتند
-
-- رشد ۳۵٪ در این حوزه
-
-
-
-۳. **Healthtech در حال رشد**:
-
-- ۱۵٪ از سرمایه‌گذاری به Healthtech
-
-- تله‌مدیسین و سلامت دیجیتال محور اصلی
-
-- رشد ۵۰٪ نسبت به سال قبل
-
-
-
-**فرصت‌های نوظهور**
-
-
-
-۱. **SaaS برای بازار خاورمیانه**:
-
-- نیاز به راه‌حل‌های محلی‌سازی شده
-
-- پتانسیل رشد بالا در بازارهای عربی
-
-- فرصت برای Scale-up سریع
-
-
-
-۲. **Edtech**:
-
-- تقاضای رو به رشد برای آموزش آنلاین
-
-- نیاز به محتوای عربی و فارسی
-
-- پتانسیل برای گسترش منطقه‌ای
-
-
-
-۳. **Cleantech**:
-
-- توجه دولت‌ها به انرژی پاک
-
-- فرصت‌های جدید در خورشیدی و بادی
-
-- حمایت سیاستی در حال افزایش
-
-
-
-**پیش‌بینی‌های ۱۴۰۴**
-
-
-
-- **رشد مداوم**: پیش‌بینی رشد ۲۰٪ دیگر
-
-- **تنوع‌بخشی بیشتر**: گسترش به حوزه‌های جدید
-
-- **ورود بازیکنان بین‌المللی**: افزایش حضور VCهای جهانی
-
-- **تمرکز بر Profitability**: از رشد به سودآوری
-
-
-
-**چالش‌ها و موانع**
-
-
-
-- عدم بلوغ کامل اکوسیستم در برخی کشورها
-
-- کمبود استعدادهای فنی
-
-- چالش‌های نظارتی در برخی حوزه‌ها
-
-- نیاز به بیشتر شدن Exitها
-
-
-
-**نتیجه‌گیری**
-
-
-
-بازار VC خاورمیانه در حال بلوغ است و فرصت‌های قابل توجهی برای استارتاپ‌ها و سرمایه‌گذاران وجود دارد. با درک روندها و آمادگی مناسب، می‌توان از این فرصت‌ها بهره‌برداری کرد.`,
+    content: __t("بازار سرمایه‌گذاری خطرپذیر در خاورمیانه در سال ۱۴۰۳ تحولات قابل توجهی را تجربه کرد. در این تحلیل، روندهای کلیدی، فرصت‌های نوظهور و پیش‌بینی‌های ۱۴۰۴ را بررسی می‌کنیم.\n\n\n\n**وضعیت کلی بازار در ۱۴۰۳**\n\n\n\n- **حجم سرمایه‌گذاری**: رشد ۲۵٪ نسبت به سال قبل\n\n- **تعداد معاملات**: افزایش ۳۰٪ در تعداد Dealها\n\n- **میانگین حجم معامله**: از ۲ میلیون به ۲.۵ میلیون دلار\n\n- **کشورهای پیشرو**: امارات، عربستان، مصر، ترکیه\n\n\n\n**روندهای کلیدی**\n\n\n\n۱. **تمرکز بر Fintech**:\n\n- ۳۵٪ از کل سرمایه‌گذاری به Fintech اختصاص شد\n\n- پرداخت دیجیتال، بانکداری نوین و DeFi محبوب‌ترین حوزه‌ها\n\n- رشد ۴۰٪ نسبت به سال قبل\n\n\n\n۲. **ظهور E-commerce**:\n\n- ۲۰٪ از سرمایه‌گذاری به E-commerce\n\n- پلتفرم‌های B2B و B2C مورد توجه قرار گرفتند\n\n- رشد ۳۵٪ در این حوزه\n\n\n\n۳. **Healthtech در حال رشد**:\n\n- ۱۵٪ از سرمایه‌گذاری به Healthtech\n\n- تله‌مدیسین و سلامت دیجیتال محور اصلی\n\n- رشد ۵۰٪ نسبت به سال قبل\n\n\n\n**فرصت‌های نوظهور**\n\n\n\n۱. **SaaS برای بازار خاورمیانه**:\n\n- نیاز به راه‌حل‌های محلی‌سازی شده\n\n- پتانسیل رشد بالا در بازارهای عربی\n\n- فرصت برای Scale-up سریع\n\n\n\n۲. **Edtech**:\n\n- تقاضای رو به رشد برای آموزش آنلاین\n\n- نیاز به محتوای عربی و فارسی\n\n- پتانسیل برای گسترش منطقه‌ای\n\n\n\n۳. **Cleantech**:\n\n- توجه دولت‌ها به انرژی پاک\n\n- فرصت‌های جدید در خورشیدی و بادی\n\n- حمایت سیاستی در حال افزایش\n\n\n\n**پیش‌بینی‌های ۱۴۰۴**\n\n\n\n- **رشد مداوم**: پیش‌بینی رشد ۲۰٪ دیگر\n\n- **تنوع‌بخشی بیشتر**: گسترش به حوزه‌های جدید\n\n- **ورود بازیکنان بین‌المللی**: افزایش حضور VCهای جهانی\n\n- **تمرکز بر Profitability**: از رشد به سودآوری\n\n\n\n**چالش‌ها و موانع**\n\n\n\n- عدم بلوغ کامل اکوسیستم در برخی کشورها\n\n- کمبود استعدادهای فنی\n\n- چالش‌های نظارتی در برخی حوزه‌ها\n\n- نیاز به بیشتر شدن Exitها\n\n\n\n**نتیجه‌گیری**\n\n\n\nبازار VC خاورمیانه در حال بلوغ است و فرصت‌های قابل توجهی برای استارتاپ‌ها و سرمایه‌گذاران وجود دارد. با درک روندها و آمادگی مناسب، می‌توان از این فرصت‌ها بهره‌برداری کرد."),
 
     author: { name: 'علی رضایی', role: 'Senior VC Advisor' },
 
@@ -1646,165 +1131,7 @@ const blogPosts: BlogPost[] = [
 
     excerpt: 'ساخت مدل مالی جامع برای راند Series A شامل پیش‌بینی درآمد، هزینه‌ها و نرخ رشد.',
 
-    content: `یک مدل مالی جامع برای راند Series A یکی از مهم‌ترین مستندات در فرآیند جذب سرمایه است. در این راهنما، نحوه ساخت مدل مالی حرفه‌ای را بررسی می‌کنیم.
-
-
-
-**اجزای کلیدی مدل مالی**
-
-
-
-۱. **پیش‌بینی درآمد**:
-
-- درآمد ماهانه/سالانه برای ۳ تا ۵ سال
-
-- سناریوهای مختلف (Base, Upside, Downside)
-
-- فرضیات واضح و قابل دفاع
-
-
-
-۲. **ساختار هزینه‌ها**:
-
-- هزینه‌های ثابت (اجاره، حقوق ثابت)
-
-- هزینه‌های متغیر (بازاریابی، فروش)
-
-- هزینه‌های سرمایه‌ای (توسعه محصول)
-
-
-
-۳. **شاخص‌های کلیدی**:
-
-- CAC (هزینه جذب مشتری)
-
-- LTV (ارزش طول عمر مشتری)
-
-- Churn Rate (نرخ ریزش)
-
-- MRR/ARR (درآمد تکرارپذیر)
-
-
-
-۴. **جریان‌های نقدی**:
-
-- Cash Flow ماهانه
-
-- Burn Rate (نرخ مصرف سرمایه)
-
-- Runway (مدت باقی‌مانده)
-
-
-
-**ساختار استاندارد مدل**
-
-
-
-**Sheet 1: فرضیات و ورودی‌ها**
-
-- فرضیات بازار
-
-- فرضیات محصول
-
-- فرضیات رشد
-
-
-
-**Sheet 2: درآمد**
-
-- پیش‌بینی درآمد بر اساس کانال‌ها
-
-- رشد ماهانه/فصلی
-
-- میانگین درآمد مشتری
-
-
-
-**Sheet 3: هزینه‌ها**
-
-- هزینه‌های عملیاتی
-
-- هزینه‌های بازاریابی
-
-- هزینه‌های پرسنلی
-
-
-
-**Sheet 4: سود و زیان**
-
-- درآمد کل
-
-- هزینه کل
-
-- سود خالص
-
-
-
-**Sheet 5: جریان نقدی**
-
-- ورودی‌ها و خروجی‌ها
-
-- موقعیت نقدی
-
-- نیاز به سرمایه
-
-
-
-**نکات کلیدی**
-
-
-
-۱. **واقع‌بین بودن**:
-
-- از اغراق پرهیز کنید
-
-- فرضیات قابل دفاع داشته باشید
-
-- سناریوهای مختلف را در نظر بگیرید
-
-
-
-۲. **شفافیت**:
-
-- تمام فرضیات را توضیح دهید
-
-- محاسبات را نشان دهید
-
-- از جداول پیچیده پرهیز کنید
-
-
-
-۳. **قابلیت به‌روزرسانی**:
-
-- مدل باید انعطاف‌پذیر باشد
-
-- تغییرات را بتوان به‌سادگی اعمال کرد
-
-- سناریوهای مختلف را بتوان تست کرد
-
-
-
-**اشتباهات رایج**
-
-
-
-- بیش از حد پیچیده کردن مدل
-
-- عدم توضیح فرضیات
-
-- عدم در نظر گرفتن سناریوهای مختلف
-
-- عدم هم‌راستایی با استراتژی کسب‌وکار
-
-- عدم به‌روزرسانی منظم
-
-
-
-**نتیجه‌گیری**
-
-
-
-یک مدل مالی حرفه‌ای برای Series A باید واقع‌بینانه، شفاف و انعطاف‌پذیر باشد. با رعایت این اصول، می‌توان اعتماد سرمایه‌گذاران را جلب کرد و فرآیند جذب سرمایه را تسهیل نمود.`,
+    content: __t("یک مدل مالی جامع برای راند Series A یکی از مهم‌ترین مستندات در فرآیند جذب سرمایه است. در این راهنما، نحوه ساخت مدل مالی حرفه‌ای را بررسی می‌کنیم.\n\n\n\n**اجزای کلیدی مدل مالی**\n\n\n\n۱. **پیش‌بینی درآمد**:\n\n- درآمد ماهانه/سالانه برای ۳ تا ۵ سال\n\n- سناریوهای مختلف (Base, Upside, Downside)\n\n- فرضیات واضح و قابل دفاع\n\n\n\n۲. **ساختار هزینه‌ها**:\n\n- هزینه‌های ثابت (اجاره، حقوق ثابت)\n\n- هزینه‌های متغیر (بازاریابی، فروش)\n\n- هزینه‌های سرمایه‌ای (توسعه محصول)\n\n\n\n۳. **شاخص‌های کلیدی**:\n\n- CAC (هزینه جذب مشتری)\n\n- LTV (ارزش طول عمر مشتری)\n\n- Churn Rate (نرخ ریزش)\n\n- MRR/ARR (درآمد تکرارپذیر)\n\n\n\n۴. **جریان‌های نقدی**:\n\n- Cash Flow ماهانه\n\n- Burn Rate (نرخ مصرف سرمایه)\n\n- Runway (مدت باقی‌مانده)\n\n\n\n**ساختار استاندارد مدل**\n\n\n\n**Sheet 1: فرضیات و ورودی‌ها**\n\n- فرضیات بازار\n\n- فرضیات محصول\n\n- فرضیات رشد\n\n\n\n**Sheet 2: درآمد**\n\n- پیش‌بینی درآمد بر اساس کانال‌ها\n\n- رشد ماهانه/فصلی\n\n- میانگین درآمد مشتری\n\n\n\n**Sheet 3: هزینه‌ها**\n\n- هزینه‌های عملیاتی\n\n- هزینه‌های بازاریابی\n\n- هزینه‌های پرسنلی\n\n\n\n**Sheet 4: سود و زیان**\n\n- درآمد کل\n\n- هزینه کل\n\n- سود خالص\n\n\n\n**Sheet 5: جریان نقدی**\n\n- ورودی‌ها و خروجی‌ها\n\n- موقعیت نقدی\n\n- نیاز به سرمایه\n\n\n\n**نکات کلیدی**\n\n\n\n۱. **واقع‌بین بودن**:\n\n- از اغراق پرهیز کنید\n\n- فرضیات قابل دفاع داشته باشید\n\n- سناریوهای مختلف را در نظر بگیرید\n\n\n\n۲. **شفافیت**:\n\n- تمام فرضیات را توضیح دهید\n\n- محاسبات را نشان دهید\n\n- از جداول پیچیده پرهیز کنید\n\n\n\n۳. **قابلیت به‌روزرسانی**:\n\n- مدل باید انعطاف‌پذیر باشد\n\n- تغییرات را بتوان به‌سادگی اعمال کرد\n\n- سناریوهای مختلف را بتوان تست کرد\n\n\n\n**اشتباهات رایج**\n\n\n\n- بیش از حد پیچیده کردن مدل\n\n- عدم توضیح فرضیات\n\n- عدم در نظر گرفتن سناریوهای مختلف\n\n- عدم هم‌راستایی با استراتژی کسب‌وکار\n\n- عدم به‌روزرسانی منظم\n\n\n\n**نتیجه‌گیری**\n\n\n\nیک مدل مالی حرفه‌ای برای Series A باید واقع‌بینانه، شفاف و انعطاف‌پذیر باشد. با رعایت این اصول، می‌توان اعتماد سرمایه‌گذاران را جلب کرد و فرآیند جذب سرمایه را تسهیل نمود."),
 
     author: { name: 'فاطمه محمدی', role: 'Investment Strategist' },
 
@@ -1852,7 +1179,7 @@ function AdvancedBlogCard({
 
 }) {
 
-  const category = blogCategories[post.category];
+  const category = deepTranslate(blogCategories)[post.category];
 
   const [isLiked, setIsLiked] = useState(false);
 
@@ -1892,7 +1219,7 @@ function AdvancedBlogCard({
 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.15),_transparent_50%),radial-gradient(circle_at_bottom_left,_rgba(251,191,36,0.15),_transparent_50%)]" />
 
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 end-3">
 
           <div className={`flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm ${category.color}`}>
 
@@ -1906,11 +1233,11 @@ function AdvancedBlogCard({
 
         {post.featured && (
 
-          <div className="absolute top-3 left-3">
+          <div className="absolute top-3 start-3">
 
             <span className="bg-amber-400/90 text-black text-[10px] font-bold px-2 py-1 rounded-full">
 
-              ویژه
+              {__t("ویژه")}
 
             </span>
 
@@ -2020,7 +1347,7 @@ function AdvancedBlogCard({
 
               <Eye size={12} />
 
-              {post.views?.toLocaleString()}
+              {formatNumber(post.views ?? 0)}
 
             </div>
 
@@ -2042,7 +1369,7 @@ function AdvancedBlogCard({
 
               className={`p-2 rounded-lg transition-colors ${isLiked ? 'text-rose-400 bg-rose-400/10' : 'text-white/40 hover:text-white hover:bg-white/10'}`}
 
-              aria-label="لایک"
+              aria-label={__t("لایک")}
 
             >
 
@@ -2060,7 +1387,7 @@ function AdvancedBlogCard({
 
               className={`p-2 rounded-lg transition-colors ${isBookmarked ? 'text-amber-400 bg-amber-400/10' : 'text-white/40 hover:text-white hover:bg-white/10'}`}
 
-              aria-label="ذخیره"
+              aria-label={__t("ذخیره")}
 
             >
 
@@ -2076,7 +1403,7 @@ function AdvancedBlogCard({
 
               className="p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-colors"
 
-              aria-label="اشتراک‌گذاری"
+              aria-label={__t("اشتراک‌گذاری")}
 
             >
 
@@ -2090,7 +1417,7 @@ function AdvancedBlogCard({
 
           <button className="text-teal-400 text-xs font-semibold hover:text-teal-300 transition-colors flex items-center gap-1">
 
-            مطالعه کامل
+            {__t("مطالعه کامل")}
 
             <ArrowLeft size={14} />
 
@@ -2110,7 +1437,7 @@ function AdvancedBlogCard({
 
 function FeaturedPost({ post, onRead }: { post: BlogPost; onRead: (slug: string) => void }) {
 
-  const category = blogCategories[post.category];
+  const category = deepTranslate(blogCategories)[post.category];
 
   return (
 
@@ -2122,9 +1449,9 @@ function FeaturedPost({ post, onRead }: { post: BlogPost; onRead: (slug: string)
 
     >
 
-      <div className="absolute top-0 right-0 w-48 h-48 bg-teal-500/10 rounded-full blur-[80px] pointer-events-none" />
+      <div className="absolute top-0 end-0 w-48 h-48 bg-teal-500/10 rounded-full blur-[80px] pointer-events-none" />
 
-      <div className="absolute bottom-0 left-0 w-36 h-36 bg-amber-500/10 rounded-full blur-[60px] pointer-events-none" />
+      <div className="absolute bottom-0 start-0 w-36 h-36 bg-amber-500/10 rounded-full blur-[60px] pointer-events-none" />
 
 
 
@@ -2142,7 +1469,7 @@ function FeaturedPost({ post, onRead }: { post: BlogPost; onRead: (slug: string)
 
           <span className="bg-amber-400/20 text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full">
 
-            ویژه
+            {__t("ویژه")}
 
           </span>
 
@@ -2212,7 +1539,7 @@ function FeaturedPost({ post, onRead }: { post: BlogPost; onRead: (slug: string)
 
             <ArrowLeft size={14} />
 
-            مطالعه کامل
+            {__t("مطالعه کامل")}
 
           </button>
 
@@ -2424,7 +1751,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
     <nav
 
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 end-0 start-0 z-50 transition-all duration-300 ${
 
         isEvaluationPage
 
@@ -2456,7 +1783,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
             className="hidden sm:inline-flex items-center justify-center w-11 h-11 rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20 transition-colors"
 
-            aria-label={t.nav.searchAriaLabel}
+            aria-label={t('nav.searchAriaLabel')}
 
           >
 
@@ -2510,7 +1837,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                   {servicesDropdownOpen && (
 
-                    <div className="absolute top-full right-0 mt-2 w-52 rounded-2xl overflow-hidden shadow-2xl z-50"
+                    <div className="absolute top-full end-0 mt-2 w-52 rounded-2xl overflow-hidden shadow-2xl z-50"
 
                       style={{ background: 'rgba(7,17,30,0.98)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(16px)' }}>
 
@@ -2518,13 +1845,13 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                       <button type="button" onClick={() => { onNavigate('services'); setServicesDropdownOpen(false); }}
 
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-right text-white hover:bg-white/5 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-end text-white hover:bg-white/5 transition-colors"
 
                         style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
 
                         <span className="text-base">📋</span>
 
-                        {t.nav.allServices}
+                        {t('nav.allServices')}
 
                       </button>
 
@@ -2536,7 +1863,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                           onClick={() => { onNavigateServiceDetail(sp.slug); setServicesDropdownOpen(false); }}
 
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-right text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-end text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
 
                           <span className="text-sm">{sp.icon || '📄'}</span>
 
@@ -2660,7 +1987,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
               >
 
-                {settings?.header_login_text ?? t.nav.login}
+                {settings?.header_login_text ?? t('nav.login')}
 
               </button>
 
@@ -2682,7 +2009,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
               <ArrowLeft size={18} />
 
-              {settings?.header_cta_text ?? t.nav.requestEvaluation}
+              {settings?.header_cta_text ?? t('nav.requestEvaluation')}
 
             </button>
 
@@ -2698,7 +2025,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
             className="flex items-center justify-center w-9 h-9 rounded-full border border-white/20 bg-white/8 text-white/80 hover:bg-white/15 hover:text-white transition-colors text-xs font-bold"
 
-            title={lang === 'fa' ? 'Switch to English' : 'تغییر به فارسی'}
+            title={lang === 'fa' ? 'Switch to English' : __t("تغییر به فارسی")}
 
           >
 
@@ -2740,7 +2067,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
             className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-white/20 bg-white/10 text-white"
 
-            aria-label={t.nav.searchAriaLabel}
+            aria-label={t('nav.searchAriaLabel')}
 
           >
 
@@ -2788,7 +2115,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                   type="button"
 
-                  className={`w-full text-base font-medium py-2 border-b border-white/5 text-right transition-colors ${
+                  className={`w-full text-base font-medium py-2 border-b border-white/5 text-end transition-colors ${
 
                     currentPage === l.page || (isServices && currentPage === 'service-detail') ? 'text-amber-300' : 'text-white'
 
@@ -2810,7 +2137,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                 {isServices && subPages.length > 0 && (
 
-                  <div className="flex flex-col pr-4 mt-1 space-y-1 border-r border-white/8">
+                  <div className="flex flex-col pe-4 mt-1 space-y-1 border-e border-white/8">
 
                     {subPages.map(sp => (
 
@@ -2818,7 +2145,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                         onClick={() => { onNavigateServiceDetail(sp.slug); setMobileOpen(false); }}
 
-                        className="text-sm text-slate-400 py-1.5 text-right hover:text-white transition-colors flex items-center gap-2">
+                        className="text-sm text-slate-400 py-1.5 text-end hover:text-white transition-colors flex items-center gap-2">
 
                         <span>{sp.icon || '📄'}</span>
 
@@ -2844,13 +2171,13 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
               type="button"
 
-              className="text-sm font-semibold text-sky-300 py-2 text-right"
+              className="text-sm font-semibold text-sky-300 py-2 text-end"
 
               onClick={() => { onOpenDashboard(); setMobileOpen(false); }}
 
             >
 
-              {t.nav.dashboard} ({displayName})
+              {t('nav.dashboard')} ({displayName})
 
             </button>
 
@@ -2862,7 +2189,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                 type="button"
 
-                className="font-bold py-2 text-right text-base"
+                className="font-bold py-2 text-end text-base"
 
                 style={{ color: settings?.header_login_color ?? '#7dd3fc' }}
 
@@ -2870,7 +2197,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
               >
 
-                {settings?.header_login_text ?? t.nav.loginRegister}
+                {settings?.header_login_text ?? t('nav.loginRegister')}
 
               </button>
 
@@ -2896,7 +2223,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
             >
 
-              {settings?.header_cta_text ?? t.nav.requestEvaluation}
+              {settings?.header_cta_text ?? t('nav.requestEvaluation')}
 
             </button>
 
@@ -2910,7 +2237,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
             onClick={() => { toggleLanguage(); setMobileOpen(false); }}
 
-            className="w-full text-left py-2 border-b border-white/5 text-sm font-bold text-white/70 flex items-center gap-2"
+            className="w-full text-start py-2 border-b border-white/5 text-sm font-bold text-white/70 flex items-center gap-2"
 
           >
 
@@ -2920,7 +2247,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
             </span>
 
-            {lang === 'fa' ? 'Switch to English' : 'تغییر به فارسی'}
+            {lang === 'fa' ? 'Switch to English' : __t("تغییر به فارسی")}
 
           </button>
 
@@ -3634,7 +2961,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
         <div
 
-          className="absolute bottom-0 left-0 right-0 h-48"
+          className="absolute bottom-0 start-0 end-0 h-48"
 
           style={{ background: 'linear-gradient(to bottom, transparent, #4A6FA5)' }}
 
@@ -3644,7 +2971,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
         <div
 
-          className="absolute top-0 left-0 right-0 h-32"
+          className="absolute top-0 start-0 end-0 h-32"
 
           style={{ background: 'linear-gradient(to top, transparent, rgba(6,14,28,0.7))' }}
 
@@ -3664,7 +2991,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
       <motion.div
 
-        className="blob-1 orb-a absolute bottom-0 right-0 w-[35rem] h-[35rem] sm:w-[52rem] sm:h-[52rem] bg-teal-500/20 rounded-full blur-[180px] pointer-events-none"
+        className="blob-1 orb-a absolute bottom-0 end-0 w-[35rem] h-[35rem] sm:w-[52rem] sm:h-[52rem] bg-teal-500/20 rounded-full blur-[180px] pointer-events-none"
 
         style={{ y: blob1Y }}
 
@@ -3672,7 +2999,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
       <motion.div
 
-        className="blob-2 orb-b absolute top-1/4 right-8 w-72 h-72 sm:w-[26rem] sm:h-[26rem] bg-teal-400/18 rounded-full blur-[130px] pointer-events-none"
+        className="blob-2 orb-b absolute top-1/4 end-8 w-72 h-72 sm:w-[26rem] sm:h-[26rem] bg-teal-400/18 rounded-full blur-[130px] pointer-events-none"
 
         style={{ y: blob2Y }}
 
@@ -3680,7 +3007,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
       <motion.div
 
-        className="blob-3 orb-c absolute top-12 left-1/4 w-56 h-56 sm:w-80 sm:h-80 bg-amber-500/16 rounded-full blur-[115px] pointer-events-none"
+        className="blob-3 orb-c absolute top-12 start-1/4 w-56 h-56 sm:w-80 sm:h-80 bg-amber-500/16 rounded-full blur-[115px] pointer-events-none"
 
         style={{ y: blob3Y }}
 
@@ -3690,11 +3017,11 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
       {/* Extra depth orbs - larger and stronger */}
 
-      <div className="orb-d absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] bg-cyan-500/12 rounded-full blur-[200px] pointer-events-none" />
+      <div className="orb-d absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] bg-cyan-500/12 rounded-full blur-[200px] pointer-events-none" />
 
-      <div className="orb-b absolute bottom-1/4 left-12 w-64 h-64 bg-amber-400/14 rounded-full blur-[120px] pointer-events-none" />
+      <div className="orb-b absolute bottom-1/4 start-12 w-64 h-64 bg-amber-400/14 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="orb-a absolute top-1/3 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="orb-a absolute top-1/3 end-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
 
 
 
@@ -3848,9 +3175,9 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
                     >
 
-                      {t.hero.startFundraising}
+                      {t('hero.startFundraising')}
 
-                      <span className="ml-1">→</span>
+                      <span className="ms-1">→</span>
 
                     </button>
 
@@ -3866,7 +3193,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
                     >
 
-                      {t.hero.immediateConsultation}
+                      {t('hero.immediateConsultation')}
 
                     </button>
 
@@ -3940,9 +3267,9 @@ function GlobalNetwork({ settings }: { settings: SiteSettings }) {
 
       {/* Subtle section blobs */}
 
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-48 bg-teal-500/6 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[500px] h-48 bg-teal-500/6 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 end-0 w-72 h-72 bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
 
 
 
@@ -3956,13 +3283,13 @@ function GlobalNetwork({ settings }: { settings: SiteSettings }) {
 
           <p className={`text-white mb-14 ${FS_CLASS[settings.home_network_desc_fs ?? 'p']} ${ac(settings.home_network_desc_align)}`}>
 
-            {settings.home_network_desc.includes('5 قاره') ? (
+            {settings.home_network_desc.includes(__t("5 قاره")) ? (
 
               <>
 
-                {settings.home_network_desc.replace('5 قاره', '').trimEnd()}{' '}
+                {settings.home_network_desc.replace(__t("5 قاره"), '').trimEnd()}{' '}
 
-                <span className="text-teal-400">5 قاره</span>
+                <span className="text-teal-400">{__t("5 قاره")}</span>
 
               </>
 
@@ -4030,7 +3357,7 @@ function GlobalNetwork({ settings }: { settings: SiteSettings }) {
 
               </div>
 
-              <span className="text-white font-semibold text-sm">{t.network.regions[r.key]}</span>
+              <span className="text-white font-semibold text-sm">{t('network.regions')[r.key]}</span>
 
               <span className="text-amber-400 font-black text-base">VC {r.count}</span>
 
@@ -4078,7 +3405,7 @@ function GlobalNetwork({ settings }: { settings: SiteSettings }) {
 
               </div>
 
-              <span className="text-white font-semibold text-xs text-center">{t.network.regions[r.key]}</span>
+              <span className="text-white font-semibold text-xs text-center">{t('network.regions')[r.key]}</span>
 
               <span className="text-amber-400 font-black text-sm">VC {r.count}</span>
 
@@ -4100,7 +3427,7 @@ function GlobalNetwork({ settings }: { settings: SiteSettings }) {
 
           <span>←</span>
 
-          <span>{t.network.scrollHint}</span>
+          <span>{t('network.scrollHint')}</span>
 
           <span>→</span>
 
@@ -4126,7 +3453,7 @@ function GlobalNetwork({ settings }: { settings: SiteSettings }) {
 
         >
 
-          {t.network.confidential}
+          {t('network.confidential')}
 
         </motion.p>
 
@@ -4206,7 +3533,7 @@ function Services({ settings }: { settings: SiteSettings }) {
 
     <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.75)' }} id="services">
 
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-80 h-80 bg-teal-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 start-0 -translate-y-1/2 w-80 h-80 bg-teal-500/5 rounded-full blur-[120px] pointer-events-none" />
 
 
 
@@ -4278,11 +3605,11 @@ function Services({ settings }: { settings: SiteSettings }) {
 
               {s.popular && (
 
-                <div className="absolute top-0 right-5 z-10">
+                <div className="absolute top-0 end-5 z-10">
 
                   <span className="bg-amber-400 text-[#0B1628] text-xs font-black px-3 py-1.5 rounded-full ring-2 ring-amber-300/60">
 
-                    {t.services.popular}
+                    {t('services.popular')}
 
                   </span>
 
@@ -4324,9 +3651,9 @@ function Services({ settings }: { settings: SiteSettings }) {
 
 
 
-                <h3 className="text-xl font-bold text-white mb-3 text-right">{s.title}</h3>
+                <h3 className="text-xl font-bold text-white mb-3 text-end">{s.title}</h3>
 
-                <p className="text-white/55 text-sm leading-relaxed mb-6 text-right flex-1">{s.desc}</p>
+                <p className="text-white/55 text-sm leading-relaxed mb-6 text-end flex-1">{s.desc}</p>
 
 
 
@@ -4418,7 +3745,7 @@ function WhyUs({ settings }: { settings: SiteSettings }) {
 
     <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.75)' }} id="about">
 
-      <div className="absolute bottom-0 right-1/2 translate-x-1/2 w-[450px] h-48 bg-amber-500/5 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute bottom-0 end-1/2 translate-x-1/2 w-[450px] h-48 bg-amber-500/5 rounded-full blur-[110px] pointer-events-none" />
 
 
 
@@ -4592,9 +3919,9 @@ function ProcessSteps({ settings }: { settings: SiteSettings }) {
 
       {/* Background gradients */}
 
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-64 bg-gradient-to-b from-teal-500/8 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[600px] h-64 bg-gradient-to-b from-teal-500/8 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-t from-amber-500/6 to-transparent rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 end-0 w-96 h-96 bg-gradient-to-t from-amber-500/6 to-transparent rounded-full blur-[120px] pointer-events-none" />
 
 
 
@@ -4642,7 +3969,7 @@ function ProcessSteps({ settings }: { settings: SiteSettings }) {
 
           {/* Vertical line */}
 
-          <div className="absolute right-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-500 via-amber-400 to-teal-500 hidden md:block" />
+          <div className="absolute end-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-500 via-amber-400 to-teal-500 hidden md:block" />
 
 
 
@@ -4766,9 +4093,7 @@ function ProcessSteps({ settings }: { settings: SiteSettings }) {
 
               href="#contact"
 
-              className="block bg-white px-10 py-4 rounded-2xl text-base font-bold text-gray-900 hover:bg-gray-50 transition-colors"
-
-            >
+              className="block bg-white px-10 py-4 rounded-2xl text-base font-bold text-gray-900 hover:bg-gray-50 transition-colors">
 
               {settings.home_process_section_cta}
 
@@ -4778,7 +4103,7 @@ function ProcessSteps({ settings }: { settings: SiteSettings }) {
 
           <p className="text-gray-500 text-sm font-medium">
 
-            میانگین کل فرآیند: <span className="text-teal-600 font-bold">{settings.home_process_avg_days}</span> بعد از شروع تا واریز
+            {__t("میانگین کل فرآیند:")} <span className="text-teal-600 font-bold">{settings.home_process_avg_days}</span> {__t("بعد از شروع تا واریز")}
 
           </p>
 
@@ -4826,7 +4151,6 @@ function FlipCard({ card }: { card: ShowcaseCardData }) {
 
       className="flip-card w-full"
 
-      dir="rtl"
 
       onClick={() => setFlipped(f => !f)}
 
@@ -4858,7 +4182,7 @@ function FlipCard({ card }: { card: ShowcaseCardData }) {
 
           <div
 
-            className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
+            className="absolute -top-10 -end-10 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
 
             style={{ background: glowFrom }}
 
@@ -4994,7 +4318,7 @@ function FlipCard({ card }: { card: ShowcaseCardData }) {
 
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: ac }} />
 
-              <span className="text-[10px] text-white/40">کپیتال نتورک</span>
+              <span className="text-[10px] text-white/40">{__t("کپیتال نتورک")}</span>
 
             </div>
 
@@ -5074,15 +4398,15 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
   return (
 
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.80)' }} dir="rtl">
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.80)' }}>
 
       {/* background blobs */}
 
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-64 bg-gradient-to-b from-teal-500/8 to-transparent rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[800px] h-64 bg-gradient-to-b from-teal-500/8 to-transparent rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="absolute bottom-0 right-0 w-[500px] h-96 bg-gradient-to-t from-violet-500/6 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 end-0 w-[500px] h-96 bg-gradient-to-t from-violet-500/6 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="absolute top-1/2 left-0 w-72 h-72 bg-gradient-to-r from-amber-500/5 to-transparent rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 start-0 w-72 h-72 bg-gradient-to-r from-amber-500/5 to-transparent rounded-full blur-[120px] pointer-events-none" />
 
 
 
@@ -5138,7 +4462,7 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
           <div className="w-1 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #2DD4BF, #F59E0B)' }} />
 
-          <div className={`${ALIGN_CLASS[foundersLabelAlign] || 'text-right'} inline-flex flex-wrap items-center gap-3`}>
+          <div className={`${ALIGN_CLASS[foundersLabelAlign] || 'text-start'} inline-flex flex-wrap items-center gap-3`}>
 
             <span className={`text-white ${foundersLabelBold ? 'font-bold' : ''}`} style={fsToStyle(foundersLabelFs)}>{foundersLabel}</span>
 
@@ -5212,7 +4536,7 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
           <div className="w-1 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #A78BFA, #F43F5E)' }} />
 
-          <div className={`${ALIGN_CLASS[vcsLabelAlign] || 'text-right'} inline-flex flex-wrap items-center gap-3`}>
+          <div className={`${ALIGN_CLASS[vcsLabelAlign] || 'text-start'} inline-flex flex-wrap items-center gap-3`}>
 
             <span className={`text-white ${vcsLabelBold ? 'font-bold' : ''}`} style={fsToStyle(vcsLabelFs)}>{vcsLabel}</span>
 
@@ -5268,19 +4592,19 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
 function HomeBlogPreview({ onNavigate, settings }: { onNavigate?: (page: PageKey, postSlug?: string, category?: BlogFilter) => void; settings: SiteSettings }) {
 
-  const featured = blogPosts.filter(p => p.featured).slice(0, 3);
+  const featured = deepTranslate(blogPosts).filter(p => p.featured).slice(0, 3);
 
 
 
   return (
 
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.75)' }} dir="rtl" id="blog-preview">
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.75)' }} id="blog-preview">
 
       {/* blobs */}
 
-      <div className="absolute top-0 right-0 w-[500px] h-64 bg-gradient-to-bl from-teal-500/7 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 end-0 w-[500px] h-64 bg-gradient-to-bl from-teal-500/7 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="absolute bottom-0 left-0 w-96 h-64 bg-gradient-to-tr from-amber-500/6 to-transparent rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 start-0 w-96 h-64 bg-gradient-to-tr from-amber-500/6 to-transparent rounded-full blur-[120px] pointer-events-none" />
 
 
 
@@ -5342,7 +4666,7 @@ function HomeBlogPreview({ onNavigate, settings }: { onNavigate?: (page: PageKey
 
           {featured.map((post, idx) => {
 
-            const catMeta = blogCategories[post.category];
+            const catMeta = deepTranslate(blogCategories)[post.category];
 
             return (
 
@@ -5422,7 +4746,7 @@ function HomeBlogPreview({ onNavigate, settings }: { onNavigate?: (page: PageKey
 
                       <Eye size={11} />
 
-                      {post.views?.toLocaleString('fa-IR') ?? '۰'}
+                      {formatNumber(post.views ?? 0)}
 
                     </div>
 
@@ -5468,11 +4792,11 @@ function FAQSection({ settings, onNavigate }: { settings: SiteSettings; onNaviga
 
   return (
 
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(7,16,32,0.82)' }} dir="rtl" id="faq">
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(7,16,32,0.82)' }} id="faq">
 
       {/* blobs */}
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-[180px] pointer-events-none" />
 
 
 
@@ -5538,7 +4862,7 @@ function FAQSection({ settings, onNavigate }: { settings: SiteSettings; onNaviga
 
                   onClick={() => toggle(i)}
 
-                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-right"
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-end"
 
                 >
 
@@ -5596,7 +4920,7 @@ function FAQSection({ settings, onNavigate }: { settings: SiteSettings; onNaviga
 
         <motion.div variants={vFadeUp} initial="hidden" whileInView="show" viewport={vp} className="text-center mt-12">
 
-          <p className="text-white/40 text-sm mb-4">{t.faq.moreQuestions}</p>
+          <p className="text-white/40 text-sm mb-4">{t('faq.moreQuestions')}</p>
 
           <button
 
@@ -5608,7 +4932,7 @@ function FAQSection({ settings, onNavigate }: { settings: SiteSettings; onNaviga
 
             <MessageCircle size={15} />
 
-            {t.faq.contactUs}
+            {t('faq.contactUs')}
 
           </button>
 
@@ -5710,7 +5034,7 @@ function VideoBlock({ block }: { block: VideoBlockData }) {
 
             <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border-2 border-white/30 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300 backdrop-blur-sm z-10">
 
-              <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 ml-1"><path d="M8 5v14l11-7z"/></svg>
+              <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 ms-1"><path d="M8 5v14l11-7z"/></svg>
 
             </div>
 
@@ -5718,7 +5042,7 @@ function VideoBlock({ block }: { block: VideoBlockData }) {
 
         </button>
 
-        {block.caption && <p className="mt-2 text-sm text-white/50 text-right">{block.caption}</p>}
+        {block.caption && <p className="mt-2 text-sm text-white/50 text-end">{block.caption}</p>}
 
         {/* Lightbox */}
 
@@ -5756,7 +5080,7 @@ function VideoBlock({ block }: { block: VideoBlockData }) {
 
                 onClick={() => setLightboxOpen(false)}
 
-                className="absolute top-3 left-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors text-lg font-bold"
+                className="absolute top-3 start-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors text-lg font-bold"
 
               >×</button>
 
@@ -5792,7 +5116,7 @@ function VideoBlock({ block }: { block: VideoBlockData }) {
 
       </div>
 
-      {block.caption && <p className="mt-2 text-sm text-white/50 text-right">{block.caption}</p>}
+      {block.caption && <p className="mt-2 text-sm text-white/50 text-end">{block.caption}</p>}
 
     </div>
 
@@ -5902,7 +5226,7 @@ function ImageGalleryBlock({ block }: { block: ImageGalleryBlockData }) {
 
               onClick={handlePrev}
 
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
+              className="absolute end-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
 
             >
 
@@ -5914,7 +5238,7 @@ function ImageGalleryBlock({ block }: { block: ImageGalleryBlockData }) {
 
               onClick={handleNext}
 
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
+              className="absolute start-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
 
             >
 
@@ -5924,7 +5248,7 @@ function ImageGalleryBlock({ block }: { block: ImageGalleryBlockData }) {
 
             {/* Dots */}
 
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+            <div className="absolute bottom-3 start-1/2 -translate-x-1/2 flex gap-1.5 z-10">
 
               {items.map((_, i) => (
 
@@ -6002,7 +5326,7 @@ function GalleryLightbox({ items, idx, onClose }: {
 
         {items.length > 1 && (
 
-          <button onClick={handlePrev} className="absolute right-0 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors">
+          <button onClick={handlePrev} className="absolute end-0 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors">
 
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-5 h-5"><path d="M15 18l-6-6 6-6"/></svg>
 
@@ -6026,7 +5350,7 @@ function GalleryLightbox({ items, idx, onClose }: {
 
         {items.length > 1 && (
 
-          <button onClick={handleNext} className="absolute left-0 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors">
+          <button onClick={handleNext} className="absolute start-0 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors">
 
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-5 h-5"><path d="M9 18l6-6-6-6"/></svg>
 
@@ -6034,7 +5358,7 @@ function GalleryLightbox({ items, idx, onClose }: {
 
         )}
 
-        <button onClick={onClose} className="absolute top-0 left-0 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors text-lg font-bold">×</button>
+        <button onClick={onClose} className="absolute top-0 start-0 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors text-lg font-bold">×</button>
 
       </div>
 
@@ -6052,13 +5376,13 @@ function DynBlock({ block }: { block: HomeSectionBlock }) {
 
     const resolved = align ?? 'right';
 
-    return resolved === 'center' ? 'text-center' : resolved === 'left' ? 'text-left' : 'text-right';
+    return resolved === 'center' ? 'text-center' : resolved === 'left' ? 'text-end' : 'text-start';
 
   };
 
 
 
-  const alignClass = 'align' in block ? getAlignClass(block.align) : 'text-right';
+  const alignClass = 'align' in block ? getAlignClass(block.align) : 'text-start';
 
   const headingSizes: Record<HeadingLevel, string> = {
 
@@ -6282,7 +5606,7 @@ function DynSection({ section }: { section: HomeSection }) {
 
   return (
 
-    <section className="py-16 px-6" style={{ background: 'rgba(7,16,32,0.6)' }} dir="rtl">
+    <section className="py-16 px-6" style={{ background: 'rgba(7,16,32,0.6)' }}>
 
       <div className="max-w-5xl mx-auto space-y-6">
 
@@ -6360,13 +5684,13 @@ function Testimonials({ settings }: { settings: SiteSettings }) {
 
   const hardcoded = [
 
-    { id:'1', name:'علی رضایی',   role:'بنیان‌گذار و CEO', company:'StartupX', text:'تیم کپیتال نتورک ما را در کمتر از ۶ ماه به سه VC Tier-1 متصل کردند. بدون آنها Series A ما ممکن نبود.', is_active:true, sort_order:1, avatar_url:null, created_at:'' },
+    { id:'1', name:__t("علی رضایی"),   role:__t("بنیان‌گذار و CEO"), company:'StartupX', text:__t("تیم کپیتال نتورک ما را در کمتر از ۶ ماه به سه VC Tier-1 متصل کردند. بدون آنها Series A ما ممکن نبود."), is_active:true, sort_order:1, avatar_url:null, created_at:'' },
 
-    { id:'2', name:'فاطمه محمدی', role:'بنیان‌گذار و CTO', company:'TechFlow', text:'دیتا روم و Pitch Deck شان بسیار حرفه‌ای بود. VC های مختلف از ما تشویق کردند که بر روی نقاط تاکید آنها تمرکز کنیم.', is_active:true, sort_order:2, avatar_url:null, created_at:'' },
+    { id:'2', name:__t("فاطمه محمدی"), role:__t("بنیان‌گذار و CTO"), company:'TechFlow', text:__t("دیتا روم و Pitch Deck شان بسیار حرفه‌ای بود. VC های مختلف از ما تشویق کردند که بر روی نقاط تاکید آنها تمرکز کنیم."), is_active:true, sort_order:2, avatar_url:null, created_at:'' },
 
-    { id:'3', name:'رضا کریمی',   role:'بنیان‌گذار و CEO', company:'DataHub',  text:'سرعت پاسخگویی و کیفیت معرفی‌ها فوق‌العاده بود. در عرض ۴۵ روز به Term Sheet رسیدیم.', is_active:true, sort_order:3, avatar_url:null, created_at:'' },
+    { id:'3', name:__t("رضا کریمی"),   role:__t("بنیان‌گذار و CEO"), company:'DataHub',  text:__t("سرعت پاسخگویی و کیفیت معرفی‌ها فوق‌العاده بود. در عرض ۴۵ روز به Term Sheet رسیدیم."), is_active:true, sort_order:3, avatar_url:null, created_at:'' },
 
-    { id:'4', name:'نیلا احمدی',  role:'مدیر محصول',       company:'Analytics AI', text:'فرآیند کاملاً شفاف بود. مشاوره‌های آنها ما را در تصمیم‌گیری درباره معماری تکنولوژی کمک کرد.', is_active:true, sort_order:4, avatar_url:null, created_at:'' },
+    { id:'4', name:__t("نیلا احمدی"),  role:__t("مدیر محصول"),       company:'Analytics AI', text:__t("فرآیند کاملاً شفاف بود. مشاوره‌های آنها ما را در تصمیم‌گیری درباره معماری تکنولوژی کمک کرد."), is_active:true, sort_order:4, avatar_url:null, created_at:'' },
 
   ] as Testimonial[];
 
@@ -6434,11 +5758,11 @@ function Testimonials({ settings }: { settings: SiteSettings }) {
 
                   <img src={item.avatar_url} alt={item.name}
 
-                    className="w-12 h-12 rounded-full object-cover ml-4 flex-shrink-0" />
+                    className="w-12 h-12 rounded-full object-cover ms-4 flex-shrink-0" />
 
                 ) : (
 
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold ml-4 flex-shrink-0"
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold ms-4 flex-shrink-0"
 
                     style={{ background: AVATAR_COLORS[idx % AVATAR_COLORS.length] }}>
 
@@ -6502,7 +5826,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
   const termsSections = (settings.footer_terms_modal_sections ?? []).filter(section => section && (section.title || section.body));
 
-  const termsTitle = settings.footer_terms_modal_title ?? t.footer.termsDefault;
+  const termsTitle = settings.footer_terms_modal_title ?? t('footer.termsDefault');
 
   const termsSubtitle = settings.footer_terms_modal_subtitle ?? 'Capital Network';
 
@@ -6554,7 +5878,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
           onClick={scrollToTop}
 
-          className="back-to-top-btn fixed bottom-8 left-8 z-50 w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full shadow-lg shadow-teal-500/30 flex items-center justify-center text-white hover:shadow-xl hover:shadow-teal-500/40 transition-all hover:scale-110"
+          className="back-to-top-btn fixed bottom-8 start-8 z-50 w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full shadow-lg shadow-teal-500/30 flex items-center justify-center text-white hover:shadow-xl hover:shadow-teal-500/40 transition-all hover:scale-110"
 
         >
 
@@ -6570,11 +5894,11 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
       {/* Background gradients */}
 
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <div className="absolute top-0 start-0 w-full h-full pointer-events-none">
 
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-teal-500/5 to-transparent rounded-full blur-[120px]" />
+        <div className="absolute top-0 end-0 w-96 h-96 bg-gradient-to-br from-teal-500/5 to-transparent rounded-full blur-[120px]" />
 
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-amber-500/5 to-transparent rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 start-0 w-80 h-80 bg-gradient-to-tr from-amber-500/5 to-transparent rounded-full blur-[100px]" />
 
       </div>
 
@@ -6586,7 +5910,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
         {/* Links Row — 4 dynamic columns */}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-12 text-right">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-12 text-end">
 
 
 
@@ -6594,7 +5918,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
           <div>
 
-            <h4 className="text-white font-bold text-sm mb-4">{settings.footer_col1_title ?? t.footer.col1Default}</h4>
+            <h4 className="text-white font-bold text-sm mb-4">{settings.footer_col1_title ?? t('footer.col1Default')}</h4>
 
             {getFooterGroups(settings.footer_col1_groups, settings.footer_col1_links ?? []).map((group, gi) => (
 
@@ -6612,7 +5936,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => onNavigate(link.page as PageKey, undefined, undefined, link.anchor)}
 
-                        className="text-white hover:text-teal-400 text-sm transition-colors text-right w-full">
+                        className="text-white hover:text-teal-400 text-sm transition-colors text-end w-full">
 
                         {link.label}
 
@@ -6630,13 +5954,13 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => { setShowTerms(true); setTermsChecked(false); }}
 
-                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-right w-full flex items-center gap-2"
+                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-end w-full flex items-center gap-2"
 
                       >
 
                         <Shield size={13} className="shrink-0" />
 
-                        {settings.footer_terms_link_label ?? t.footer.termsDefault}
+                        {settings.footer_terms_link_label ?? t('footer.termsDefault')}
 
                       </button>
 
@@ -6658,7 +5982,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
           <div>
 
-            <h4 className="text-white font-bold text-sm mb-4">{settings.footer_col2_title ?? t.footer.col2Default}</h4>
+            <h4 className="text-white font-bold text-sm mb-4">{settings.footer_col2_title ?? t('footer.col2Default')}</h4>
 
             {getFooterGroups(settings.footer_col2_groups, settings.footer_col2_links ?? []).map((group, gi) => (
 
@@ -6676,7 +6000,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => onNavigate(link.page as PageKey, undefined, link.category as BlogFilter | undefined)}
 
-                        className="text-white hover:text-teal-400 text-sm transition-colors text-right w-full">
+                        className="text-white hover:text-teal-400 text-sm transition-colors text-end w-full">
 
                         {link.label}
 
@@ -6694,13 +6018,13 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => { setShowTerms(true); setTermsChecked(false); }}
 
-                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-right w-full flex items-center gap-2"
+                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-end w-full flex items-center gap-2"
 
                       >
 
                         <Shield size={13} className="shrink-0" />
 
-                        {settings.footer_terms_link_label ?? t.footer.termsDefault}
+                        {settings.footer_terms_link_label ?? t('footer.termsDefault')}
 
                       </button>
 
@@ -6722,7 +6046,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
           <div>
 
-            <h4 className="text-white font-bold text-sm mb-4">{settings.footer_col3_title ?? t.footer.col3Default}</h4>
+            <h4 className="text-white font-bold text-sm mb-4">{settings.footer_col3_title ?? t('footer.col3Default')}</h4>
 
             {getFooterGroups(settings.footer_col3_groups, settings.footer_col3_links ?? []).map((group, gi) => (
 
@@ -6740,7 +6064,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => onNavigate(link.page as PageKey, undefined, undefined, link.anchor)}
 
-                        className="text-white hover:text-teal-400 text-sm transition-colors text-right w-full">
+                        className="text-white hover:text-teal-400 text-sm transition-colors text-end w-full">
 
                         {link.label}
 
@@ -6758,13 +6082,13 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => { setShowTerms(true); setTermsChecked(false); }}
 
-                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-right w-full flex items-center gap-2"
+                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-end w-full flex items-center gap-2"
 
                       >
 
                         <Shield size={13} className="shrink-0" />
 
-                        {settings.footer_terms_link_label ?? t.footer.termsDefault}
+                        {settings.footer_terms_link_label ?? t('footer.termsDefault')}
 
                       </button>
 
@@ -6786,7 +6110,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
           <div>
 
-            <h4 className="text-white font-bold text-sm mb-4">{settings.footer_col4_title ?? t.footer.col4Default}</h4>
+            <h4 className="text-white font-bold text-sm mb-4">{settings.footer_col4_title ?? t('footer.col4Default')}</h4>
 
             <ul className="space-y-3">
 
@@ -6862,7 +6186,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                     <CheckCircle2 size={14} className="text-amber-400" />
 
-                    {settings.footer_col4_response_label ?? t.footer.response24h}
+                    {settings.footer_col4_response_label ?? t('footer.response24h')}
 
                   </span>
 
@@ -6892,7 +6216,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
             <p className="text-white text-sm leading-relaxed mb-8">
 
-              {settings.footer_brand_tagline ?? 'اتصال استارتاپ از Seed تا Series B به شبکه جهانی سرمایه‌گذاران Tier-1 در ۵ قاره.'}
+              {settings.footer_brand_tagline ?? __t("اتصال استارتاپ از Seed تا Series B به شبکه جهانی سرمایه‌گذاران Tier-1 در ۵ قاره.")}
 
             </p>
 
@@ -6908,17 +6232,17 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                   <CheckCircle2 size={14} className="text-teal-400" />
 
-                  <span className="text-white/60 text-xs">{t.footer.noSpam}</span>
+                  <span className="text-white/60 text-xs">{t('footer.noSpam')}</span>
 
                   <CheckCircle2 size={14} className="text-teal-400" />
 
-                  <span className="text-white/60 text-xs">{t.footer.confidential}</span>
+                  <span className="text-white/60 text-xs">{t('footer.confidential')}</span>
 
                 </div>
 
                 <p className="text-white/70 text-sm leading-relaxed">
 
-                  {settings.footer_newsletter_desc ?? 'هفته‌ای یک بار، بهترین فرصت‌های سرمایه‌گذاری و insights از دنیای VC را دریافت کنید.'}
+                  {settings.footer_newsletter_desc ?? __t("هفته‌ای یک بار، بهترین فرصت‌های سرمایه‌گذاری و insights از دنیای VC را دریافت کنید.")}
 
                 </p>
 
@@ -6932,9 +6256,9 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                     onChange={(e) => setEmail(e.target.value)}
 
-                    placeholder={settings.footer_newsletter_placeholder ?? `${t.blog.emailPlaceholder}...`}
+                    placeholder={settings.footer_newsletter_placeholder ?? `${t('blog.emailPlaceholder')}...`}
 
-                    className="flex-1 bg-white/8 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20 text-right transition-all"
+                    className="flex-1 bg-white/8 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20 text-end transition-all"
 
                   />
 
@@ -6946,7 +6270,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                   >
 
-                    {settings.footer_newsletter_btn ?? t.blog.subscribe}
+                    {settings.footer_newsletter_btn ?? t('blog.subscribe')}
 
                   </button>
 
@@ -6974,7 +6298,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                 <span className="text-white/50 text-xs">
 
-                  {settings.footer_bottom_right_text?.split('[social]')[0] ?? t.footer.followUs}
+                  {settings.footer_bottom_right_text?.split('[social]')[0] ?? t('footer.followUs')}
 
                 </span>
 
@@ -7040,7 +6364,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                 <span className="text-white/50 text-xs">
 
-                  {settings.footer_bottom_right_text?.split('[social]')[0] ?? t.footer.followUs}
+                  {settings.footer_bottom_right_text?.split('[social]')[0] ?? t('footer.followUs')}
 
                 </span>
 
@@ -7124,7 +6448,6 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
             style={{ background: 'linear-gradient(160deg,#071428 0%,#060e1c 100%)', maxHeight: '90vh' }}
 
-            dir="rtl"
 
           >
 
@@ -7176,7 +6499,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                 <section key={`${section.title}-${index}`}>
 
-                  <h3 className="text-amber-400 font-bold text-sm mb-2">{section.title || `بند ${index + 1}`}</h3>
+                  <h3 className="text-amber-400 font-bold text-sm mb-2">{section.title || t('بند {n}', { n: index + 1 })}</h3>
 
                   <p className="whitespace-pre-line">{section.body}</p>
 
@@ -7240,7 +6563,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                     >
 
-                      {t.footer.acceptConfirm}
+                      {t('footer.acceptConfirm')}
 
                     </button>
 
@@ -7254,7 +6577,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                   <CheckCircle2 size={18} className="text-teal-400" />
 
-                  <span className="text-teal-400 font-bold text-sm">{t.footer.termsAccepted}</span>
+                  <span className="text-teal-400 font-bold text-sm">{t('footer.termsAccepted')}</span>
 
                 </div>
 
@@ -7288,9 +6611,9 @@ function HomePage({ settings, onNavigate }: { settings: SiteSettings; onNavigate
 
   useSEO({
 
-    title: tr.seo.home,
+    title: tr('seo.home'),
 
-    description: tr.seo.homeDesc,
+    description: tr('seo.homeDesc'),
 
     pageKey: 'home',
 
@@ -7410,9 +6733,9 @@ function ServicesPage({ onNavigate, settings }: { onNavigate: (page: PageKey) =>
 
   useSEO({
 
-    title: 'خدمات',
+    title: __t("خدمات"),
 
-    description: 'سرویس‌های VC-Ready سازی، مدل مالی، Pitch Deck و مشاوره استراتژیک برای استارتاپ‌ها',
+    description: __t("سرویس‌های VC-Ready سازی، مدل مالی، Pitch Deck و مشاوره استراتژیک برای استارتاپ‌ها"),
 
     pageKey: 'services',
 
@@ -7460,7 +6783,7 @@ function ServicesPage({ onNavigate, settings }: { onNavigate: (page: PageKey) =>
 
   return (
 
-    <div className="min-h-screen bg-[#0d1829] text-white" dir="rtl">
+    <div className="min-h-screen bg-[#0d1829] text-white">
 
       <InlineBannerRenderer banners={banners} page="services" section="top" />
 
@@ -7480,9 +6803,9 @@ function ProcessPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
   useSEO({
 
-    title: 'فرآیند جذب سرمایه — VC-Ready سازی استارتاپ',
+    title: __t("فرآیند جذب سرمایه — VC-Ready سازی استارتاپ"),
 
-    description: 'مسیر ساختاریافته Capital Network برای آماده‌سازی استارتاپ‌ها — از ارزیابی اولیه تا Term Sheet',
+    description: __t("مسیر ساختاریافته Capital Network برای آماده‌سازی استارتاپ‌ها — از ارزیابی اولیه تا Term Sheet"),
 
     pageKey: 'process',
 
@@ -7572,7 +6895,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
 
 
-  const post = dbPost ?? blogPosts.find((p) => p.slug === slug);
+  const post = deepTranslate(dbPost ?? blogPosts.find((p) => p.slug === slug));
 
   const category = post ? blogCategories[post.category as BlogCategory] : null;
 
@@ -7680,7 +7003,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
     return (
 
-      <div className="min-h-screen bg-[#0d1829] text-white relative" dir="rtl">
+      <div className="min-h-screen bg-[#0d1829] text-white relative">
 
         <FinancialBackground />
 
@@ -7690,11 +7013,11 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
             <ArrowLeft size={20} />
 
-            بازگشت به بلاگ
+            {__t("بازگشت به بلاگ")}
 
           </button>
 
-          <h1 className="text-3xl font-bold text-white">مقاله یافت نشد</h1>
+          <h1 className="text-3xl font-bold text-white">{__t("مقاله یافت نشد")}</h1>
 
         </div>
 
@@ -7706,7 +7029,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
 
 
-  const relatedPosts = blogPosts
+  const relatedPosts = deepTranslate(blogPosts)
 
     .filter((p) => p.id !== post.id && (p.category === post.category || p.tags.some((t) => post.tags.includes(t))))
 
@@ -7744,7 +7067,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
   return (
 
-    <article className="min-h-screen bg-[#0d1829] text-white relative" dir="rtl">
+    <article className="min-h-screen bg-[#0d1829] text-white relative">
 
       <FinancialBackground />
 
@@ -7754,11 +7077,9 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
         href="#main-content" 
 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-white focus:rounded-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-white focus:rounded-lg">
 
-      >
-
-        پرش به محتوای اصلی
+        {__t("پرش به محتوای اصلی")}
 
       </a>
 
@@ -7766,7 +7087,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
       {/* Reading Progress Bar */}
 
-      <div className="fixed top-20 left-0 right-0 h-1 bg-white/10 z-40" aria-hidden="true">
+      <div className="fixed top-20 start-0 end-0 h-1 bg-white/10 z-40" aria-hidden="true">
 
         <div 
 
@@ -7782,7 +7103,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
           aria-valuemax={100}
 
-          aria-label="پیشرفت خواندن مقاله"
+          aria-label={__t("پیشرفت خواندن مقاله")}
 
         />
 
@@ -7818,7 +7139,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
 
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+        <div className="absolute bottom-0 start-0 end-0 p-6 md:p-10">
 
           <div className="mx-auto max-w-7xl">
 
@@ -7838,7 +7159,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                   <span className="bg-amber-400/90 text-black text-xs font-bold px-3 py-1 rounded-full">
 
-                    ویژه
+                    {__t("ویژه")}
 
                   </span>
 
@@ -7880,9 +7201,9 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
           items={[
 
-            { label: 'خانه', href: '/', onClick: onBack },
+            { label: __t("خانه"), href: '/', onClick: onBack },
 
-            { label: 'بلاگ', href: '/blog', onClick: onBack },
+            { label: __t("بلاگ"), href: '/blog', onClick: onBack },
 
             { label: blogCategories[post.category as BlogCategory]?.label || post.category, href: `/blog/category/${post.category}` },
 
@@ -7904,13 +7225,13 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
             className="flex items-center gap-2 text-white/60 hover:text-white transition-colors focus:ring-2 focus:ring-teal-500/50 rounded-lg px-3 py-2"
 
-            aria-label="بازگشت به صفحه بلاگ"
+            aria-label={__t("بازگشت به صفحه بلاگ")}
 
           >
 
             <ArrowLeft size={20} />
 
-            بازگشت به بلاگ
+            {__t("بازگشت به بلاگ")}
 
           </button>
 
@@ -7954,7 +7275,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                       <Eye size={16} className="text-teal-400" />
 
-                      <span>{post.views.toLocaleString()} بازدید</span>
+                      <span>{formatNumber(post.views)} {__t("بازدید")}</span>
 
                     </div>
 
@@ -7972,7 +7293,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                     className={`p-2 rounded-lg transition-colors ${isBookmarked ? 'text-amber-400 bg-amber-400/10' : 'text-white/40 hover:text-white hover:bg-white/10'}`}
 
-                    aria-label="ذخیره مقاله"
+                    aria-label={__t("ذخیره مقاله")}
 
                   >
 
@@ -7986,7 +7307,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                     className="p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-colors"
 
-                    aria-label="اشتراک‌گذاری"
+                    aria-label={__t("اشتراک‌گذاری")}
 
                   >
 
@@ -8020,7 +7341,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                     <p className="text-white font-bold text-lg">{post.author.name}</p>
 
-                    <span className="bg-teal-400/20 text-teal-300 text-xs px-2 py-0.5 rounded-full">نویسنده</span>
+                    <span className="bg-teal-400/20 text-teal-300 text-xs px-2 py-0.5 rounded-full">{__t("نویسنده")}</span>
 
                   </div>
 
@@ -8094,7 +7415,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                 <Layers size={18} className="text-teal-400" />
 
-                برچسب‌ها
+                {__t("برچسب‌ها")}
 
               </h3>
 
@@ -8136,7 +7457,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                   <TrendingUp size={20} className="text amber-400" />
 
-                  مقالات مرتبط
+                  {__t("مقالات مرتبط")}
 
                 </h3>
 
@@ -8212,13 +7533,13 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
               <div className="rounded-2xl bg-gradient-to-r from-teal-500/10 to-amber-500/10 border border-white/10 p-8 text-center">
 
-                <h3 className="text-2xl font-bold text-white mb-4">آماده شروع جذب سرمایه هستید؟</h3>
+                <h3 className="text-2xl font-bold text-white mb-4">{__t("آماده شروع جذب سرمایه هستید؟")}</h3>
 
-                <p className="text-white/60 mb-6">تیم ما با تجربه بیش از 15 سال در زمینه تأمین مالی، همراه شماست.</p>
+                <p className="text-white/60 mb-6">{__t("تیم ما با تجربه بیش از 15 سال در زمینه تأمین مالی، همراه شماست.")}</p>
 
                 <button className="btn-gold px-8 py-3 rounded-xl font-semibold">
 
-                  درخواست مشاوره رایگان
+                  {__t("درخواست مشاوره رایگان")}
 
                 </button>
 
@@ -8244,7 +7565,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                   <Layers size={18} className="text-teal-400" />
 
-                  فهرست مطالب
+                  {__t("فهرست مطالب")}
 
                 </h3>
 
@@ -8284,7 +7605,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                 ) : (
 
-                  <p className="text-white/40 text-sm">فهرست مطالب در دسترس نیست</p>
+                  <p className="text-white/40 text-sm">{__t("فهرست مطالب در دسترس نیست")}</p>
 
                 )}
 
@@ -8300,7 +7621,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                   <Users size={18} className="text-teal-400" />
 
-                  درباره نویسنده
+                  {__t("درباره نویسنده")}
 
                 </h3>
 
@@ -8334,7 +7655,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                 <button className="w-full btn-gold py-2.5 rounded-lg text-xs font-semibold">
 
-                  مشاهده تمام مقالات
+                  {__t("مشاهده تمام مقالات")}
 
                 </button>
 
@@ -8350,13 +7671,13 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                   <TrendingUp size={18} className="text-amber-400" />
 
-                  مقالات محبوب
+                  {__t("مقالات محبوب")}
 
                 </h3>
 
                 <div className="space-y-3">
 
-                  {blogPosts
+                  {deepTranslate(blogPosts)
 
                     .sort((a, b) => (b.views || 0) - (a.views || 0))
 
@@ -8370,7 +7691,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                         onClick={() => onBack()}
 
-                        className="w-full text-right group"
+                        className="w-full text-end group"
 
                       >
 
@@ -8394,7 +7715,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                               <Eye size={12} />
 
-                              {popularPost.views?.toLocaleString()} بازدید
+                              {formatNumber(popularPost.views ?? 0)} {__t("بازدید")}
 
                             </div>
 
@@ -8429,7 +7750,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page: PageKey, postSlug?: string, category?: BlogFilter) => void; initialCategory?: BlogFilter; settings?: SiteSettings }) {
   const { t } = useLanguage();
   const blogCats = useBlogCategories();
-  useSEO({ title: t.seo.blog, description: t.seo.blogDesc, pageKey: 'blog', seoPage: settings?.seo_pages?.['blog'] });
+  useSEO({ title: t('seo.blog'), description: t('seo.blogDesc'), pageKey: 'blog', seoPage: settings?.seo_pages?.['blog'] });
   const [activeCategory, setActiveCategory] = useState<BlogCategory | 'all'>(initialCategory || 'all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -8467,7 +7788,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
 
 
-  const allPosts = postsLoaded && dbPosts.length > 0 ? dbPosts : blogPosts;
+  const allPosts = deepTranslate(postsLoaded && dbPosts.length > 0 ? dbPosts : blogPosts);
 
 
 
@@ -8611,7 +7932,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
   return (
 
-    <div className="min-h-screen bg-[#0d1829] text-white relative" dir="rtl">
+    <div className="min-h-screen bg-[#0d1829] text-white relative">
 
       <FinancialBackground />
 
@@ -8623,9 +7944,9 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
           items={[
 
-            { label: 'خانه', href: '/', onClick: () => onNavigate('home') },
+            { label: __t("خانه"), href: '/', onClick: () => onNavigate('home') },
 
-            { label: 'بلاگ', href: '/blog' },
+            { label: __t("بلاگ"), href: '/blog' },
 
           ]}
 
@@ -8653,7 +7974,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
             <TrendingUp size={13} />
 
-            بلاگ تخصصی سرمایه‌گذاری
+            {__t("بلاگ تخصصی سرمایه‌گذاری")}
 
           </span>
 
@@ -8661,11 +7982,11 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-5">
 
-            مقالات راهبردی و عملی
+            {__t("مقالات راهبردی و عملی")}
 
             <br />
 
-            <span style={{ color: '#67e8f9' }}>برای آماده‌سازی سرمایه‌گذاری</span>
+            <span style={{ color: '#67e8f9' }}>{__t("برای آماده‌سازی سرمایه‌گذاری")}</span>
 
           </h1>
 
@@ -8673,7 +7994,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
           <p className="text-slate-300 leading-[1.95] text-[15px] mb-8">
 
-            روایت‌ها، مطالعه‌های موردی و راهنمایی‌های عملی برای رساندن کسب‌وکار شما به جلسه سرمایه‌گذار
+            {__t("روایت‌ها، مطالعه‌های موردی و راهنمایی‌های عملی برای رساندن کسب‌وکار شما به جلسه سرمایه‌گذار")}
 
           </p>
 
@@ -8685,13 +8006,13 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
             {[
 
-              { value: allPosts.length, label: 'مقاله منتشر شده', icon: <Star size={18} /> },
+              { value: allPosts.length, label: __t("مقاله منتشر شده"), icon: <Star size={18} /> },
 
-              { value: Object.keys(blogCategories).length, label: 'دسته‌بندی تخصصی', icon: <Layers size={18} /> },
+              { value: Object.keys(blogCategories).length, label: __t("دسته‌بندی تخصصی"), icon: <Layers size={18} /> },
 
-              { value: topAuthors.length, label: 'نویسنده متخصص', icon: <Users size={18} /> },
+              { value: topAuthors.length, label: __t("نویسنده متخصص"), icon: <Users size={18} /> },
 
-              { value: '50K+', label: 'بازدید ماهانه', icon: <Eye size={18} /> },
+              { value: '50K+', label: __t("بازدید ماهانه"), icon: <Eye size={18} /> },
 
             ].map((stat) => (
 
@@ -8729,7 +8050,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
             <Mail size={18} />
 
-            عضویت در خبرنامه
+            {__t("عضویت در خبرنامه")}
 
           </button>
 
@@ -8743,21 +8064,21 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
           <div className="relative">
 
-            <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40" size={20} aria-hidden="true" />
+            <Search className="absolute end-4 top-1/2 -translate-y-1/2 text-white/40" size={20} aria-hidden="true" />
 
             <input
 
               type="text"
 
-              placeholder="جستجو در مقالات..."
+              placeholder={__t("جستجو در مقالات...")}
 
               value={searchQuery}
 
               onChange={(e) => handleSearchChange(e.target.value)}
 
-              className="w-full bg-white/5 border border-white/10 rounded-xl pr-12 pl-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+              className="w-full bg-white/5 border border-white/10 rounded-xl pe-12 ps-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
 
-              aria-label="جستجو در مقالات"
+              aria-label={__t("جستجو در مقالات")}
 
               aria-autocomplete="list"
 
@@ -8775,11 +8096,9 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
               id="search-suggestions"
 
-              className="absolute top-full left-0 right-0 mt-2 bg-[#0B1628]/95 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden z-10"
+              className="absolute top-full start-0 end-0 mt-2 bg-[#0B1628]/95 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden z-10"
 
-              role="listbox"
-
-            >
+              role="listbox">
 
               {searchSuggestions.map((suggestion) => (
 
@@ -8789,7 +8108,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                     onClick={() => handleSearchChange(suggestion)}
 
-                    className="w-full text-right px-4 py-3 text-sm text-white/80 hover:bg-white/10 transition-colors focus:bg-white/10 focus:outline-none"
+                    className="w-full text-end px-4 py-3 text-sm text-white/80 hover:bg-white/10 transition-colors focus:bg-white/10 focus:outline-none"
 
                     role="option"
 
@@ -8841,11 +8160,11 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
               }`}
 
-              aria-label="نمایش همه مقالات"
+              aria-label={__t("نمایش همه مقالات")}
 
             >
 
-              همه مقالات
+              {__t("همه مقالات")}
 
             </button>
 
@@ -8879,7 +8198,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                   }`}
 
-                  aria-label={`فیلتر بر اساس ${catInfo.label}`}
+                  aria-label={t('فیلتر بر اساس {label}', { label: catInfo.label })}
 
                 >
 
@@ -8917,7 +8236,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                   <Star className="text-amber-400" size={20} />
 
-                  مقالات ویژه
+                  {__t("مقالات ویژه")}
 
                 </h2>
 
@@ -8945,9 +8264,9 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                 <span>
 
-                  {activeCategory === 'all' ? 'همه مقالات' : blogCategories[activeCategory]?.label}
+                  {activeCategory === 'all' ? __t("همه مقالات") : blogCategories[activeCategory]?.label}
 
-                  <span className="text-white/40 text-sm font-normal mr-2">
+                  <span className="text-white/40 text-sm font-normal me-2">
 
                     ({regularPosts.length})
 
@@ -8991,7 +8310,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                   <Search className="mx-auto text-white/30 mb-4" size={48} />
 
-                  <p className="text-white/40 text-base mb-4">مقاله‌ای یافت نشد</p>
+                  <p className="text-white/40 text-base mb-4">{__t("مقاله‌ای یافت نشد")}</p>
 
                   <button
 
@@ -9007,7 +8326,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                   >
 
-                    پاک کردن فیلترها
+                    {__t("پاک کردن فیلترها")}
 
                   </button>
 
@@ -9033,7 +8352,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                 <TrendingUp className="text-amber-400" size={18} />
 
-                مقالات محبوب
+                {__t("مقالات محبوب")}
 
               </h3>
 
@@ -9047,7 +8366,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                     onClick={() => handleReadPost(post.slug)}
 
-                    className="w-full text-right group"
+                    className="w-full text-end group"
 
                   >
 
@@ -9071,7 +8390,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                           <Eye size={12} />
 
-                          {post.views?.toLocaleString()} بازدید
+                          {formatNumber(post.views ?? 0)} {__t("بازدید")}
 
                         </div>
 
@@ -9097,7 +8416,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                 <Users className="text-teal-400" size={18} />
 
-                نویسندگان برتر
+                {__t("نویسندگان برتر")}
 
               </h3>
 
@@ -9147,7 +8466,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                 <Target className="text-purple-400" size={18} />
 
-                تگ‌های پرطرفدار
+                {__t("تگ‌های پرطرفدار")}
 
               </h3>
 
@@ -9185,13 +8504,13 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                 <Mail className="text-teal-400" size={18} />
 
-                خبرنامه
+                {__t("خبرنامه")}
 
               </h3>
 
               <p className="text-xs text-white/60 mb-4">
 
-                جدیدترین مقالات و insights را در ایمیل خود دریافت کنید
+                {__t("جدیدترین مقالات و insights را در ایمیل خود دریافت کنید")}
 
               </p>
 
@@ -9201,7 +8520,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                   type="email"
 
-                  placeholder="ایمیل شما"
+                  placeholder={__t("ایمیل شما")}
 
                   className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-teal-500/50"
 
@@ -9209,7 +8528,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                 <button className="btn-gold px-3 py-2 rounded-lg text-xs font-semibold">
 
-                  عضویت
+                  {__t("عضویت")}
 
                 </button>
 
@@ -9263,11 +8582,11 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
               </div>
 
-              <h3 className="text-xl font-bold text-white mb-2">عضویت در خبرنامه</h3>
+              <h3 className="text-xl font-bold text-white mb-2">{__t("عضویت در خبرنامه")}</h3>
 
               <p className="text-sm text-white/60">
 
-                جدیدترین مقالات و insights سرمایه‌گذاری را هفتگی در ایمیل خود دریافت کنید
+                {__t("جدیدترین مقالات و insights سرمایه‌گذاری را هفتگی در ایمیل خود دریافت کنید")}
 
               </p>
 
@@ -9279,7 +8598,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                 type="text"
 
-                placeholder="نام و نام خانوادگی"
+                placeholder={__t("نام و نام خانوادگی")}
 
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-teal-500/50"
 
@@ -9289,7 +8608,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                 type="email"
 
-                placeholder="ایمیل"
+                placeholder={__t("ایمیل")}
 
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-teal-500/50"
 
@@ -9297,7 +8616,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
               <button className="w-full btn-gold py-3 rounded-xl font-semibold">
 
-                عضویت در خبرنامه
+                {__t("عضویت در خبرنامه")}
 
               </button>
 
@@ -9311,7 +8630,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
             >
 
-              بستن
+              {__t("بستن")}
 
             </button>
 
@@ -9335,9 +8654,9 @@ function EvaluationPage({ onNavigate: _onNavigate, settings }: { onNavigate: (pa
 
   useSEO({
 
-    title: 'درخواست ارزیابی',
+    title: __t("درخواست ارزیابی"),
 
-    description: 'ارزیابی رایگان آمادگی استارتاپ شما برای جذب سرمایه — از Seed تا Series B با تیم متخصص Capital Network',
+    description: __t("ارزیابی رایگان آمادگی استارتاپ شما برای جذب سرمایه — از Seed تا Series B با تیم متخصص Capital Network"),
 
     pageKey: 'evaluation',
 
@@ -9381,9 +8700,9 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
   useSEO({
 
-    title: 'تماس با ما',
+    title: __t("تماس با ما"),
 
-    description: 'برای مشاوره رایگان و شروع فرآیند جذب سرمایه با ما تماس بگیرید',
+    description: __t("برای مشاوره رایگان و شروع فرآیند جذب سرمایه با ما تماس بگیرید"),
 
     pageKey: 'contact',
 
@@ -9457,11 +8776,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
     <div
 
-      className="min-h-screen bg-[#0d1829] text-white relative"
-
-      dir="rtl"
-
-    >
+      className="min-h-screen bg-[#0d1829] text-white relative">
 
       <FinancialBackground />
 
@@ -9495,7 +8810,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
           <ArrowLeft size={16} />
 
-          بازگشت به صفحه اصلی
+          {__t("بازگشت به صفحه اصلی")}
 
         </motion.button>
 
@@ -9521,7 +8836,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
 
-            تماس با ما
+            {__t("تماس با ما")}
 
           </span>
 
@@ -9665,7 +8980,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                 </div>
 
-                <h2 className="text-base font-bold text-white">اطلاعات تماس</h2>
+                <h2 className="text-base font-bold text-white">{__t("اطلاعات تماس")}</h2>
 
               </div>
 
@@ -9691,7 +9006,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   <div className="min-w-0">
 
-                    <p className="text-[11px] text-slate-500 mb-0.5">ایمیل</p>
+                    <p className="text-[11px] text-slate-500 mb-0.5">{__t("ایمیل")}</p>
 
                     <a href={`mailto:${settings.contact_email}`}
 
@@ -9725,7 +9040,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   <div>
 
-                    <p className="text-[11px] text-slate-500 mb-0.5">تلفن</p>
+                    <p className="text-[11px] text-slate-500 mb-0.5">{__t("تلفن")}</p>
 
                     <a href={`tel:${settings.contact_phone.replace(/\s/g,'')}`}
 
@@ -9761,7 +9076,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                     <div>
 
-                      <p className="text-[11px] text-slate-500 mb-0.5">واتساپ</p>
+                      <p className="text-[11px] text-slate-500 mb-0.5">{__t("واتساپ")}</p>
 
                       <a href={`https://wa.me/${settings.contact_whatsapp.replace(/[^0-9]/g,'')}`}
 
@@ -9829,7 +9144,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   <div>
 
-                    <p className="text-[11px] text-slate-500 mb-0.5">ساعات کاری</p>
+                    <p className="text-[11px] text-slate-500 mb-0.5">{__t("ساعات کاری")}</p>
 
                     <p className="text-sm font-medium text-white">
 
@@ -9857,7 +9172,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
             >
 
-              <p className="text-sm font-semibold text-white mb-4">شبکه‌های اجتماعی</p>
+              <p className="text-sm font-semibold text-white mb-4">{__t("شبکه‌های اجتماعی")}</p>
 
               <div className="flex flex-wrap gap-3">
 
@@ -9875,7 +9190,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   >
 
-                    <Twitter size={15} /> توییتر
+                    <Twitter size={15} /> {__t("توییتر")}
 
                   </a>
 
@@ -9895,7 +9210,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   >
 
-                    <Linkedin size={15} /> لینکدین
+                    <Linkedin size={15} /> {__t("لینکدین")}
 
                   </a>
 
@@ -9915,7 +9230,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   >
 
-                    <Instagram size={15} /> اینستاگرام
+                    <Instagram size={15} /> {__t("اینستاگرام")}
 
                   </a>
 
@@ -9935,7 +9250,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   >
 
-                    <Youtube size={15} /> یوتیوب
+                    <Youtube size={15} /> {__t("یوتیوب")}
 
                   </a>
 
@@ -9973,11 +9288,11 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
               <div>
 
-                <p className="text-sm font-bold text-white mb-1">مشاوره رایگان</p>
+                <p className="text-sm font-bold text-white mb-1">{__t("مشاوره رایگان")}</p>
 
                 <p className="text-xs text-slate-400 leading-relaxed">
 
-                  با ارسال فرم، کارشناسان ما ظرف ۲۴ ساعت با شما تماس خواهند گرفت.
+                  {__t("با ارسال فرم، کارشناسان ما ظرف ۲۴ ساعت با شما تماس خواهند گرفت.")}
 
                 </p>
 
@@ -10045,7 +9360,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                 <div>
 
-                  <p className="text-lg font-bold text-white mb-1">پیام شما دریافت شد!</p>
+                  <p className="text-lg font-bold text-white mb-1">{__t("پیام شما دریافت شد!")}</p>
 
                   <p className="text-sm text-slate-400">{settings.contact_success_msg}</p>
 
@@ -10061,7 +9376,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   <div className="space-y-1.5">
 
-                    <label className="text-xs font-medium text-slate-400">نام و نام خانوادگی *</label>
+                    <label className="text-xs font-medium text-slate-400">{__t("نام و نام خانوادگی *")}</label>
 
                     <input
 
@@ -10079,7 +9394,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                       onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
 
-                      placeholder="نام شما"
+                      placeholder={__t("نام شما")}
 
                     />
 
@@ -10087,7 +9402,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                   <div className="space-y-1.5">
 
-                    <label className="text-xs font-medium text-slate-400">ایمیل *</label>
+                    <label className="text-xs font-medium text-slate-400">{__t("ایمیل *")}</label>
 
                     <input
 
@@ -10119,7 +9434,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                 <div className="space-y-1.5">
 
-                  <label className="text-xs font-medium text-slate-400">موضوع</label>
+                  <label className="text-xs font-medium text-slate-400">{__t("موضوع")}</label>
 
                   <input
 
@@ -10135,7 +9450,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                     onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
 
-                    placeholder="موضوع پیام شما"
+                    placeholder={__t("موضوع پیام شما")}
 
                   />
 
@@ -10145,7 +9460,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                 <div className="space-y-1.5">
 
-                  <label className="text-xs font-medium text-slate-400">پیام *</label>
+                  <label className="text-xs font-medium text-slate-400">{__t("پیام *")}</label>
 
                   <textarea
 
@@ -10165,7 +9480,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                     onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.1)')}
 
-                    placeholder="پیام خود را بنویسید..."
+                    placeholder={__t("پیام خود را بنویسید...")}
 
                   />
 
@@ -10185,7 +9500,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                     <span className="w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
 
-                    <p className="text-sm text-red-400">خطا در ارسال. لطفاً دوباره تلاش کنید.</p>
+                    <p className="text-sm text-red-400">{__t("خطا در ارسال. لطفاً دوباره تلاش کنید.")}</p>
 
                   </div>
 
@@ -10213,15 +9528,15 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
                     {contactStatus === 'sending'
 
-                      ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> در حال ارسال...</>
+                      ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {__t("در حال ارسال...")}</>
 
-                      : <><Send size={15} /> ارسال پیام</>
+                      : <><Send size={15} /> {__t("ارسال پیام")}</>
 
                     }
 
                   </button>
 
-                  <span className="text-xs text-slate-500">پاسخ در کمتر از ۲۴ ساعت</span>
+                  <span className="text-xs text-slate-500">{__t("پاسخ در کمتر از ۲۴ ساعت")}</span>
 
                 </div>
 
@@ -10253,9 +9568,9 @@ function AboutPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => vo
 
   useSEO({
 
-    title: 'درباره ما',
+    title: __t("درباره ما"),
 
-    description: 'آشنایی با تیم Capital Network و رویکرد ما در کمک به جذب سرمایه',
+    description: __t("آشنایی با تیم Capital Network و رویکرد ما در کمک به جذب سرمایه"),
 
     pageKey: 'about',
 
@@ -10335,11 +9650,7 @@ function AboutPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => vo
 
     <div
 
-      className="min-h-screen bg-[#0d1829] text-white relative"
-
-      dir="rtl"
-
-    >
+      className="min-h-screen bg-[#0d1829] text-white relative">
 
       <FinancialBackground />
 
@@ -10373,7 +9684,7 @@ function AboutPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => vo
 
           <ArrowLeft size={16} />
 
-          بازگشت به صفحه اصلی
+          {__t("بازگشت به صفحه اصلی")}
 
         </motion.button>
 
@@ -10397,7 +9708,7 @@ function AboutPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => vo
 
           >
 
-            <BookOpen size={13} /> درباره ما
+            <BookOpen size={13} /> {__t("درباره ما")}
 
           </span>
 
@@ -10561,7 +9872,7 @@ function AboutPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => vo
 
           >
 
-            <SectionHeading icon={<Users size={18} />} title="تیم کپیتال نتورک" />
+            <SectionHeading icon={<Users size={18} />} title={__t("تیم کپیتال نتورک")} />
 
 
 
@@ -10663,7 +9974,7 @@ function AboutPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => vo
 
           >
 
-            درخواست ارزیابی رایگان
+            {__t("درخواست ارزیابی رایگان")}
 
           </button>
 
@@ -10693,7 +10004,7 @@ function AboutPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => vo
 
           >
 
-            تماس با ما
+            {__t("تماس با ما")}
 
           </button>
 
@@ -10947,7 +10258,7 @@ function MobileBottomNav({
 
       <nav
 
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40"
+        className="md:hidden fixed bottom-0 start-0 end-0 z-40"
 
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
 
@@ -11105,7 +10416,7 @@ function MobileBottomNav({
 
                     <motion.span
 
-                      className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full"
+                      className="absolute -top-0.5 -end-0.5 w-1.5 h-1.5 rounded-full"
 
                       style={{ background: item.color }}
 
@@ -11183,7 +10494,7 @@ function MobileBottomNav({
 
               style={{ width: 56, height: 62 }}
 
-              aria-label="پنل کاربری"
+              aria-label={__t("پنل کاربری")}
 
               whileTap={{ scale: 0.88 }}
 
@@ -11233,7 +10544,7 @@ function MobileBottomNav({
 
                 <span
 
-                  className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
+                  className="absolute -bottom-0.5 -end-0.5 w-2.5 h-2.5 rounded-full border-2"
 
                   style={{ background: '#22c55e', borderColor: 'rgb(8,16,32)' }}
 
@@ -11243,7 +10554,7 @@ function MobileBottomNav({
 
               <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontWeight: 700 }}>
 
-                پروفایل
+                {__t("پروفایل")}
 
               </span>
 
@@ -11277,7 +10588,7 @@ function MobileBottomNav({
 
               }}
 
-              aria-label="ورود"
+              aria-label={__t("ورود")}
 
               whileTap={{ scale: 0.88 }}
 
@@ -11305,7 +10616,7 @@ function MobileBottomNav({
 
               <span style={{ fontSize: 9, color: '#fff', fontWeight: 800, letterSpacing: '0.04em', zIndex: 1 }}>
 
-                ورود
+                {__t("ورود")}
 
               </span>
 
@@ -11589,7 +10900,7 @@ function MainApp() {
 
         type: 'page',
 
-        title: 'خانه',
+        title: __t("خانه"),
 
         description: settings.home_hero_desc,
 
@@ -11623,7 +10934,7 @@ function MainApp() {
 
         type: 'page',
 
-        title: 'خدمات',
+        title: __t("خدمات"),
 
         description: settings.services_hero_desc,
 
@@ -11647,7 +10958,7 @@ function MainApp() {
 
         type: 'page',
 
-        title: 'فرآیند',
+        title: __t("فرآیند"),
 
         description: settings.process_hero_desc,
 
@@ -11671,13 +10982,13 @@ function MainApp() {
 
         type: 'page',
 
-        title: 'بلاگ',
+        title: __t("بلاگ"),
 
-        description: 'مقالات تخصصی در حوزه سرمایه‌گذاری و استراتژی کسب‌وکار',
+        description: __t("مقالات تخصصی در حوزه سرمایه‌گذاری و استراتژی کسب‌وکار"),
 
         page: 'blog',
 
-        searchText: normalize('بلاگ', 'مقالات', 'سرمایه‌گذاری', 'Pitch Deck', 'مدل مالی', 'استارتاپ', 'تجربه'),
+        searchText: normalize(__t("بلاگ"), __t("مقالات"), __t("سرمایه‌گذاری"), 'Pitch Deck', __t("مدل مالی"), __t("استارتاپ"), __t("تجربه")),
 
       },
 
@@ -11687,7 +10998,7 @@ function MainApp() {
 
         type: 'page',
 
-        title: 'تماس با ما',
+        title: __t("تماس با ما"),
 
         description: settings.contact_hero_desc,
 
@@ -11717,7 +11028,7 @@ function MainApp() {
 
         type: 'page',
 
-        title: 'درباره ما',
+        title: __t("درباره ما"),
 
         description: settings.about_hero_desc,
 
@@ -11751,13 +11062,13 @@ function MainApp() {
 
         type: 'page',
 
-        title: 'درخواست ارزیابی',
+        title: __t("درخواست ارزیابی"),
 
-        description: 'ارزیابی آماده‌سازی استارتاپ برای جذب سرمایه',
+        description: __t("ارزیابی آماده‌سازی استارتاپ برای جذب سرمایه"),
 
         page: 'evaluation',
 
-        searchText: normalize(settings.home_ready_title, settings.home_ready_desc, 'ارزیابی', 'سرمایه‌گذاری', 'Pitch Deck'),
+        searchText: normalize(settings.home_ready_title, settings.home_ready_desc, __t("ارزیابی"), __t("سرمایه‌گذاری"), 'Pitch Deck'),
 
       },
 
@@ -11765,7 +11076,7 @@ function MainApp() {
 
 
 
-    const blogItems: SearchItem[] = blogPosts.map((post) => ({
+    const blogItems: SearchItem[] = deepTranslate(blogPosts).map((post) => ({
 
       id: `blog-${post.id}`,
 
@@ -11927,7 +11238,7 @@ function MainApp() {
 
   return (
 
-    <div className="min-h-screen relative" dir="rtl">
+    <div className="min-h-screen relative">
 
       {!isMobile && currentPage !== 'evaluation' && <AnimatedCanvas />}
 
@@ -12037,11 +11348,11 @@ function MainApp() {
 
                   <div>
 
-                    <h2 className="text-xl font-bold text-white">جستجوی سریع سایت</h2>
+                    <h2 className="text-xl font-bold text-white">{__t("جستجوی سریع سایت")}</h2>
 
                     <p className="mt-1 text-sm text-slate-400">
 
-                      عبارت مورد نظر خود را وارد کنید تا صفحات و مقالات مرتبط را بیابید.
+                      {__t("عبارت مورد نظر خود را وارد کنید تا صفحات و مقالات مرتبط را بیابید.")}
 
                     </p>
 
@@ -12057,7 +11368,7 @@ function MainApp() {
 
                   >
 
-                    بستن
+                    {__t("بستن")}
 
                   </button>
 
@@ -12067,7 +11378,7 @@ function MainApp() {
 
                 <div className="relative">
 
-                  <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
+                  <Search className="absolute end-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
 
                   <input
 
@@ -12085,11 +11396,11 @@ function MainApp() {
 
                     }}
 
-                    placeholder="جستجو در صفحات و مقالات..."
+                    placeholder={__t("جستجو در صفحات و مقالات...")}
 
-                    className="w-full rounded-2xl border border-white/10 bg-slate-900/90 py-4 pr-14 pl-4 text-sm text-white placeholder-white/45 outline-none transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
+                    className="w-full rounded-2xl border border-white/10 bg-slate-900/90 py-4 pe-14 ps-4 text-sm text-white placeholder-white/45 outline-none transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
 
-                    aria-label="جستجوی سایت"
+                    aria-label={__t("جستجوی سایت")}
 
                   />
 
@@ -12103,7 +11414,7 @@ function MainApp() {
 
                     <div className="rounded-2xl bg-white/5 p-6 text-center text-sm text-slate-400">
 
-                      برای دیدن نتایج، یک کلمه یا عبارت را وارد کنید.
+                      {__t("برای دیدن نتایج، یک کلمه یا عبارت را وارد کنید.")}
 
                     </div>
 
@@ -12111,7 +11422,7 @@ function MainApp() {
 
                     <div className="rounded-2xl bg-white/5 p-6 text-center text-sm text-slate-400">
 
-                      نتیجه‌ای یافت نشد.
+                      {__t("نتیجه‌ای یافت نشد.")}
 
                     </div>
 
@@ -12125,7 +11436,7 @@ function MainApp() {
 
                           <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
 
-                            صفحات
+                            {__t("صفحات")}
 
                           </div>
 
@@ -12141,7 +11452,7 @@ function MainApp() {
 
                                 onClick={() => handleSearchSelect(item)}
 
-                                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-right text-sm text-white transition hover:border-teal-400/40 hover:bg-white/10"
+                                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-end text-sm text-white transition hover:border-teal-400/40 hover:bg-white/10"
 
                               >
 
@@ -12167,7 +11478,7 @@ function MainApp() {
 
                           <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
 
-                            مقالات
+                            {__t("مقالات")}
 
                           </div>
 
@@ -12183,7 +11494,7 @@ function MainApp() {
 
                                 onClick={() => handleSearchSelect(item)}
 
-                                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-right text-sm text-white transition hover:border-teal-400/40 hover:bg-white/10"
+                                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-end text-sm text-white transition hover:border-teal-400/40 hover:bg-white/10"
 
                               >
 

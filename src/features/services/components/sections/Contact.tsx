@@ -6,6 +6,9 @@ import { ArrowRight, CheckCircle2, Send, Sparkles, Phone } from 'lucide-react';
 import type { CTASection, ContactForm as ContactFormType } from '../../types/enterprise';
 import { useState } from 'react';
 
+import { t } from '@/i18n';
+
+
 export interface ContactProps {
   cta: CTASection;
   contact: ContactFormType;
@@ -25,22 +28,22 @@ export const Contact = ({ cta, contact }: ContactProps) => {
   const validateField = (name: string, value: string) => {
     switch (name) {
       case 'name':
-        if (!value.trim()) return 'نام الزامی است';
-        if (value.trim().length < 2) return 'نام باید حداقل 2 کاراکتر باشد';
+        if (!value.trim()) return t("نام الزامی است");
+        if (value.trim().length < 2) return t("نام باید حداقل 2 کاراکتر باشد");
         return '';
       case 'email':
-        if (!value.trim()) return 'ایمیل الزامی است';
+        if (!value.trim()) return t("ایمیل الزامی است");
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) return 'ایمیل معتبر نیست';
+        if (!emailRegex.test(value)) return t("ایمیل معتبر نیست");
         return '';
       case 'phone':
         if (value && !/^[0-9]{10,11}$/.test(value.replace(/\D/g, ''))) {
-          return 'شماره موبایل معتبر نیست';
+          return t("شماره موبایل معتبر نیست");
         }
         return '';
       case 'message':
-        if (!value.trim()) return 'پیام الزامی است';
-        if (value.trim().length < 10) return 'پیام باید حداقل 10 کاراکتر باشد';
+        if (!value.trim()) return t("پیام الزامی است");
+        if (value.trim().length < 10) return t("پیام باید حداقل 10 کاراکتر باشد");
         return '';
       default:
         return '';
@@ -101,7 +104,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 rounded-[40px]" />
           
           {/* Decorative pattern */}
-          <div className="absolute top-0 right-0 w-64 h-64 opacity-5">
+          <div className="absolute top-0 end-0 w-64 h-64 opacity-5">
             <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-bl-full" />
           </div>
 
@@ -159,7 +162,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                         {/* Name field */}
                         <div>
                           <label className="mb-2 block text-sm font-semibold text-white">
-                            نام
+                            {t("نام")}
                           </label>
                           <motion.input
                             type="text"
@@ -171,7 +174,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                                 ? 'border-red-500/50 bg-red-500/5 focus:border-red-500 focus:bg-red-500/10' 
                                 : 'border-white/10 bg-white/5 focus:border-cyan-400/50 focus:bg-white/10'
                             }`}
-                            placeholder="نام شما"
+                            placeholder={t("نام شما")}
                           />
                           <AnimatePresence>
                             {errors.name && (
@@ -190,7 +193,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                         {/* Email field */}
                         <div>
                           <label className="mb-2 block text-sm font-semibold text-white">
-                            ایمیل
+                            {t("ایمیل")}
                           </label>
                           <motion.input
                             type="email"
@@ -202,7 +205,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                                 ? 'border-red-500/50 bg-red-500/5 focus:border-red-500 focus:bg-red-500/10' 
                                 : 'border-white/10 bg-white/5 focus:border-cyan-400/50 focus:bg-white/10'
                             }`}
-                            placeholder="ایمیل شما"
+                            placeholder={t("ایمیل شما")}
                           />
                           <AnimatePresence>
                             {errors.email && (
@@ -221,7 +224,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                         {/* Phone field */}
                         <div>
                           <label className="mb-2 block text-sm font-semibold text-white">
-                            موبایل (اختیاری)
+                            {t("موبایل (اختیاری)")}
                           </label>
                           <motion.input
                             type="tel"
@@ -233,7 +236,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                                 ? 'border-red-500/50 bg-red-500/5 focus:border-red-500 focus:bg-red-500/10' 
                                 : 'border-white/10 bg-white/5 focus:border-cyan-400/50 focus:bg-white/10'
                             }`}
-                            placeholder="شماره موبایل"
+                            placeholder={t("شماره موبایل")}
                           />
                           <AnimatePresence>
                             {errors.phone && (
@@ -252,7 +255,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                         {/* Message field */}
                         <div>
                           <label className="mb-2 block text-sm font-semibold text-white">
-                            پیام
+                            {t("پیام")}
                           </label>
                           <motion.textarea
                             value={formData.message}
@@ -264,7 +267,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                                 ? 'border-red-500/50 bg-red-500/5 focus:border-red-500 focus:bg-red-500/10' 
                                 : 'border-white/10 bg-white/5 focus:border-cyan-400/50 focus:bg-white/10'
                             }`}
-                            placeholder="پیام شما"
+                            placeholder={t("پیام شما")}
                           />
                           <AnimatePresence>
                             {errors.message && (
@@ -295,7 +298,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                                 transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                                 className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                               />
-                              در حال ارسال...
+                              {t("در حال ارسال...")}
                             </span>
                           ) : (
                             <span className="flex items-center justify-center gap-2">
@@ -320,10 +323,10 @@ export const Contact = ({ cta, contact }: ContactProps) => {
                           <CheckCircle2 size={40} className="text-white" />
                         </motion.div>
                         <h4 className="text-2xl font-black text-white mb-2">
-                          پیام شما با موفقیت ارسال شد!
+                          {t("پیام شما با موفقیت ارسال شد!")}
                         </h4>
                         <p className="text-slate-300">
-                          به زودی با شما تماس خواهیم گرفت.
+                          {t("به زودی با شما تماس خواهیم گرفت.")}
                         </p>
                       </motion.div>
                     )}
@@ -351,7 +354,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
           className="flex items-center gap-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-violet-500 px-6 py-4 font-black text-white shadow-lg shadow-cyan-500/30 transition-all hover:shadow-cyan-500/40"
         >
           <Phone size={20} />
-          تماس با ما
+          {t("تماس با ما")}
         </motion.a>
       </motion.div>
     </section>

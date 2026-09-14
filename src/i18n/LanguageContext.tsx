@@ -1,59 +1,87 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
-import fa from './fa';
-import en from './en';
-import type { Translations } from './fa';
+// ─── Language Context ────────────────────────────────────────────────────────
+// اتصال مخزن زبان (store) به درخت React. با تغییر زبان، کل درخت دوباره رندر
+// می‌شود و همهٔ فراخوانی‌های t() مقدار جدید را برمی‌گردانند.
 
-export type Language = 'fa' | 'en';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { t as translate } from './translate';
+import {
+  getLang,
+  getDir,
+  subscribeLanguage,
+  setLang as storeSetLang,
+  initLanguage,
+  otherLanguage,
+  langFromPathname,
+  type Language,
+  type Direction,
+} from './store';
+
+export type { Language, Direction } from './store';
 
 interface LanguageContextValue {
+  /** زبان فعال */
   lang: Language;
-  t: Translations;
-  dir: 'rtl' | 'ltr';
+  /** جهت چیدمان: rtl برای فارسی، ltr برای انگلیسی */
+  dir: Direction;
+  /** تابع ترجمه — t('nav.services') یا t('خدمات') */
+  t: typeof translate;
+  /** تغییر مستقیم زبان */
+  setLanguage: (lang: Language) => void;
+  /** جابه‌جایی بین فارسی و انگلیسی */
   toggleLanguage: () => void;
+  /** آیا جهت فعلی راست‌به‌چپ است؟ */
+  isRtl: boolean;
 }
-
-const translations: Record<Language, Translations> = { fa, en };
 
 const LanguageContext = createContext<LanguageContextValue>({
   lang: 'fa',
-  t: fa,
   dir: 'rtl',
+  t: translate,
+  setLanguage: () => {},
   toggleLanguage: () => {},
+  isRtl: true,
 });
 
-const STORAGE_KEY = 'cn_lang';
-
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Language>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === 'en' || saved === 'fa') return saved;
-    } catch {}
-    return 'fa';
-  });
+  const [lang, setCurrentLang] = useState<Language>(() => initLanguage());
 
-  const dir: 'rtl' | 'ltr' = lang === 'fa' ? 'rtl' : 'ltr';
+  // تغییر زبان از هر نقطه‌ای از برنامه (مثلاً دکمه‌ی تغییر زبان)
+  useEffect(() => subscribeLanguage(setCurrentLang), []);
 
-  // Sync dir on <html> element
+  // دکمه‌های جلو/عقب مرورگر بین /en و /fa
   useEffect(() => {
-    document.documentElement.setAttribute('dir', dir);
-    document.documentElement.setAttribute('lang', lang);
-  }, [lang, dir]);
-
-  const toggleLanguage = useCallback(() => {
-    setLang(prev => {
-      const next: Language = prev === 'fa' ? 'en' : 'fa';
-      try { localStorage.setItem(STORAGE_KEY, next); } catch {}
-      return next;
-    });
+    if (typeof window === 'undefined') return;
+    const handlePopState = () => {
+      const fromPath = langFromPathname(window.location.pathname);
+      if (fromPath && fromPath !== getLang()) {
+        storeSetLang(fromPath, { updateUrl: false });
+      } else {
+        setCurrentLang(getLang());
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const value: LanguageContextValue = {
-    lang,
-    t: translations[lang],
-    dir,
-    toggleLanguage,
-  };
+  const setLanguage = useCallback((next: Language) => {
+    storeSetLang(next);
+  }, []);
+
+  const toggleLanguage = useCallback(() => {
+    storeSetLang(otherLanguage(getLang()));
+  }, []);
+
+  const value = useMemo<LanguageContextValue>(() => {
+    const active = lang;
+    return {
+      lang: active,
+      dir: getDir(),
+      t: translate,
+      setLanguage,
+      toggleLanguage,
+      isRtl: active === 'fa',
+    };
+  }, [lang, setLanguage, toggleLanguage]);
 
   return (
     <LanguageContext.Provider value={value}>
@@ -65,3 +93,5 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 export function useLanguage(): LanguageContextValue {
   return useContext(LanguageContext);
 }
+
+export default LanguageProvider;

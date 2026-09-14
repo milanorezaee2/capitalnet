@@ -13,6 +13,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink } from 'lucide-react';
 import type { PopupAd, SiteSection } from '../lib/settingsApi';
 
+import { t as tr } from '@/i18n';
+
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
 // ─────────────────────────────────────────────────────────────────────────────
@@ -193,22 +196,21 @@ function PopupCard({ ad, onClose }: PopupCardProps) {
           perspective: 1000,
           zIndex: 1,
         }}
-        dir="rtl"
       >
         {/* ── Background glow blobs ── */}
         <div
-          className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl pointer-events-none"
+          className="absolute -top-10 -end-10 w-32 h-32 rounded-full blur-3xl pointer-events-none"
           style={{ background: ad.accent_color, opacity: 0.18 }}
         />
         <div
-          className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full blur-2xl pointer-events-none"
+          className="absolute -bottom-8 -start-8 w-24 h-24 rounded-full blur-2xl pointer-events-none"
           style={{ background: ad.accent_color, opacity: 0.1 }}
         />
 
         {/* ── Close button ── */}
         <button
           onClick={onClose}
-          className="absolute top-3 left-3 w-7 h-7 rounded-full flex items-center justify-center transition-all z-10"
+          className="absolute top-3 start-3 w-7 h-7 rounded-full flex items-center justify-center transition-all z-10"
           style={{
             background: 'rgba(255,255,255,0.08)',
             color: 'rgba(255,255,255,0.5)',
@@ -329,7 +331,7 @@ function PopupCard({ ad, onClose }: PopupCardProps) {
             onClick={onClose}
             className="w-full text-center text-xs text-slate-600 hover:text-slate-400 mt-2.5 transition-colors"
           >
-            بستن
+            {tr("بستن")}
           </motion.button>
         </div>
 

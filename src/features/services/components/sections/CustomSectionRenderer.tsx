@@ -2,13 +2,16 @@
 import { motion } from 'framer-motion';
 import type { CustomSection, CustomBlock } from '../../types/enterprise';
 
+import { t } from '@/i18n';
+
+
 // ── Block-level renderer ──────────────────────────────────────────────────────
 
 const SPACER_SIZE: Record<string, string> = { xs: 'py-2', sm: 'py-4', md: 'py-8', lg: 'py-14' };
 const ICON_SIZE: Record<string, string>  = { sm: 'text-3xl', md: 'text-5xl', lg: 'text-7xl', xl: 'text-9xl' };
 const STICKER_SIZE: Record<string, string> = { md: 'text-5xl', lg: 'text-7xl', xl: 'text-9xl' };
 const PADDINGY: Record<string, string> = { none: 'py-0', sm: 'py-3', md: 'py-6', lg: 'py-12' };
-const ALIGN_CLS: Record<string, string> = { right: 'text-right', center: 'text-center', left: 'text-left' };
+const ALIGN_CLS: Record<string, string> = { right: 'text-start', center: 'text-center', left: 'text-end' };
 
 function Block({ block }: { block: CustomBlock }) {
   const py = PADDINGY[block.paddingY ?? 'none'];
@@ -89,7 +92,7 @@ function Block({ block }: { block: CustomBlock }) {
               borderColor: block.badgeColor ? `${block.badgeColor}40` : 'rgba(0,188,212,0.3)',
               color: block.badgeColor ?? '#00BCD4',
             }}>
-            {block.content || 'برچسب'}
+            {block.content || t("برچسب")}
           </span>
         </div>
       );
@@ -112,7 +115,7 @@ function Block({ block }: { block: CustomBlock }) {
                 : { borderColor: block.bgColor ?? '#00BCD4', color: block.bgColor ?? '#00BCD4' }
             }
           >
-            {block.content || 'دکمه'}
+            {block.content || t("دکمه")}
           </a>
         </div>
       );
@@ -179,7 +182,7 @@ function Block({ block }: { block: CustomBlock }) {
     case 'highlight': {
       const accent = block.bgColor ?? '#f59e0b';
       return (
-        <div className={`${py} px-5 py-4 rounded-xl border-r-4`}
+        <div className={`${py} px-5 py-4 rounded-xl border-e-4`}
           style={{ background: `${accent}10`, borderColor: accent }}>
           <p className="text-sm text-slate-200 leading-relaxed font-medium whitespace-pre-wrap">{block.content || ''}</p>
         </div>
