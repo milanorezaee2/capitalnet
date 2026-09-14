@@ -196,7 +196,6 @@ function PopupCard({ ad, onClose }: PopupCardProps) {
           perspective: 1000,
           zIndex: 1,
         }}
-        dir="rtl"
       >
         {/* ── Background glow blobs ── */}
         <div

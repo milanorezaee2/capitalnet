@@ -184,8 +184,7 @@ function LeadsTab({ leads, loading }: { leads: Lead[]; loading: boolean }) {
         <p className="text-slate-400 text-sm">{t("هنوز درخواست ارزیابی ارسال نکرده‌اید")}</p>
         <a
           href="/evaluation"
-          className="mt-3 inline-block text-teal-400 text-sm hover:underline"
-        >
+          className="mt-3 inline-block text-teal-400 text-sm hover:underline">
           {t("ارسال درخواست ارزیابی")}
         </a>
       </div>
@@ -269,8 +268,7 @@ function MessagesTab({ messages, loading }: { messages: ContactMessage[]; loadin
         <p className="text-slate-400 text-sm">{t("هنوز پیامی ارسال نکرده‌اید")}</p>
         <a
           href="/contact"
-          className="mt-3 inline-block text-teal-400 text-sm hover:underline"
-        >
+          className="mt-3 inline-block text-teal-400 text-sm hover:underline">
           {t("ارسال پیام به تیم")}
         </a>
       </div>
@@ -448,7 +446,6 @@ export default function UserDashboard({ user, onClose, onLogout }: UserDashboard
             backdropFilter: 'blur(24px)',
             maxHeight: 'calc(100vh - 80px)',
           }}
-          dir="rtl"
         >
           {/* Header */}
           <div

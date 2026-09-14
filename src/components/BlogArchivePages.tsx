@@ -43,7 +43,7 @@ export function CategoryPage({ categoryName, posts, onNavigate, onBack }: Catego
 
   if (!categoryInfo) {
     return (
-      <div className="min-h-screen bg-[linear-gradient(180deg,#040614_0%,#071422_60%)] text-white" dir="rtl">
+      <div className="min-h-screen bg-[linear-gradient(180deg,#040614_0%,#071422_60%)] text-white">
         <div className="mx-auto max-w-7xl px-5 pt-24 pb-16">
           <button onClick={onBack} className="flex items-center gap-2 text-white/60 hover:text-white mb-6 transition-colors">
             <ArrowLeft size={18} />
@@ -56,7 +56,7 @@ export function CategoryPage({ categoryName, posts, onNavigate, onBack }: Catego
   }
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#040614_0%,#071422_60%)] text-white" dir="rtl">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#040614_0%,#071422_60%)] text-white">
       <div className="mx-auto max-w-7xl px-5 pt-24 pb-16 md:pt-28">
         {/* ── Breadcrumb ────────────────────────────────────────────────── */}
         <Breadcrumb
@@ -181,7 +181,7 @@ export function TagPage({ tagName, posts, onNavigate, onBack }: TagPageProps) {
   }, [posts, tagName]);
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#040614_0%,#071422_60%)] text-white" dir="rtl">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#040614_0%,#071422_60%)] text-white">
       <div className="mx-auto max-w-7xl px-5 pt-24 pb-16 md:pt-28">
         {/* ── Breadcrumb ────────────────────────────────────────────────── */}
         <Breadcrumb
@@ -288,7 +288,7 @@ export function AuthorPage({ authorName, posts, onNavigate, onBack }: AuthorPage
   const author = filteredPosts[0]?.author;
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#040614_0%,#071422_60%)] text-white" dir="rtl">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#040614_0%,#071422_60%)] text-white">
       <div className="mx-auto max-w-7xl px-5 pt-24 pb-16 md:pt-28">
         {/* ── Breadcrumb ────────────────────────────────────────────────── */}
         <Breadcrumb

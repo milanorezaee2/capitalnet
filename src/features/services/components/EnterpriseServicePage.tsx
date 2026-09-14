@@ -46,9 +46,7 @@ export const EnterpriseServicePage = ({ content, canonicalUrl }: EnterpriseServi
 
   return (
     <div
-      className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.18),_transparent_45%),linear-gradient(180deg,#020617_0%,#06111f_100%)] text-white"
-      dir="rtl"
-    >
+      className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.18),_transparent_45%),linear-gradient(180deg,#020617_0%,#06111f_100%)] text-white">
       {/* Hero Section */}
       <Hero content={content.hero} />
 

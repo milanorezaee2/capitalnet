@@ -553,7 +553,7 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0d1829', color: '#fff', direction: 'rtl', position: 'relative' }}>
+    <div style={{ minHeight: '100vh', background: '#0d1829', color: '#fff', position: 'relative' }}>
       <FinancialBackground />
       <a href="#blog-main" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)' }}>
         {tr("رفتن به مقالات")}

@@ -11,7 +11,7 @@ const SPACER_SIZE: Record<string, string> = { xs: 'py-2', sm: 'py-4', md: 'py-8'
 const ICON_SIZE: Record<string, string>  = { sm: 'text-3xl', md: 'text-5xl', lg: 'text-7xl', xl: 'text-9xl' };
 const STICKER_SIZE: Record<string, string> = { md: 'text-5xl', lg: 'text-7xl', xl: 'text-9xl' };
 const PADDINGY: Record<string, string> = { none: 'py-0', sm: 'py-3', md: 'py-6', lg: 'py-12' };
-const ALIGN_CLS: Record<string, string> = { right: 'text-right', center: 'text-center', left: 'text-left' };
+const ALIGN_CLS: Record<string, string> = { right: 'text-start', center: 'text-center', left: 'text-end' };
 
 function Block({ block }: { block: CustomBlock }) {
   const py = PADDINGY[block.paddingY ?? 'none'];

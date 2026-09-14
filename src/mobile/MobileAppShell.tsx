@@ -137,7 +137,7 @@ export default function MobileAppShell({
       };
 
   return (
-    <div className="min-h-screen mn-shell" dir="rtl" style={shellStyles}>
+    <div className="min-h-screen mn-shell" style={shellStyles}>
       <AnimatePresence>
         {showSplash && (
           <motion.div

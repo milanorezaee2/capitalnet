@@ -125,7 +125,6 @@ function BannerCard({ banner, onDismiss, compact = false }: {
       {/* ── body row ── */}
       <div
         className={`relative flex items-center gap-3 ${compact ? 'px-3 py-2.5' : 'px-4 py-3'}`}
-        dir="rtl"
       >
         {/* icon box — only when no full-width image */}
         {!(hasImg && !compact) && (
@@ -365,7 +364,7 @@ export default function InlineBannerRenderer({ banners, page, section }: InlineB
   if (inlineVisible.length === 0) return null;
 
   return (
-    <div className="w-full my-5 px-4 space-y-2" dir="rtl">
+    <div className="w-full my-5 px-4 space-y-2">
       {inlineVisible.map((banner, idx) => {
         const corner = banner.corner ?? 'top-right';
         const wrapStyle = cornerToInlineStyle(corner);

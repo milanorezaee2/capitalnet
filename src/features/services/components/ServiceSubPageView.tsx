@@ -590,7 +590,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
                 <thead>
                   <tr style={{ background: color + '15' }}>
                     {columns.map((col, i) => (
-                      <th key={i} className={`px-5 py-3.5 text-xs font-bold uppercase tracking-widest ${i === 0 ? 'text-right' : 'text-center'}`}
+                      <th key={i} className={`px-5 py-3.5 text-xs font-bold uppercase tracking-widest ${i === 0 ? 'text-start' : 'text-center'}`}
                         style={{ color: i === 0 ? 'rgba(255,255,255,0.5)' : color }}>
                         {col}
                       </th>
@@ -699,7 +699,7 @@ export default function ServiceSubPageView({ slug, onBack }: ServiceSubPageViewP
   const visibleSections = page.sections.filter(s => s.visible);
 
   return (
-    <div className="min-h-screen" style={{ background: '#0d1829', color: '#e2e8f0' }} dir="rtl">
+    <div className="min-h-screen" style={{ background: '#0d1829', color: '#e2e8f0' }}>
       {/* Breadcrumb nav */}
       <div className="bg-[#050d1a]/80 border-b border-white/[0.06] px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>

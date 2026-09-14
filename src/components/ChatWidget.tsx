@@ -271,7 +271,7 @@ export default function ChatWidget() {
   if (chatEnabled === false) return null;
 
   return (
-    <div className="chat-widget-fab fixed bottom-8 end-8 z-50 flex flex-col items-end gap-3" dir="rtl">
+    <div className="chat-widget-fab fixed bottom-8 end-8 z-50 flex flex-col items-end gap-3">
       {/* Chat Panel */}
       <AnimatePresence>
         {open && (

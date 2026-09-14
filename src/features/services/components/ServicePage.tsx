@@ -67,7 +67,7 @@ export function ServicePage({ onNavigate, banners = [] }: ServicePageProps = {})
       .map(cs => <CustomSectionRenderer key={cs.id} section={cs} />);
 
   return (
-    <div className="min-h-screen bg-[#0d1829] text-white" dir="rtl">
+    <div className="min-h-screen bg-[#0d1829] text-white">
       <GlobalEnhancements />
 
       {/* ── 1. Hero ── */}

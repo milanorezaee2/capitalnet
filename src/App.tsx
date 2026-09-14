@@ -206,15 +206,15 @@ function fsToStyle(size: FontSize): React.CSSProperties {
 
 const ALIGN_CLASS: Record<string, string> = {
 
-  right:  'text-right',
+  right:  'text-start',
 
   center: 'text-center',
 
-  left:   'text-left',
+  left:   'text-end',
 
 };
 
-const ac = (align?: string) => ALIGN_CLASS[align ?? 'right'] ?? 'text-right';
+const ac = (align?: string) => ALIGN_CLASS[align ?? 'right'] ?? 'text-start';
 
 
 
@@ -4093,9 +4093,7 @@ function ProcessSteps({ settings }: { settings: SiteSettings }) {
 
               href="#contact"
 
-              className="block bg-white px-10 py-4 rounded-2xl text-base font-bold text-gray-900 hover:bg-gray-50 transition-colors"
-
-            >
+              className="block bg-white px-10 py-4 rounded-2xl text-base font-bold text-gray-900 hover:bg-gray-50 transition-colors">
 
               {settings.home_process_section_cta}
 
@@ -4153,7 +4151,6 @@ function FlipCard({ card }: { card: ShowcaseCardData }) {
 
       className="flip-card w-full"
 
-      dir="rtl"
 
       onClick={() => setFlipped(f => !f)}
 
@@ -4401,7 +4398,7 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
   return (
 
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.80)' }} dir="rtl">
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.80)' }}>
 
       {/* background blobs */}
 
@@ -4465,7 +4462,7 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
           <div className="w-1 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #2DD4BF, #F59E0B)' }} />
 
-          <div className={`${ALIGN_CLASS[foundersLabelAlign] || 'text-right'} inline-flex flex-wrap items-center gap-3`}>
+          <div className={`${ALIGN_CLASS[foundersLabelAlign] || 'text-start'} inline-flex flex-wrap items-center gap-3`}>
 
             <span className={`text-white ${foundersLabelBold ? 'font-bold' : ''}`} style={fsToStyle(foundersLabelFs)}>{foundersLabel}</span>
 
@@ -4539,7 +4536,7 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
           <div className="w-1 h-7 rounded-full" style={{ background: 'linear-gradient(to bottom, #A78BFA, #F43F5E)' }} />
 
-          <div className={`${ALIGN_CLASS[vcsLabelAlign] || 'text-right'} inline-flex flex-wrap items-center gap-3`}>
+          <div className={`${ALIGN_CLASS[vcsLabelAlign] || 'text-start'} inline-flex flex-wrap items-center gap-3`}>
 
             <span className={`text-white ${vcsLabelBold ? 'font-bold' : ''}`} style={fsToStyle(vcsLabelFs)}>{vcsLabel}</span>
 
@@ -4601,7 +4598,7 @@ function HomeBlogPreview({ onNavigate, settings }: { onNavigate?: (page: PageKey
 
   return (
 
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.75)' }} dir="rtl" id="blog-preview">
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.75)' }} id="blog-preview">
 
       {/* blobs */}
 
@@ -4795,7 +4792,7 @@ function FAQSection({ settings, onNavigate }: { settings: SiteSettings; onNaviga
 
   return (
 
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(7,16,32,0.82)' }} dir="rtl" id="faq">
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(7,16,32,0.82)' }} id="faq">
 
       {/* blobs */}
 
@@ -5379,13 +5376,13 @@ function DynBlock({ block }: { block: HomeSectionBlock }) {
 
     const resolved = align ?? 'right';
 
-    return resolved === 'center' ? 'text-center' : resolved === 'left' ? 'text-left' : 'text-right';
+    return resolved === 'center' ? 'text-center' : resolved === 'left' ? 'text-end' : 'text-start';
 
   };
 
 
 
-  const alignClass = 'align' in block ? getAlignClass(block.align) : 'text-right';
+  const alignClass = 'align' in block ? getAlignClass(block.align) : 'text-start';
 
   const headingSizes: Record<HeadingLevel, string> = {
 
@@ -5609,7 +5606,7 @@ function DynSection({ section }: { section: HomeSection }) {
 
   return (
 
-    <section className="py-16 px-6" style={{ background: 'rgba(7,16,32,0.6)' }} dir="rtl">
+    <section className="py-16 px-6" style={{ background: 'rgba(7,16,32,0.6)' }}>
 
       <div className="max-w-5xl mx-auto space-y-6">
 
@@ -6451,7 +6448,6 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
             style={{ background: 'linear-gradient(160deg,#071428 0%,#060e1c 100%)', maxHeight: '90vh' }}
 
-            dir="rtl"
 
           >
 
@@ -6787,7 +6783,7 @@ function ServicesPage({ onNavigate, settings }: { onNavigate: (page: PageKey) =>
 
   return (
 
-    <div className="min-h-screen bg-[#0d1829] text-white" dir="rtl">
+    <div className="min-h-screen bg-[#0d1829] text-white">
 
       <InlineBannerRenderer banners={banners} page="services" section="top" />
 
@@ -7007,7 +7003,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
     return (
 
-      <div className="min-h-screen bg-[#0d1829] text-white relative" dir="rtl">
+      <div className="min-h-screen bg-[#0d1829] text-white relative">
 
         <FinancialBackground />
 
@@ -7071,7 +7067,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
   return (
 
-    <article className="min-h-screen bg-[#0d1829] text-white relative" dir="rtl">
+    <article className="min-h-screen bg-[#0d1829] text-white relative">
 
       <FinancialBackground />
 
@@ -7081,9 +7077,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
         href="#main-content" 
 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-white focus:rounded-lg"
-
-      >
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-white focus:rounded-lg">
 
         {__t("پرش به محتوای اصلی")}
 
@@ -7938,7 +7932,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
   return (
 
-    <div className="min-h-screen bg-[#0d1829] text-white relative" dir="rtl">
+    <div className="min-h-screen bg-[#0d1829] text-white relative">
 
       <FinancialBackground />
 
@@ -8104,9 +8098,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
               className="absolute top-full start-0 end-0 mt-2 bg-[#0B1628]/95 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden z-10"
 
-              role="listbox"
-
-            >
+              role="listbox">
 
               {searchSuggestions.map((suggestion) => (
 
@@ -8784,11 +8776,7 @@ function ContactPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => 
 
     <div
 
-      className="min-h-screen bg-[#0d1829] text-white relative"
-
-      dir="rtl"
-
-    >
+      className="min-h-screen bg-[#0d1829] text-white relative">
 
       <FinancialBackground />
 
@@ -9662,11 +9650,7 @@ function AboutPage({ onNavigate, settings }: { onNavigate: (page: PageKey) => vo
 
     <div
 
-      className="min-h-screen bg-[#0d1829] text-white relative"
-
-      dir="rtl"
-
-    >
+      className="min-h-screen bg-[#0d1829] text-white relative">
 
       <FinancialBackground />
 
@@ -11254,7 +11238,7 @@ function MainApp() {
 
   return (
 
-    <div className="min-h-screen relative" dir="rtl">
+    <div className="min-h-screen relative">
 
       {!isMobile && currentPage !== 'evaluation' && <AnimatedCanvas />}
 

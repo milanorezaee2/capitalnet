@@ -181,9 +181,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
         >
           {/* Main Card */}
           <div
-            className="relative overflow-hidden rounded-[40px] border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-transparent backdrop-blur-xl p-4 md:p-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]"
-            dir="rtl"
-          >
+            className="relative overflow-hidden rounded-[40px] border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.05] to-transparent backdrop-blur-xl p-4 md:p-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
             {/* Glass Effect Border */}
             <div className="absolute inset-0 rounded-[40px] bg-gradient-to-br from-white/10 via-transparent to-transparent" />
             <div className="absolute inset-0 rounded-[40px] border border-white/5" />
@@ -480,8 +478,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                       href="https://market.capitalnetwork.ir"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-teal-400/30 bg-gradient-to-r from-teal-400/15 to-cyan-400/15 px-4 py-2.5 text-xs font-semibold text-teal-300 backdrop-blur-sm hover:border-teal-400/50 hover:bg-teal-400/25 transition-all cursor-pointer"
-                    >
+                      className="inline-flex items-center gap-2 rounded-xl border border-teal-400/30 bg-gradient-to-r from-teal-400/15 to-cyan-400/15 px-4 py-2.5 text-xs font-semibold text-teal-300 backdrop-blur-sm hover:border-teal-400/50 hover:bg-teal-400/25 transition-all cursor-pointer">
                       <span>market.capitalnetwork.ir</span>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

@@ -205,11 +205,11 @@
 }
 .bp-code-num {
   min-width: 36px;
-  padding-left: 16px;
+  padding-inline-start: 16px;
   color: rgba(255,255,255,0.2);
   font-size: 0.75rem;
   user-select: none;
-  text-align: right;
+  text-align: start;
   flex-shrink: 0;
 }
 .bp-code-text {
@@ -235,7 +235,7 @@
 .bp-table th {
   background: rgba(255,255,255,0.05);
   padding: 12px 16px;
-  text-align: right;
+  text-align: start;
   font-weight: 700;
   color: rgba(255,255,255,0.9);
   border-bottom: 1px solid rgba(255,255,255,0.1);

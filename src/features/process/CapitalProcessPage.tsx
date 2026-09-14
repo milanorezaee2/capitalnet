@@ -441,7 +441,7 @@ function LiveJourneyPanel() {
   }, []);
 
   return (
-    <div className="w-full rounded-2xl overflow-hidden" dir="rtl"
+    <div className="w-full rounded-2xl overflow-hidden"
       style={{ background: 'rgba(7,17,30,0.85)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)' }}>
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-3.5"
@@ -1036,7 +1036,7 @@ export default function CapitalProcessPage({ onNavigate, banners = [] }: { onNav
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0d1829] text-white" dir="rtl">
+    <div className="min-h-screen bg-[#0d1829] text-white">
       <Hero onNavigate={onNavigate} c={c} />
       <InlineBannerRenderer banners={banners} page="process" section="after-hero" />
       <StatsBar c={c} />

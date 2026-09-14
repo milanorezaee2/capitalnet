@@ -35,7 +35,7 @@ export const FAQItem: React.FC<FAQProps> = ({
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-5 flex items-center justify-between text-right hover:bg-gray-800/50 transition-colors"
+        className="w-full p-5 flex items-center justify-between text-start hover:bg-gray-800/50 transition-colors"
         aria-expanded={isOpen}
       >
         <span className={cn(

@@ -46,7 +46,6 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
 
   return (
     <footer
-      dir="rtl"
       className="mx-3 mt-4 rounded-[22px] overflow-hidden"
       style={{ background: bg, border: `1px solid ${border}`, marginBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))' }}
     >
