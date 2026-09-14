@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap.xml — Capital Network (capitalnetwork.ir)
+  ─────────────────────────────────────────────────
+  Static sitemap covering all app-shell routes.
+  Blog post URLs are dynamic — generate a separate sitemap from Supabase
+  or use a build-time script (scripts/generate-sitemap.ts) to extend this.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ── Home ── -->
+  <url>
+    <loc>https://capitalnetwork.ir/</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ── Services ── -->
+  <url>
+    <loc>https://capitalnetwork.ir/services</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/services"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ── Process ── -->
+  <url>
+    <loc>https://capitalnetwork.ir/process</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/process"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── Blog (listing) ── -->
+  <url>
+    <loc>https://capitalnetwork.ir/blog</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/blog"/>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ── Blog Categories ── -->
+  <url>
+    <loc>https://capitalnetwork.ir/blog/category/investment</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/blog/category/investment"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://capitalnetwork.ir/blog/category/strategy</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/blog/category/strategy"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://capitalnetwork.ir/blog/category/case-study</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/blog/category/case-study"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://capitalnetwork.ir/blog/category/market-analysis</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/blog/category/market-analysis"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://capitalnetwork.ir/blog/category/negotiation</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/blog/category/negotiation"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://capitalnetwork.ir/blog/category/financial-modeling</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/blog/category/financial-modeling"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── About ── -->
+  <url>
+    <loc>https://capitalnetwork.ir/about</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/about"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── Contact ── -->
+  <url>
+    <loc>https://capitalnetwork.ir/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/contact"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ── Evaluation ── -->
+  <url>
+    <loc>https://capitalnetwork.ir/evaluation</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://capitalnetwork.ir/evaluation"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

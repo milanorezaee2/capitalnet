@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Capital Network favicon — CN monogram on dark background -->
+  <rect width="64" height="64" rx="14" fill="#060E1C"/>
+  <!-- C arc -->
+  <path d="M38 20C33.2 16.8 26.4 17.6 22.8 22.4C19.2 27.2 20 34 24.8 37.6C29.6 41.2 36.4 40.4 40 35.6"
+        stroke="#00BCD4" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <!-- N vertical left -->
+  <line x1="40" y1="18" x2="40" y2="44" stroke="#00BCD4" stroke-width="4" stroke-linecap="round"/>
+  <!-- N diagonal -->
+  <line x1="40" y1="18" x2="50" y2="44" stroke="#00BCD4" stroke-width="4" stroke-linecap="round"/>
+  <!-- N vertical right -->
+  <line x1="50" y1="18" x2="50" y2="44" stroke="#00BCD4" stroke-width="4" stroke-linecap="round"/>
+</svg>

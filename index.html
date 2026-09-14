@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>کپیتال نتورک | سرمایه‌گذار درست، در زمان درست</title>
+    <meta name="title" content="کپیتال نتورک | سرمایه‌گذار درست، در زمان درست" />
+    <meta name="description" content="ما استارتاپ‌های ممتاز را به شبکه اختصاصی سرمایه‌گذاران Tier-1 معرفی می‌کنیم. بلاگ تخصصی سرمایه‌گذاری با مقالات راهبردی و عملی." />
+    <meta name="keywords" content="سرمایه‌گذاری، استارتاپ، VC، جذب سرمایه، بلاگ سرمایه‌گذاری، راهنمای سرمایه‌گذاری" />
+    <meta name="author" content="کپیتال نتورک" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://capitalnetwork.ir/" />
+    <meta property="og:title" content="کپیتال نتورک | سرمایه‌گذار درست، در زمان درست" />
+    <meta property="og:description" content="ما استارتاپ‌های ممتاز را به شبکه اختصاصی سرمایه‌گذاران Tier-1 معرفی می‌کنیم." />
+    <meta property="og:image" content="https://capitalnetwork.ir/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="fa_IR" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://capitalnetwork.ir/" />
+    <meta property="twitter:title" content="کپیتال نتورک | سرمایه‌گذار درست، در زمان درست" />
+    <meta property="twitter:description" content="ما استارتاپ‌های ممتاز را به شبکه اختصاصی سرمایه‌گذاران Tier-1 معرفی می‌کنیم." />
+    <meta property="twitter:image" content="https://capitalnetwork.ir/og-image.png" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://capitalnetwork.ir/" />
+    
+    <!-- ═══ PERFORMANCE: DNS/TCP/TLS pre-connect ═══════════════════════════════ -->
+    <!-- Supabase: establish TCP+TLS before JS even loads -->
+    <link rel="preconnect" href="https://supabase.co" crossorigin />
+    <link rel="dns-prefetch" href="https://supabase.co" />
+
+    <!-- ═══ FONTS: self-hosted, critical weights preloaded ═══════════════════════ -->
+    <!-- Only Arabic subset is critical for above-the-fold Persian text -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/almarai-400-arabic.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/almarai-700-arabic.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/almarai-800-arabic.woff2" crossorigin />
+    <!-- Non-critical weights: load async, don't block render -->
+    <link rel="stylesheet" href="/fonts/almarai.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="/fonts/almarai.css" /></noscript>
+
+    <!-- ═══ CRITICAL CSS: inline above-the-fold styles — zero render-blocking ═══ -->
+    <!-- Extracted minimum to paint body background + spinner before any JS loads -->
+    <style>
+      /* Critical: prevent flash of white (FOUC) and set dark background */
+      *{box-sizing:border-box;font-family:'Almarai','Segoe UI',Tahoma,sans-serif}
+      html,body,#root{margin:0;min-height:100%;background:#030712;color:#fff;direction:rtl}
+      body{min-height:100vh}
+      /* Critical font-face: Arabic 400 for above-the-fold text */
+      @font-face{font-family:'Almarai';font-style:normal;font-weight:400;font-display:optional;src:url('/fonts/almarai-400-arabic.woff2') format('woff2');unicode-range:U+0600-06FF,U+FB50-FDFF,U+FE70-FEFC}
+      @font-face{font-family:'Almarai';font-style:normal;font-weight:700;font-display:optional;src:url('/fonts/almarai-700-arabic.woff2') format('woff2');unicode-range:U+0600-06FF,U+FB50-FDFF,U+FE70-FEFC}
+      @font-face{font-family:'Almarai';font-style:normal;font-weight:800;font-display:optional;src:url('/fonts/almarai-800-arabic.woff2') format('woff2');unicode-range:U+0600-06FF,U+FB50-FDFF,U+FE70-FEFC}
+      /* Loading spinner — shown before React hydrates */
+      #initial-loader{position:fixed;inset:0;background:#030712;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease}
+      #initial-loader.hidden{opacity:0;pointer-events:none}
+      #initial-loader svg{animation:spin .7s linear infinite}
+      @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#060E1C" />
+    
+    <!-- Additional SEO -->
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <!-- ── Initial loader: visible before React hydrates, prevents FOUC ───── -->
+    <div id="initial-loader" aria-hidden="true">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="17" stroke="rgba(255,255,255,0.10)" stroke-width="3"/>
+        <path d="M20 3 A17 17 0 0 1 37 20" stroke="#00BCD4" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div id="root"></div>
+
+    <!-- ── Hide loader once React root renders ───────────────────────────── -->
+    <script>
+      // Remove initial loader once React has mounted
+      (function(){
+        var l=document.getElementById('initial-loader');
+        if(!l) return;
+        // MutationObserver: detect when #root gets children (React mounted)
+        var obs=new MutationObserver(function(){
+          if(document.getElementById('root').children.length>0){
+            l.classList.add('hidden');
+            setTimeout(function(){l.remove();},400);
+            obs.disconnect();
+          }
+        });
+        obs.observe(document.getElementById('root'),{childList:true});
+        // Fallback: remove after 4s regardless
+        setTimeout(function(){l.classList.add('hidden');setTimeout(function(){if(l.parentNode)l.remove();},400);},4000);
+      })();
+    </script>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

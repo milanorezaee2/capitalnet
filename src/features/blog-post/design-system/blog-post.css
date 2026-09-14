@@ -1,0 +1,487 @@
+/**
+ * Blog Post Design System — Global CSS overrides and utilities
+ * Scoped to the .bp- namespace (blog-post) to avoid global conflicts.
+ *
+ * Sections:
+ *  1. Surface cards
+ *  2. Prose — article body typography
+ *  3. Skeleton shimmer
+ *  4. Reading progress bar
+ *  5. Sticky left sidebar
+ *  6. Code block
+ *  7. Table
+ *  8. Alert / callout boxes
+ *  9. AI Key-Takeaways box
+ * 10. Quote block
+ * 11. Download box
+ * 12. TOC active link
+ * 13. Scroll to top
+ * 14. Tag pill
+ * 15. Rating stars
+ * 16. Lightbox overlay
+ * 17. Print styles
+ */
+
+/* ── 1. Surface cards ──────────────────────────────────────────────────────── */
+.bp-card {
+  background: rgba(13, 17, 23, 0.9);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.bp-card:hover {
+  border-color: rgba(255,255,255,0.14);
+}
+.bp-card-elevated {
+  background: rgba(22, 27, 34, 0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+}
+
+/* ── 2. Prose — article body typography ─────────────────────────────────────── */
+.bp-prose {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.78);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+.bp-prose h2 {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #f0f6fc;
+  margin: 2.75rem 0 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  scroll-margin-top: 88px;
+  line-height: 1.3;
+}
+.bp-prose h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  margin: 2.25rem 0 0.8rem;
+  scroll-margin-top: 88px;
+  line-height: 1.35;
+}
+.bp-prose h4 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  margin: 1.75rem 0 0.55rem;
+  scroll-margin-top: 88px;
+}
+.bp-prose p {
+  margin: 1rem 0;
+  text-align: justify;
+}
+.bp-prose strong { color: #f0f6fc; font-weight: 700; }
+.bp-prose em { color: #2dd4bf; font-style: italic; }
+.bp-prose a {
+  color: #14b8a6;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.15s ease;
+}
+.bp-prose a:hover { color: #2dd4bf; }
+.bp-prose a:focus-visible {
+  outline: 2px solid #14b8a6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* RTL-safe lists */
+.bp-prose ul, .bp-prose ol {
+  padding-right: 1.5rem;
+  padding-left: 0;
+  margin: 1.25rem 0;
+}
+.bp-prose li { margin: 0.45rem 0; }
+.bp-prose li::marker { color: #14b8a6; }
+
+.bp-prose hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin: 2.75rem 0;
+}
+.bp-prose blockquote {
+  border-right: 3px solid #14b8a6;
+  border-left: none;
+  background: rgba(20,184,166,0.05);
+  padding: 1.25rem 1.5rem 1.25rem 1.25rem;
+  border-radius: 0 16px 16px 0;
+  margin: 1.75rem 0;
+  color: rgba(255,255,255,0.72);
+  font-style: italic;
+}
+
+/* Font-size levels (set by FontControls) */
+.bp-prose.text-sm     { font-size: 0.875rem;  }
+.bp-prose.text-\[15px\] { font-size: 0.9375rem; }
+.bp-prose.text-lg     { font-size: 1.125rem;  }
+.bp-prose.text-xl     { font-size: 1.25rem;   }
+
+/* ── 3. Skeleton shimmer ──────────────────────────────────────────────────── */
+@keyframes bp-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.bp-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.10) 50%,
+    rgba(255,255,255,0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: bp-shimmer 1.6s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* ── 4. Reading progress bar ──────────────────────────────────────────────── */
+.bp-progress-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.07);
+  z-index: 200;
+  pointer-events: none;
+}
+.bp-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #14b8a6, #2dd4bf, #f59e0b);
+  transform-origin: left;
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ── 5. Sticky left sidebar ───────────────────────────────────────────────── */
+.bp-sticky-left {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── 6. Code block ──────────────────────────────────────────────────────────── */
+.bp-code-block {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin: 1.75rem 0;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+.bp-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.bp-code-body {
+  background: #0d1117;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+.bp-code-body pre {
+  margin: 0;
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+}
+.bp-code-line {
+  display: flex;
+  padding: 0 20px;
+}
+.bp-code-line:hover {
+  background: rgba(255,255,255,0.025);
+}
+.bp-code-num {
+  min-width: 36px;
+  padding-left: 16px;
+  color: rgba(255,255,255,0.2);
+  font-size: 0.75rem;
+  user-select: none;
+  text-align: right;
+  flex-shrink: 0;
+}
+.bp-code-text {
+  color: #a5d6ff;
+  white-space: pre;
+  flex: 1;
+}
+
+/* ── 7. Table ──────────────────────────────────────────────────────────────── */
+.bp-table-wrap {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  margin: 1.75rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+.bp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  min-width: 400px;
+}
+.bp-table th {
+  background: rgba(255,255,255,0.05);
+  padding: 12px 16px;
+  text-align: right;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  white-space: nowrap;
+}
+.bp-table td {
+  padding: 10px 16px;
+  color: rgba(255,255,255,0.6);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.bp-table tr:last-child td { border-bottom: none; }
+.bp-table tr:hover td { background: rgba(255,255,255,0.025); }
+
+/* ── 8. Alert / callout boxes ────────────────────────────────────────────────── */
+.bp-alert {
+  display: flex;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  margin: 1.75rem 0;
+  border: 1px solid;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.bp-alert-info    { background: rgba(59,130,246,0.07);  border-color: rgba(59,130,246,0.25);  color: rgba(255,255,255,0.72); }
+.bp-alert-warning { background: rgba(245,158,11,0.07);  border-color: rgba(245,158,11,0.25);  color: rgba(255,255,255,0.72); }
+.bp-alert-error   { background: rgba(239,68,68,0.07);   border-color: rgba(239,68,68,0.25);   color: rgba(255,255,255,0.72); }
+.bp-alert-success { background: rgba(16,185,129,0.07);  border-color: rgba(16,185,129,0.25);  color: rgba(255,255,255,0.72); }
+.bp-alert-tip     { background: rgba(139,92,246,0.07);  border-color: rgba(139,92,246,0.25);  color: rgba(255,255,255,0.72); }
+
+/* ── 9. Key takeaways / AI summary box ──────────────────────────────────────── */
+.bp-ai-box {
+  background: linear-gradient(135deg, rgba(20,184,166,0.07), rgba(139,92,246,0.05));
+  border: 1px solid rgba(20,184,166,0.22);
+  border-radius: 20px;
+  padding: 22px 26px;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.bp-ai-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(20,184,166,0.07), transparent 60%);
+  pointer-events: none;
+}
+
+/* ── 10. Quote block ─────────────────────────────────────────────────────────── */
+.bp-quote {
+  position: relative;
+  padding: 24px 28px 24px 24px;
+  border-right: 4px solid #14b8a6;
+  border-left: none;
+  background: rgba(20,184,166,0.04);
+  border-radius: 0 20px 20px 0;
+  margin: 2rem 0;
+}
+
+/* ── 11. Download box ────────────────────────────────────────────────────────── */
+.bp-download {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  background: rgba(245,158,11,0.06);
+  border: 1px solid rgba(245,158,11,0.18);
+  border-radius: 16px;
+  margin: 1.75rem 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+.bp-download:hover {
+  background: rgba(245,158,11,0.1);
+  border-color: rgba(245,158,11,0.32);
+}
+.bp-download:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* ── 12. TOC active link ─────────────────────────────────────────────────────── */
+.bp-toc-link {
+  display: block;
+  font-size: 0.8125rem;
+  padding: 6px 12px;
+  border-radius: 10px;
+  color: rgba(255,255,255,0.48);
+  transition: background 0.15s ease, color 0.15s ease, padding-right 0.15s ease;
+  position: relative;
+  text-decoration: none;
+  line-height: 1.4;
+}
+.bp-toc-link:hover {
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.85);
+}
+.bp-toc-link.active {
+  background: rgba(20,184,166,0.1);
+  color: #2dd4bf;
+  font-weight: 600;
+}
+.bp-toc-link.active::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 70%;
+  background: #14b8a6;
+  border-radius: 2px 0 0 2px;
+}
+
+/* ── 13. Scroll to top ──────────────────────────────────────────────────────── */
+.bp-scroll-top {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(13,17,23,0.92);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  transition: all 0.2s ease;
+}
+.bp-scroll-top:hover {
+  background: rgba(20,184,166,0.15);
+  color: #14b8a6;
+  border-color: rgba(20,184,166,0.3);
+  transform: translateY(-2px);
+}
+.bp-scroll-top:focus-visible {
+  outline: 2px solid #14b8a6;
+  outline-offset: 2px;
+}
+
+/* ── 14. Tag pill ─────────────────────────────────────────────────────────────── */
+.bp-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.55);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.bp-tag:hover {
+  background: rgba(20,184,166,0.1);
+  border-color: rgba(20,184,166,0.3);
+  color: #2dd4bf;
+}
+
+/* ── 15. Rating stars ────────────────────────────────────────────────────────── */
+.bp-star {
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.bp-star:hover { transform: scale(1.22); filter: drop-shadow(0 0 6px rgba(245,158,11,0.5)); }
+.bp-star:disabled { cursor: default; opacity: 0.75; }
+.bp-star:disabled:hover { transform: none; filter: none; }
+
+/* ── 16. Lightbox overlay ────────────────────────────────────────────────────── */
+.bp-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.bp-lightbox img {
+  max-height: 90vh;
+  max-width: 90vw;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* ── 17. Print styles ────────────────────────────────────────────────────────── */
+.bp-no-print { /* marked for print hiding */ }
+
+@media print {
+  /* Hide all interactive / decorative chrome */
+  .bp-no-print,
+  .bp-progress-bar,
+  .bp-scroll-top,
+  .bp-sticky-left,
+  header nav,
+  [aria-label="ابزارهای مقاله"],
+  [aria-label="اشتراک‌گذاری"],
+  [aria-label="واکنش به مقاله"],
+  [aria-label="امتیازدهی"],
+  form,
+  button:not([aria-label="چاپ مقاله"]),
+  aside { display: none !important; }
+
+  /* Reset backgrounds & colours */
+  * { background: white !important; color: #1f2328 !important; border-color: #e5e7eb !important; box-shadow: none !important; }
+
+  /* Prose */
+  .bp-prose {
+    color: #1f2328 !important;
+    font-size: 11pt;
+    line-height: 1.7;
+  }
+  .bp-prose h2, .bp-prose h3, .bp-prose h4 { color: #1f2328 !important; border-color: #e5e7eb !important; }
+  .bp-prose a { color: #14b8a6 !important; }
+  .bp-prose blockquote { border-right-color: #14b8a6 !important; background: #f0fdfa !important; color: #374151 !important; }
+
+  /* Code blocks: force monospace, no decorative chrome */
+  .bp-code-block { border: 1px solid #e5e7eb !important; break-inside: avoid; }
+  .bp-code-header { background: #f7f8fa !important; }
+  .bp-code-body { background: #f7f8fa !important; }
+  .bp-code-text { color: #1f2328 !important; }
+  .bp-code-num { color: #9ca3af !important; }
+
+  /* Alerts */
+  .bp-alert { border: 1px solid #e5e7eb !important; }
+
+  /* Tables */
+  .bp-table th { background: #f7f8fa !important; color: #1f2328 !important; }
+  .bp-table td { color: #374151 !important; }
+
+  /* Layout: single column, max-width */
+  article { max-width: 720px !important; margin: 0 auto !important; }
+
+  @page {
+    margin: 20mm;
+    size: A4;
+  }
+}

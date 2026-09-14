@@ -1,0 +1,32 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#060E1C"/>
+      <stop offset="100%" stop-color="#0D1E38"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00BCD4"/>
+      <stop offset="100%" stop-color="#0097A7"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Decorative grid lines -->
+  <line x1="0" y1="210" x2="1200" y2="210" stroke="#00BCD4" stroke-opacity="0.08" stroke-width="1"/>
+  <line x1="0" y1="420" x2="1200" y2="420" stroke="#00BCD4" stroke-opacity="0.08" stroke-width="1"/>
+  <line x1="300" y1="0" x2="300" y2="630" stroke="#00BCD4" stroke-opacity="0.06" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="#00BCD4" stroke-opacity="0.06" stroke-width="1"/>
+  <line x1="900" y1="0" x2="900" y2="630" stroke="#00BCD4" stroke-opacity="0.06" stroke-width="1"/>
+  <!-- Accent bar -->
+  <rect x="80" y="260" width="6" height="110" rx="3" fill="url(#accent)"/>
+  <!-- Company name -->
+  <text x="110" y="305" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700" fill="#FFFFFF">Capital Network</text>
+  <!-- Tagline Persian -->
+  <text x="110" y="355" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#00BCD4">سرمایه‌گذار درست، در زمان درست</text>
+  <!-- Domain -->
+  <text x="110" y="400" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#57788A">capitalnetwork.ir</text>
+  <!-- Decorative circles -->
+  <circle cx="1050" cy="315" r="160" fill="#00BCD4" fill-opacity="0.05"/>
+  <circle cx="1050" cy="315" r="110" fill="#00BCD4" fill-opacity="0.07"/>
+  <circle cx="1050" cy="315" r="60" fill="#00BCD4" fill-opacity="0.10"/>
+</svg>

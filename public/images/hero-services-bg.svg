@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <!-- Base dark gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050d1a;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#081525;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0e1f;stop-opacity:1" />
+    </linearGradient>
+    <!-- Cyan glow -->
+    <radialGradient id="cyanGlow" cx="75%" cy="20%" r="45%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.18" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0" />
+    </radialGradient>
+    <!-- Violet glow -->
+    <radialGradient id="violetGlow" cx="15%" cy="80%" r="40%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:0.14" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0" />
+    </radialGradient>
+    <!-- Green glow center -->
+    <radialGradient id="greenGlow" cx="50%" cy="55%" r="30%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.06" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0" />
+    </radialGradient>
+    <!-- Grid dot -->
+    <pattern id="dotGrid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="rgba(6,182,212,0.12)" />
+    </pattern>
+    <!-- Subtle line pattern -->
+    <pattern id="lineGrid" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+      <path d="M0 60 L120 60" stroke="rgba(255,255,255,0.025)" stroke-width="1" fill="none"/>
+      <path d="M60 0 L60 120" stroke="rgba(255,255,255,0.025)" stroke-width="1" fill="none"/>
+    </pattern>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1920" height="1080" fill="url(#bgGrad)" />
+  <rect width="1920" height="1080" fill="url(#dotGrid)" />
+  <rect width="1920" height="1080" fill="url(#lineGrid)" />
+  <rect width="1920" height="1080" fill="url(#cyanGlow)" />
+  <rect width="1920" height="1080" fill="url(#violetGlow)" />
+  <rect width="1920" height="1080" fill="url(#greenGlow)" />
+
+  <!-- ── Candlestick chart — center-right ── -->
+  <g transform="translate(900, 200)" opacity="0.22">
+    <!-- Wicks -->
+    <line x1="40" y1="30" x2="40" y2="160" stroke="#06b6d4" stroke-width="1.5"/>
+    <line x1="120" y1="10" x2="120" y2="130" stroke="#10b981" stroke-width="1.5"/>
+    <line x1="200" y1="50" x2="200" y2="200" stroke="#ef4444" stroke-width="1.5"/>
+    <line x1="280" y1="20" x2="280" y2="150" stroke="#10b981" stroke-width="1.5"/>
+    <line x1="360" y1="40" x2="360" y2="180" stroke="#06b6d4" stroke-width="1.5"/>
+    <line x1="440" y1="15" x2="440" y2="120" stroke="#10b981" stroke-width="1.5"/>
+    <line x1="520" y1="60" x2="520" y2="210" stroke="#ef4444" stroke-width="1.5"/>
+    <line x1="600" y1="10" x2="600" y2="140" stroke="#10b981" stroke-width="1.5"/>
+    <!-- Candle bodies -->
+    <rect x="20" y="60" width="40" height="80" rx="2" fill="#06b6d4" opacity="0.8"/>
+    <rect x="100" y="40" width="40" height="60" rx="2" fill="#10b981" opacity="0.8"/>
+    <rect x="180" y="90" width="40" height="90" rx="2" fill="#ef4444" opacity="0.8"/>
+    <rect x="260" y="45" width="40" height="80" rx="2" fill="#10b981" opacity="0.8"/>
+    <rect x="340" y="70" width="40" height="85" rx="2" fill="#06b6d4" opacity="0.8"/>
+    <rect x="420" y="35" width="40" height="55" rx="2" fill="#10b981" opacity="0.8"/>
+    <rect x="500" y="95" width="40" height="90" rx="2" fill="#ef4444" opacity="0.8"/>
+    <rect x="580" y="30" width="40" height="80" rx="2" fill="#10b981" opacity="0.8"/>
+  </g>
+
+  <!-- ── Line chart / trend curve ── -->
+  <g opacity="0.18">
+    <polyline
+      points="100,820 250,760 400,790 550,680 700,640 850,590 1000,530 1150,480 1300,420 1450,350 1600,300 1750,240 1900,200"
+      fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Fill under curve -->
+    <polygon
+      points="100,820 250,760 400,790 550,680 700,640 850,590 1000,530 1150,480 1300,420 1450,350 1600,300 1750,240 1900,200 1900,900 100,900"
+      fill="url(#cyanGlow)" opacity="0.3"/>
+  </g>
+
+  <!-- Secondary trend line (slightly different path) -->
+  <polyline
+    points="100,900 280,860 460,830 640,790 820,750 1000,700 1180,680 1360,640 1540,600 1720,560 1900,540"
+    fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.12"/>
+
+  <!-- ── Horizontal grid lines ── -->
+  <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+    <line x1="0" y1="200" x2="1920" y2="200"/>
+    <line x1="0" y1="350" x2="1920" y2="350"/>
+    <line x1="0" y1="500" x2="1920" y2="500"/>
+    <line x1="0" y1="650" x2="1920" y2="650"/>
+    <line x1="0" y1="800" x2="1920" y2="800"/>
+    <line x1="0" y1="950" x2="1920" y2="950"/>
+  </g>
+
+  <!-- ── Vertical grid lines ── -->
+  <g stroke="rgba(255,255,255,0.03)" stroke-width="1">
+    <line x1="240" y1="0" x2="240" y2="1080"/>
+    <line x1="480" y1="0" x2="480" y2="1080"/>
+    <line x1="720" y1="0" x2="720" y2="1080"/>
+    <line x1="960" y1="0" x2="960" y2="1080"/>
+    <line x1="1200" y1="0" x2="1200" y2="1080"/>
+    <line x1="1440" y1="0" x2="1440" y2="1080"/>
+    <line x1="1680" y1="0" x2="1680" y2="1080"/>
+  </g>
+
+  <!-- ── Bar chart bottom ── -->
+  <g transform="translate(0, 880)" opacity="0.12">
+    <rect x="80" y="-120" width="45" height="120" rx="3" fill="#06b6d4"/>
+    <rect x="155" y="-85" width="45" height="85" rx="3" fill="#10b981"/>
+    <rect x="230" y="-150" width="45" height="150" rx="3" fill="#06b6d4"/>
+    <rect x="305" y="-100" width="45" height="100" rx="3" fill="#7c3aed"/>
+    <rect x="380" y="-170" width="45" height="170" rx="3" fill="#10b981"/>
+    <rect x="455" y="-90" width="45" height="90" rx="3" fill="#06b6d4"/>
+    <rect x="530" y="-130" width="45" height="130" rx="3" fill="#10b981"/>
+    <rect x="605" y="-60" width="45" height="60" rx="3" fill="#ef4444"/>
+    <rect x="680" y="-180" width="45" height="180" rx="3" fill="#06b6d4"/>
+    <rect x="755" y="-110" width="45" height="110" rx="3" fill="#10b981"/>
+  </g>
+
+  <!-- ── Floating numbers / tickers ── -->
+  <g font-family="monospace" fill="rgba(6,182,212,0.2)" font-size="13">
+    <text x="1400" y="180">+2.41%</text>
+    <text x="1550" y="240">▲ 4,892.3</text>
+    <text x="1650" y="300">BTC 67,240</text>
+    <text x="1500" y="360" fill="rgba(239,68,68,0.2)">-0.87%</text>
+    <text x="1700" y="420">ETH 3,510</text>
+    <text x="1450" y="480">S&amp;P 5,847</text>
+    <text x="1600" y="540" fill="rgba(16,185,129,0.2)">+1.23%</text>
+    <text x="1720" y="600">GOLD 2,340</text>
+    <text x="1480" y="660">NASDAQ +0.6%</text>
+    <text x="1600" y="720" fill="rgba(239,68,68,0.2)">-1.4%</text>
+  </g>
+
+  <!-- Left side faint text labels -->
+  <g font-family="monospace" fill="rgba(255,255,255,0.06)" font-size="11">
+    <text x="20" y="205">5,000</text>
+    <text x="20" y="355">4,000</text>
+    <text x="20" y="505">3,000</text>
+    <text x="20" y="655">2,000</text>
+    <text x="20" y="805">1,000</text>
+  </g>
+
+  <!-- ── Circular node network (top-right area) ── -->
+  <g transform="translate(1500, 80)" opacity="0.1">
+    <circle cx="200" cy="150" r="60" fill="none" stroke="#06b6d4" stroke-width="1"/>
+    <circle cx="200" cy="150" r="100" fill="none" stroke="#06b6d4" stroke-width="0.5" stroke-dasharray="4 6"/>
+    <circle cx="200" cy="150" r="145" fill="none" stroke="#7c3aed" stroke-width="0.5" stroke-dasharray="3 8"/>
+    <!-- nodes -->
+    <circle cx="200" cy="50" r="5" fill="#06b6d4"/>
+    <circle cx="290" cy="115" r="4" fill="#10b981"/>
+    <circle cx="260" cy="225" r="5" fill="#7c3aed"/>
+    <circle cx="140" cy="230" r="4" fill="#06b6d4"/>
+    <circle cx="110" cy="115" r="5" fill="#10b981"/>
+    <!-- connecting lines to center -->
+    <line x1="200" y1="150" x2="200" y2="50" stroke="#06b6d4" stroke-width="0.8"/>
+    <line x1="200" y1="150" x2="290" y2="115" stroke="#10b981" stroke-width="0.8"/>
+    <line x1="200" y1="150" x2="260" y2="225" stroke="#7c3aed" stroke-width="0.8"/>
+    <line x1="200" y1="150" x2="140" y2="230" stroke="#06b6d4" stroke-width="0.8"/>
+    <line x1="200" y1="150" x2="110" y2="115" stroke="#10b981" stroke-width="0.8"/>
+  </g>
+
+  <!-- ── Top fade overlay ── -->
+  <defs>
+    <linearGradient id="topFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" style="stop-color:#050d1a;stop-opacity:0.5" />
+      <stop offset="30%" style="stop-color:#050d1a;stop-opacity:0" />
+    </linearGradient>
+    <linearGradient id="bottomFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="70%" style="stop-color:#050d1a;stop-opacity:0" />
+      <stop offset="100%" style="stop-color:#050d1a;stop-opacity:0.8" />
+    </linearGradient>
+    <linearGradient id="leftFade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" style="stop-color:#050d1a;stop-opacity:0.7" />
+      <stop offset="50%" style="stop-color:#050d1a;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#topFade)" />
+  <rect width="1920" height="1080" fill="url(#bottomFade)" />
+  <rect width="1920" height="1080" fill="url(#leftFade)" />
+</svg>
