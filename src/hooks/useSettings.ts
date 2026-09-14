@@ -8,8 +8,9 @@
 // 3. Memory singleton: از duplicate fetch در StrictMode / re-mount جلوگیری می‌کند
 // 4. Realtime WebSocket: فقط یک connection برای همه mount‌ها
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { fetchSettings, DEFAULT_SETTINGS } from '../lib/settingsApi';
+import { useLanguage, deepTranslate } from '../i18n';
 import type { SiteSettings } from '../lib/settingsApi';
 import { supabase } from '../lib/supabaseApi';
 
@@ -68,6 +69,7 @@ function getOrFetchSettings(): Promise<SiteSettings> {
 export function useSettings(): SiteSettings {
   // اگر memory یا localStorage cache وجود دارد، بلافاصله استفاده کن — بدون flash
   const [settings, setSettings] = useState<SiteSettings>(() => _memCache ?? DEFAULT_SETTINGS);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     let mounted = true;
@@ -129,5 +131,14 @@ export function useSettings(): SiteSettings {
     };
   }, []);
 
-  return settings;
+  // ── ترجمهٔ محتوای تنظیمات ─────────────────────────────────────────────────
+  // تنظیمات سایت از Supabase (یا مقادیر پیش‌فرض) به فارسی می‌آیند. با ترجمهٔ
+  // عمیق در همین نقطه، تمام بخش‌هایی که از settings استفاده می‌کنند (منو، فوتر،
+  // اطلاعات تماس، بنرها و …) بدون نیاز به تغییر جداگانه دو زبانه می‌شوند.
+  const localizedSettings = useMemo(
+    () => deepTranslate(settings),
+    [settings, lang]
+  );
+
+  return localizedSettings;
 }
