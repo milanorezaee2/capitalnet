@@ -46,7 +46,7 @@ export default function PostMetaBar({
         <MetaItem icon={<Eye size={13} />}           label={t('{count} بازدید', { count: formatNumber(views ?? 0) })} />
       )}
       {(likes ?? 0) > 0 && (
-        <MetaItem icon={<ThumbsUp size={13} />}      label={`${(likes ?? 0).toLocaleString('fa-IR')} پسند`} />
+        <MetaItem icon={<ThumbsUp size={13} />}      label={t('{count} پسند', { count: formatNumber(likes ?? 0) })} />
       )}
       <MetaItem icon={<MessageCircle size={13} />}   label={t("{commentCount} نظر", { commentCount })} />
       {(wordCount ?? 0) > 0 && (

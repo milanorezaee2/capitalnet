@@ -473,8 +473,8 @@ const sourceEn: Record<string, string> = {
     'Costs vary depending on the startup stage and type of service. Contact our team for a quote.',
   'ممنون از سؤالتان! تیم ما به زودی پاسخ می‌دهد. همچنین می‌توانید صفحه تماس را پر کنید.':
     'Thanks for your question! Our team will reply shortly. You can also fill in the contact form.',
-  'سلام! 👋 به CapNet خوش آمدید. ⏎ چطور می‌توانم در مسیر جذب سرمایه کمکتان کنم؟':
-    'Hi! 👋 Welcome to CapNet. ⏎ How can I help you on your fundraising journey?',
+  'سلام! 👋 به CapNet خوش آمدید.\nچطور می‌توانم در مسیر جذب سرمایه کمکتان کنم؟':
+    'Hi! 👋 Welcome to CapNet.\nHow can I help you on your fundraising journey?',
   'پشتیبانی CapNet': 'CapNet Support',
   'آنلاین': 'Online',
   'تیم CapNet': 'CapNet Team',
@@ -1938,6 +1938,10 @@ const sourceEn: Record<string, string> = {
   'پیش از هر معرفی، تمامی درخواست‌ها با دقت بررسی می‌شوند. هر پروژه توسط متخصصان ارزیابی می‌شود و تنها موارد واجد شرایط به مرحله بعد می‌رسند.': 'Before any introduction, all requests are carefully reviewed. Every project is assessed by specialists and only qualified cases advance to the next stage.',
   'رفع باگ': 'Bug fixing',
   'توسعه اپلیکیشن موبایل': 'Mobile app development',
+  // ── رشته‌های دارای متغیر (تکمیلی) ────────────────────────────────────────
+  '{label} | وبلاگ': '{label} | Blog',
+  '{count} مقاله': '{count} articles',
+  '{count} پسند': '{count} likes',
 };
 
 export default sourceEn;

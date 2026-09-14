@@ -4,7 +4,7 @@ import { X, Send, MessageCircle, ChevronDown } from 'lucide-react';
 import { fetchSettings } from '../lib/settingsApi';
 import { supabase } from '../lib/supabaseApi';
 
-import { t as tr } from '@/i18n';
+import { t as tr, useLanguage } from '@/i18n';
 
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -47,23 +47,38 @@ function botReply(userText: string): string {
 
 // ─── INITIAL messages ─────────────────────────────────────────────────────────
 
-const INITIAL_MESSAGES: Message[] = [
-  {
-    id: 1,
-    from: 'bot',
-    text: tr("سلام! 👋 به CapNet خوش آمدید.\nچطور می‌توانم در مسیر جذب سرمایه کمکتان کنم؟"),
-  },
-];
+// پیام خوش‌آمدگویی باید هنگام استفاده (نه هنگام بارگذاری ماژول) ترجمه شود،
+// تا با تغییر زبان به‌روزرسانی گردد.
+function createInitialMessages(): Message[] {
+  return [
+    {
+      id: 1,
+      from: 'bot',
+      text: tr("سلام! 👋 به CapNet خوش آمدید.\nچطور می‌توانم در مسیر جذب سرمایه کمکتان کنم؟"),
+    },
+  ];
+}
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function ChatWidget() {
+  const { lang } = useLanguage();
   const [chatEnabled, setChatEnabled] = useState<boolean | null>(null);
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState<Message[]>(createInitialMessages);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
   const [unread, setUnread] = useState(1);
+
+  // با تغییر زبان، پیام خوش‌آمدگویی دوباره ترجمه می‌شود
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 0 || prev[0].from !== 'bot') return prev;
+      const [welcome] = createInitialMessages();
+      if (prev[0].text === welcome.text) return prev;
+      return [welcome, ...prev.slice(1)];
+    });
+  }, [lang]);
   const [quickReplies, setQuickReplies] = useState<string[]>(DEFAULT_QUICK_REPLIES);
   const [roomId, setRoomId] = useState<string | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
@@ -182,7 +197,7 @@ export default function ChatWidget() {
         created_at: m.created_at,
       }));
 
-    setMessages([...INITIAL_MESSAGES, ...history]);
+    setMessages([...createInitialMessages(), ...history]);
   }, []);
 
   // ── پیدا کردن یا ساختن chat room (بر اساس session_id) ──────────────────────

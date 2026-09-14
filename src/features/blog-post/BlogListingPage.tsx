@@ -30,7 +30,7 @@ import { FinancialBackground } from '../../components/FinancialBackground';
 // ─── Design-system CSS (bp-* scoped classes) ────────────────────────────────
 import './design-system/blog-post.css';
 
-import { t as tr } from '@/i18n';
+import { t as tr, formatNumber } from '@/i18n';
 
 
 // ─── Category meta — colours as CSS values, NOT Tailwind strings ──────────────
@@ -536,7 +536,7 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
   useEffect(() => {
     document.title = category === 'all'
       ? tr("وبلاگ | Capital Network")
-      : `${CATEGORY_META[category]?.label ?? category} | وبلاگ`;
+      : tr('{label} | وبلاگ', { label: CATEGORY_META[category]?.label ?? category });
   }, [category]);
 
   // ── Shared style tokens ──────────────────────────────────────────────────
@@ -691,7 +691,7 @@ export default function BlogListingPage({ initialCategory, onRead, banners = [] 
 
         {/* Result count */}
         <p role="status" aria-live="polite" style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', marginBottom: 24 }}>
-          {loading ? tr("در حال بارگذاری...") : `${filtered.length} مقاله`}
+          {loading ? tr("در حال بارگذاری...") : tr('{count} مقاله', { count: formatNumber(filtered.length) })}
         </p>
 
         {/* ── Main content ───────────────────────────────────────────────── */}

@@ -46,6 +46,21 @@ function normalizeKey(key: string): string {
 }
 
 // ─── ثبت ترجمه‌های گمشده (فقط در حالت توسعه) ──────────────────────────────────
+/**
+ * نمایهٔ نرمال‌شدهٔ دیکشنری مبدأ.
+ * برخی متن‌ها (مثل پیام‌های چندخطی) در کد با خط جدید و در دیکشنری با فاصله
+ * نوشته شده‌اند؛ این نمایه باعث می‌شود تطبیق بدون حساسیت به نوع فاصله‌گذاری انجام شود.
+ */
+const normalizedSourceEn: Record<string, string> = (() => {
+  const map: Record<string, string> = {};
+  for (const [key, value] of Object.entries(sourceEn)) {
+    if (typeof value !== 'string') continue;
+    const normalized = normalizeKey(key);
+    if (!(normalized in map)) map[normalized] = value;
+  }
+  return map;
+})();
+
 const missingTranslations = new Set<string>();
 
 function isDev(): boolean {
@@ -85,7 +100,7 @@ export function t(key: string, vars?: Record<string, unknown>): string {
   // ۲. متنِ مبدأ
   if (lang === 'fa') return interpolate(source, vars);
 
-  const translated = sourceEn[normalizeKey(source)];
+  const translated = normalizedSourceEn[normalizeKey(source)] ?? sourceEn[source];
   if (translated == null) {
     if (isDev() && /[\u0600-\u06FF]/.test(source)) missingTranslations.add(normalizeKey(source));
     // ترجمه‌ای وجود ندارد — متن اصلی را برمی‌گردانیم تا چیزی خالی نماند
@@ -149,7 +164,7 @@ function translateNode(value: unknown, skip: Set<string>, seen: WeakSet<object>)
 export function hasTranslation(key: string): boolean {
   const normalized = normalizeKey(key);
   return typeof lookupPath(dictionaries.en, normalized) === 'string'
-    || Object.prototype.hasOwnProperty.call(sourceEn, normalized);
+    || Object.prototype.hasOwnProperty.call(normalizedSourceEn, normalized);
 }
 
 /** ترجمهٔ صریح به یک زبان مشخص — بدون وابستگی به زبان فعال (برای سئو و متadata) */
