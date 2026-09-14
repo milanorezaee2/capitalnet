@@ -92,7 +92,7 @@ export default function GalleryGrid({ items, columns = 3 }: Props) {
             {/* Close */}
             <button
               onClick={close}
-              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 z-10"
+              className="absolute top-4 end-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 z-10"
               aria-label={t("بستن")}
             >
               <X size={20} aria-hidden="true" />
@@ -102,7 +102,7 @@ export default function GalleryGrid({ items, columns = 3 }: Props) {
             {items.length > 1 && (
               <button
                 onClick={(e) => { e.stopPropagation(); prev(); }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 z-10"
+                className="absolute end-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 z-10"
                 aria-label={t("تصویر قبلی")}
               >
                 <ChevronRight size={22} aria-hidden="true" />
@@ -129,7 +129,7 @@ export default function GalleryGrid({ items, columns = 3 }: Props) {
                   {items[lightboxIdx].caption}
                 </p>
               )}
-              <div className="absolute bottom-3 right-1/2 translate-x-1/2 text-xs text-white/40">
+              <div className="absolute bottom-3 end-1/2 translate-x-1/2 text-xs text-white/40">
                 {lightboxIdx + 1} / {items.length}
               </div>
             </motion.div>
@@ -138,7 +138,7 @@ export default function GalleryGrid({ items, columns = 3 }: Props) {
             {items.length > 1 && (
               <button
                 onClick={(e) => { e.stopPropagation(); next(); }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 z-10"
+                className="absolute start-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 z-10"
                 aria-label={t("تصویر بعدی")}
               >
                 <ChevronLeft size={22} aria-hidden="true" />

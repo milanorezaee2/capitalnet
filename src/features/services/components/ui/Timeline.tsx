@@ -16,7 +16,7 @@ export interface TimelineProps {
 export const Timeline = ({ steps }: TimelineProps) => {
   return (
     <div className="relative rounded-[32px] border border-white/10 bg-slate-950/50 p-6 md:p-8">
-      <div className="absolute right-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-cyan-400/50 to-amber-400/50" aria-hidden="true" />
+      <div className="absolute end-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-cyan-400/50 to-amber-400/50" aria-hidden="true" />
       <div className="space-y-6">
         {steps.map((step, index) => (
           <div key={step.id} className="relative flex gap-4">

@@ -80,12 +80,12 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
 
       {/* ── Brand tagline ── */}
       <div className="px-4 py-3" style={{ borderBottom: `1px solid ${divider}` }}>
-        <p className="text-xs leading-[1.85] text-right" style={{ color: textMid }}>{tagline}</p>
+        <p className="text-xs leading-[1.85] text-end" style={{ color: textMid }}>{tagline}</p>
       </div>
 
       {/* ── Quick access links ── */}
       <div className="px-4 py-3" style={{ borderBottom: `1px solid ${divider}` }}>
-        <p className="text-[10px] font-black tracking-widest mb-2.5 text-right" style={{ color: textLow }}>
+        <p className="text-[10px] font-black tracking-widest mb-2.5 text-end" style={{ color: textLow }}>
           {t("دسترسی سریع")}
         </p>
         <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
@@ -94,7 +94,7 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
               key={item.page}
               type="button"
               onClick={() => onNavigate(item.page)}
-              className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-right text-xs font-semibold transition-colors active:opacity-70"
+              className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-end text-xs font-semibold transition-colors active:opacity-70"
               style={{ color: textMid }}
               onMouseEnter={(e) => (e.currentTarget.style.background = navHoverBg)}
               onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
@@ -108,7 +108,7 @@ export default function MobileFooter({ themeMode, settings, onNavigate }: Props)
 
       {/* ── Contact info ── */}
       <div className="px-4 py-3" style={{ borderBottom: `1px solid ${divider}` }}>
-        <p className="text-[10px] font-black tracking-widest mb-2.5 text-right" style={{ color: textLow }}>
+        <p className="text-[10px] font-black tracking-widest mb-2.5 text-end" style={{ color: textLow }}>
           {t("ارتباط با ما")}
         </p>
         <div className="space-y-2">

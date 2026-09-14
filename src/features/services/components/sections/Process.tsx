@@ -31,7 +31,7 @@ export const Process = ({ steps }: ProcessProps) => (
 
       <div className="relative">
         {/* vertical line */}
-        <div className="absolute top-0 bottom-0 right-[19px] w-px bg-white/6 md:right-auto md:left-1/2" />
+        <div className="absolute top-0 bottom-0 end-[19px] w-px bg-white/6 md:end-auto md:start-1/2" />
 
         <div className="space-y-0">
           {steps.map((step, i) => {

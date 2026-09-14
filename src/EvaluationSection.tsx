@@ -150,9 +150,9 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-amber-500/5 to-teal-500/5 rounded-full blur-[150px]" />
+        <div className="absolute top-0 start-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-0 end-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-amber-500/5 to-teal-500/5 rounded-full blur-[150px]" />
       </div>
 
       {/* Grid Pattern */}
@@ -183,7 +183,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
 
             {/* Animated Glow */}
             <motion.div
-              className="absolute -top-20 -right-20 w-40 h-40 bg-amber-400/20 rounded-full blur-[60px]"
+              className="absolute -top-20 -end-20 w-40 h-40 bg-amber-400/20 rounded-full blur-[60px]"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.5, 0.3],
@@ -195,7 +195,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
               }}
             />
             <motion.div
-              className="absolute -bottom-20 -left-20 w-40 h-40 bg-teal-400/20 rounded-full blur-[60px]"
+              className="absolute -bottom-20 -start-20 w-40 h-40 bg-teal-400/20 rounded-full blur-[60px]"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.5, 0.3],
@@ -285,7 +285,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
 
                 {/* Floating Elements */}
                 <motion.div
-                  className="absolute -top-4 -right-4 h-8 w-8 rounded-full bg-amber-400/20 blur-xl"
+                  className="absolute -top-4 -end-4 h-8 w-8 rounded-full bg-amber-400/20 blur-xl"
                   animate={{
                     y: [0, -10, 0],
                     opacity: [0.3, 0.6, 0.3],
@@ -297,7 +297,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                   }}
                 />
                 <motion.div
-                  className="absolute -bottom-4 -left-4 h-8 w-8 rounded-full bg-teal-400/20 blur-xl"
+                  className="absolute -bottom-4 -start-4 h-8 w-8 rounded-full bg-teal-400/20 blur-xl"
                   animate={{
                     y: [0, 10, 0],
                     opacity: [0.3, 0.6, 0.3],
@@ -317,7 +317,7 @@ export default function EvaluationSection({ data = {}, className = '' }: Evaluat
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex flex-col justify-center text-right"
+                className="flex flex-col justify-center text-end"
               >
                 {/* Badge */}
                 <motion.div

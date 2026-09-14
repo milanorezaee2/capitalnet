@@ -182,7 +182,7 @@ function Block({ block }: { block: CustomBlock }) {
     case 'highlight': {
       const accent = block.bgColor ?? '#f59e0b';
       return (
-        <div className={`${py} px-5 py-4 rounded-xl border-r-4`}
+        <div className={`${py} px-5 py-4 rounded-xl border-e-4`}
           style={{ background: `${accent}10`, borderColor: accent }}>
           <p className="text-sm text-slate-200 leading-relaxed font-medium whitespace-pre-wrap">{block.content || ''}</p>
         </div>

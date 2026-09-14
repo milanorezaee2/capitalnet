@@ -64,7 +64,7 @@ export const Comparison = ({ comparison }: ComparisonProps) => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 + 0.3 }}
-                    className="px-6 py-5 text-right text-lg font-black text-white"
+                    className="px-6 py-5 text-end text-lg font-black text-white"
                   >
                     {column}
                   </motion.th>

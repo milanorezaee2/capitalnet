@@ -44,7 +44,7 @@ const WhyCard = ({ item, index }: { item: any; index: number }) => {
 
         {/* status badge */}
         <span
-          className="absolute bottom-3 right-3 rounded-full px-3 py-1 text-[11px] font-black uppercase border"
+          className="absolute bottom-3 end-3 rounded-full px-3 py-1 text-[11px] font-black uppercase border"
           style={{ color: accent, borderColor: `${accent}40`, background: `${accent}15` }}
         >
           {item.status}

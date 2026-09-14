@@ -187,7 +187,7 @@ export const EnterpriseServicePage = ({ content, canonicalUrl }: EnterpriseServi
               <thead>
                 <tr className="border-b border-white/10">
                   {content.comparison.columns.map((column) => (
-                    <th key={column} className="px-6 py-4 text-right text-lg font-bold text-white">
+                    <th key={column} className="px-6 py-4 text-end text-lg font-bold text-white">
                       {column}
                     </th>
                   ))}

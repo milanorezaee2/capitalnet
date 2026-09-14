@@ -70,7 +70,7 @@ export default function ShareButtons({ title, url }: Props) {
 
   return (
     <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t("اشتراک‌گذاری")}>
-      <span className="text-sm text-white/40 ml-1">{t("اشتراک‌گذاری:")}</span>
+      <span className="text-sm text-white/40 ms-1">{t("اشتراک‌گذاری:")}</span>
 
       {PLATFORMS.map((p) => (
         <a

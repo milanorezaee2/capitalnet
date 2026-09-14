@@ -103,7 +103,7 @@ function OverviewTab({
           <button
             key={s.label}
             onClick={s.onClick}
-            className="rounded-xl p-4 text-right transition-all hover:opacity-80 active:scale-[0.98]"
+            className="rounded-xl p-4 text-end transition-all hover:opacity-80 active:scale-[0.98]"
             style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${s.color}20` }}
           >
             <p className="text-2xl font-black" style={{ color: s.color }}>{s.value}</p>
@@ -496,7 +496,7 @@ export default function UserDashboard({ user, onClose, onLogout }: UserDashboard
                 <span className="hidden sm:inline">{tab.label}</span>
                 {tab.badge !== undefined && tab.badge > 0 && (
                   <span
-                    className="absolute -top-1 -left-1 w-4 h-4 rounded-full text-[9px] font-black flex items-center justify-center"
+                    className="absolute -top-1 -start-1 w-4 h-4 rounded-full text-[9px] font-black flex items-center justify-center"
                     style={{ background: '#00BCD4', color: '#000' }}
                   >
                     {tab.badge}

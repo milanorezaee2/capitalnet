@@ -57,7 +57,7 @@ const TeamCard = ({ member, index }: { member: TeamMember; index: number }) => {
 
         {/* role badge */}
         <span
-          className="absolute bottom-3 right-3 rounded-full px-3 py-1 text-[11px] font-black border"
+          className="absolute bottom-3 end-3 rounded-full px-3 py-1 text-[11px] font-black border"
           style={{ color: accent, borderColor: `${accent}40`, background: `${accent}15` }}
         >
           {member.role}

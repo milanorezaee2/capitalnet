@@ -61,14 +61,14 @@ function InputField({
     <div>
       <label className="block text-sm font-semibold text-slate-300 mb-1.5">{label}</label>
       <div className="relative">
-        <Icon size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+        <Icon size={16} className="absolute end-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
         <input
           type={type}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={placeholder}
           autoComplete={autoComplete}
-          className="w-full pr-9 pl-10 py-2.5 rounded-xl text-sm text-white outline-none transition-all duration-200 placeholder-slate-600"
+          className="w-full pe-9 ps-10 py-2.5 rounded-xl text-sm text-white outline-none transition-all duration-200 placeholder-slate-600"
           style={{
             background: 'rgba(255,255,255,0.05)',
             border: '1px solid rgba(255,255,255,0.10)',
@@ -77,7 +77,7 @@ function InputField({
           onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.10)')}
         />
         {rightSlot && (
-          <div className="absolute left-3 top-1/2 -translate-y-1/2">{rightSlot}</div>
+          <div className="absolute start-3 top-1/2 -translate-y-1/2">{rightSlot}</div>
         )}
       </div>
     </div>

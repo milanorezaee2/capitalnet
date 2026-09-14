@@ -67,7 +67,7 @@ export default function MobileProcessPage({ settings, onNavigate, themeMode = 'd
       <motion.div variants={stagger} className="relative">
         {/* Vertical connector line */}
         <div
-          className="absolute right-[19px] top-5 bottom-5 w-[2px] rounded-full"
+          className="absolute end-[19px] top-5 bottom-5 w-[2px] rounded-full"
           style={{ background: 'linear-gradient(180deg, rgba(139,92,246,0.5) 0%, rgba(6,182,212,0.15) 100%)' }}
         />
 

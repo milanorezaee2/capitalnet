@@ -96,7 +96,7 @@ export default function NewsletterBox({ onSubscribe }: Props) {
               <div className="flex-1 relative">
                 <Mail
                   size={16}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+                  className="absolute end-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
                   aria-hidden="true"
                 />
                 <input
@@ -108,7 +108,7 @@ export default function NewsletterBox({ onSubscribe }: Props) {
                   aria-label={t("آدرس ایمیل")}
                   aria-invalid={!!errorMsg}
                   aria-describedby={errorMsg ? 'newsletter-error' : undefined}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pr-9 pl-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-colors"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pe-9 ps-4 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-colors"
                 />
               </div>
               <button

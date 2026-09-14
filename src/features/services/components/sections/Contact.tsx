@@ -104,7 +104,7 @@ export const Contact = ({ cta, contact }: ContactProps) => {
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5 rounded-[40px]" />
           
           {/* Decorative pattern */}
-          <div className="absolute top-0 right-0 w-64 h-64 opacity-5">
+          <div className="absolute top-0 end-0 w-64 h-64 opacity-5">
             <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-bl-full" />
           </div>
 

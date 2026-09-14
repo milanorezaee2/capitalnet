@@ -44,7 +44,7 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
         {/* metric badge */}
         {study.metrics && study.metrics.length > 0 && (
           <div
-            className="absolute top-4 right-4 rounded-full px-4 py-1.5 text-sm font-black backdrop-blur-sm border"
+            className="absolute top-4 end-4 rounded-full px-4 py-1.5 text-sm font-black backdrop-blur-sm border"
             style={{ color: accent, borderColor: `${accent}50`, background: `${accent}18` }}
           >
             {study.metrics[0].value}
@@ -52,7 +52,7 @@ const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) =>
         )}
 
         {/* title over image */}
-        <div className="absolute bottom-4 right-4 left-4">
+        <div className="absolute bottom-4 end-4 start-4">
           <h3 className="text-xl font-black text-white leading-tight">{study.title}</h3>
           <p className="mt-1 text-xs text-slate-400">{study.client} · {study.industry}</p>
         </div>

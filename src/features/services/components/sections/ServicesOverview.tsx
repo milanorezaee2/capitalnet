@@ -50,7 +50,7 @@ export const ServicesOverview = ({ content }: ServicesOverviewProps) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="max-w-xl text-base leading-relaxed text-slate-400 lg:text-left"
+              className="max-w-xl text-base leading-relaxed text-slate-400 lg:text-start"
             >
               {content.intro}
             </motion.p>

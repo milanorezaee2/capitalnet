@@ -173,7 +173,7 @@ export default function MobileAppShell({
             <button type="button" onClick={() => onNavigate('home')} className="flex items-center gap-2.5 min-w-0">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-[11px] font-black text-white"
                 style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}>CN</div>
-              <div className="min-w-0 text-right">
+              <div className="min-w-0 text-end">
                 <AnimatePresence mode="wait">
                   <motion.p key={currentPage}
                     initial={{ opacity:0, y:3 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-3 }}
@@ -279,7 +279,7 @@ export default function MobileAppShell({
             <motion.div key="dr"
               initial={{ x:'100%' }} animate={{ x:0 }} exit={{ x:'100%' }}
               transition={{ type:'spring', stiffness:320, damping:32 }}
-              className="fixed top-0 right-0 bottom-0 z-50 w-[272px] flex flex-col"
+              className="fixed top-0 end-0 bottom-0 z-50 w-[272px] flex flex-col"
               style={{ background: themeMode === 'dark' ? 'rgba(9,11,20,0.98)' : 'rgba(255,255,255,0.86)', borderLeft: themeMode === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(15,23,42,0.08)', backdropFilter:'blur(32px)', WebkitBackdropFilter:'blur(32px)' }}>
               {/* Drawer header */}
               <div className={`relative overflow-hidden border-b px-5 pt-5 pb-4 ${themeMode === 'dark' ? 'border-white/[0.05]' : 'border-slate-200/80'}`}>

@@ -83,7 +83,7 @@ export default function BlogPostCTA({ variant = 'consult', onAction }: Props) {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
+      <div className="relative z-10 p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 text-center md:text-end">
         {/* Icon badge */}
         <div
           className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-white"

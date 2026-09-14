@@ -2,12 +2,12 @@
 // Renders a dynamically-created service sub-page from the localStorage store.
 // Each section type is rendered with a matching visual style.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Home, ChevronRight } from 'lucide-react';
 import { loadSubPages, SECTION_META, type ServiceSubPage, type SubPageSection } from '../data/serviceSubPageStore';
 
-import { t as tr } from '@/i18n';
+import { t as tr, useLanguage, deepTranslate } from '@/i18n';
 
 
 // ─── Fade-in wrapper ─────────────────────────────────────────────────────────
@@ -41,9 +41,9 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
         style={{ background: 'linear-gradient(135deg,#050d1a 0%,#0d1829 100%)' }}>
         {/* Background glow */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10 blur-[80px]"
+          <div className="absolute top-0 end-0 w-96 h-96 rounded-full opacity-10 blur-[80px]"
             style={{ background: color }} />
-          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-8 blur-[60px]"
+          <div className="absolute bottom-0 start-0 w-64 h-64 rounded-full opacity-8 blur-[60px]"
             style={{ background: '#7c3aed' }} />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto w-full">
@@ -467,7 +467,7 @@ function RenderSection({ section, color }: { section: SubPageSection; color: str
                 <span key={i} className="px-4 py-2 rounded-xl text-sm font-semibold"
                   style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.75)' }}>
                   {t.name}{t.version ? ` v${t.version}` : ''}
-                  {t.category && <span className="ml-2 text-[10px] opacity-50">{t.category}</span>}
+                  {t.category && <span className="ms-2 text-[10px] opacity-50">{t.category}</span>}
                 </span>
               ))}
             </div>
@@ -636,7 +636,7 @@ function FaqItem({ question, answer, color }: { question: string; answer: string
   return (
     <div className="rounded-xl overflow-hidden" style={{ border: `1px solid rgba(255,255,255,${open ? '0.12' : '0.07'})` }}>
       <button onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-5 py-4 text-right transition-all"
+        className="w-full flex items-center justify-between px-5 py-4 text-end transition-all"
         style={{ background: open ? color + '10' : 'rgba(255,255,255,0.04)' }}>
         <span className="text-sm font-semibold text-white">{question}</span>
         <ChevronRight size={16} style={{ color, transform: open ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.25s' }} />
@@ -657,7 +657,14 @@ interface ServiceSubPageViewProps {
 }
 
 export default function ServiceSubPageView({ slug, onBack }: ServiceSubPageViewProps) {
-  const [page, setPage] = useState<ServiceSubPage | null | 'loading'>('loading');
+  const [rawPage, setPage] = useState<ServiceSubPage | null | 'loading'>('loading');
+  const { lang } = useLanguage();
+
+  // زیرصفحه‌های خدمات به فارسی ذخیره شده‌اند؛ ترجمهٔ عمیق برای نسخهٔ انگلیسی
+  const page = useMemo(
+    () => (rawPage && rawPage !== 'loading' ? deepTranslate(rawPage) : rawPage),
+    [rawPage, lang]
+  );
 
   useEffect(() => {
     const pages = loadSubPages();

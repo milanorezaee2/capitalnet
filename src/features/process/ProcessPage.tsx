@@ -353,13 +353,13 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
               {data.timelineSchedule.phases.map((phase, index) => (
                 <motion.div
                   key={phase.id}
-                  className="relative pr-8"
+                  className="relative pe-8"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <div className="absolute right-0 top-0 w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold">
+                  <div className="absolute end-0 top-0 w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold">
                     {index + 1}
                   </div>
                   <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
@@ -705,7 +705,7 @@ export const ProcessPage: React.FC<ProcessPageProps> = ({
                     <div key={field.id}>
                       <label className="block text-white font-semibold mb-2">
                         {field.label}
-                        {field.required && <span className="text-red-400 mr-1">*</span>}
+                        {field.required && <span className="text-red-400 me-1">*</span>}
                       </label>
                       {field.type === 'textarea' ? (
                         <textarea

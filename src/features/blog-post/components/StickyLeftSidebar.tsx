@@ -23,7 +23,7 @@ function Tip({ label, children }: { label: string; children: React.ReactNode }) 
     <div className="relative group">
       {children}
       <div
-        className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 ml-0 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 whitespace-nowrap text-xs bg-[#161b22] text-white/80 border border-white/10 px-2.5 py-1 rounded-lg"
+        className="pointer-events-none absolute end-full top-1/2 -translate-y-1/2 ms-0 me-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 whitespace-nowrap text-xs bg-[#161b22] text-white/80 border border-white/10 px-2.5 py-1 rounded-lg"
         role="tooltip"
       >
         {label}

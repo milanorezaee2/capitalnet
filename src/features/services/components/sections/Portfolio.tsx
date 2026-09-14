@@ -45,7 +45,7 @@ const PortfolioCard = ({ item, index }: { item: PortfolioItem; index: number }) 
 
         {/* category badge */}
         <span
-          className="absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-black uppercase border backdrop-blur-sm"
+          className="absolute top-4 end-4 rounded-full px-3 py-1 text-xs font-black uppercase border backdrop-blur-sm"
           style={{ color: accent, borderColor: `${accent}40`, background: `${accent}18` }}
         >
           {item.category}
@@ -57,14 +57,14 @@ const PortfolioCard = ({ item, index }: { item: PortfolioItem; index: number }) 
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute top-4 left-4 flex items-center justify-center rounded-full p-2 border border-white/20 bg-white/10 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute top-4 start-4 flex items-center justify-center rounded-full p-2 border border-white/20 bg-white/10 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
           >
             <ExternalLink size={16} className="text-white" />
           </a>
         )}
 
         {/* title overlay */}
-        <div className="absolute bottom-4 right-4 left-4">
+        <div className="absolute bottom-4 end-4 start-4">
           <h3 className="text-xl font-black text-white leading-tight">{item.title}</h3>
           {item.client && <p className="mt-1 text-xs text-slate-400">{item.client}</p>}
         </div>

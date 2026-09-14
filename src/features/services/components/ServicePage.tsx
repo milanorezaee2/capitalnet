@@ -1,5 +1,6 @@
 // ─── Service Page — Editorial Layout ────────────────────────────────────────
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useLanguage, deepTranslate } from '@/i18n';
 import InlineBannerRenderer from '../../../components/InlineBannerRenderer';
 import type { InlineBanner } from '../../../lib/settingsApi';
 import { useServiceSEO, useFAQSchema } from '../hooks';
@@ -25,9 +26,14 @@ export interface ServicePageProps {
 // Custom sections can be inserted anywhere via their `position` value
 
 export function ServicePage({ onNavigate, banners = [] }: ServicePageProps = {}) {
-  const [content, setContent] = useState<EnterpriseServicePageContent>(
+  const [rawContent, setContent] = useState<EnterpriseServicePageContent>(
     () => loadServiceContent()
   );
+  const { lang } = useLanguage();
+
+  // محتوای صفحهٔ خدمات به فارسی ذخیره شده؛ برای نسخهٔ انگلیسی در همین نقطه
+  // ترجمهٔ عمیق اعمال می‌شود.
+  const content = useMemo(() => deepTranslate(rawContent), [rawContent, lang]);
 
   useEffect(() => {
     const handler = (e: StorageEvent) => {

@@ -46,7 +46,7 @@ export const FAQSection = ({ faqs }: FAQSectionProps) => {
             >
               <button
                 onClick={() => toggle(i)}
-                className="flex w-full items-start justify-between gap-4 py-5 text-right"
+                className="flex w-full items-start justify-between gap-4 py-5 text-end"
               >
                 <span className={`text-base font-bold transition-colors ${open === i ? 'text-white' : 'text-slate-300'}`}>
                   {faq.question}

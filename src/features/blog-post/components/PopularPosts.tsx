@@ -34,7 +34,7 @@ export default function PopularPosts({ posts, onNavigate }: Props) {
           <li key={post.id}>
             <button
               onClick={() => onNavigate(post.slug)}
-              className="w-full flex items-start gap-3 text-right group focus:outline-none focus:ring-2 focus:ring-teal-500/40 rounded-xl p-1"
+              className="w-full flex items-start gap-3 text-end group focus:outline-none focus:ring-2 focus:ring-teal-500/40 rounded-xl p-1"
               aria-label={post.title}
             >
               <span

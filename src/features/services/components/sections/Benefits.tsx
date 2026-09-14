@@ -46,7 +46,7 @@ const BenefitCard = ({ benefit, index }: { benefit: Benefit; index: number }) =>
         <div className="absolute inset-0 opacity-20 mix-blend-overlay"
           style={{ background: `linear-gradient(135deg, ${accent}, transparent)` }} />
         {/* accent dot */}
-        <div className="absolute top-3 right-3 h-2 w-2 rounded-full" style={{ background: accent }} />
+        <div className="absolute top-3 end-3 h-2 w-2 rounded-full" style={{ background: accent }} />
       </div>
 
       <div className="p-6">

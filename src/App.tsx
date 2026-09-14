@@ -1219,7 +1219,7 @@ function AdvancedBlogCard({
 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.15),_transparent_50%),radial-gradient(circle_at_bottom_left,_rgba(251,191,36,0.15),_transparent_50%)]" />
 
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 end-3">
 
           <div className={`flex items-center gap-1 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm ${category.color}`}>
 
@@ -1233,7 +1233,7 @@ function AdvancedBlogCard({
 
         {post.featured && (
 
-          <div className="absolute top-3 left-3">
+          <div className="absolute top-3 start-3">
 
             <span className="bg-amber-400/90 text-black text-[10px] font-bold px-2 py-1 rounded-full">
 
@@ -1449,9 +1449,9 @@ function FeaturedPost({ post, onRead }: { post: BlogPost; onRead: (slug: string)
 
     >
 
-      <div className="absolute top-0 right-0 w-48 h-48 bg-teal-500/10 rounded-full blur-[80px] pointer-events-none" />
+      <div className="absolute top-0 end-0 w-48 h-48 bg-teal-500/10 rounded-full blur-[80px] pointer-events-none" />
 
-      <div className="absolute bottom-0 left-0 w-36 h-36 bg-amber-500/10 rounded-full blur-[60px] pointer-events-none" />
+      <div className="absolute bottom-0 start-0 w-36 h-36 bg-amber-500/10 rounded-full blur-[60px] pointer-events-none" />
 
 
 
@@ -1751,7 +1751,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
     <nav
 
-      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 end-0 start-0 z-50 transition-all duration-300 ${
 
         isEvaluationPage
 
@@ -1837,7 +1837,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                   {servicesDropdownOpen && (
 
-                    <div className="absolute top-full right-0 mt-2 w-52 rounded-2xl overflow-hidden shadow-2xl z-50"
+                    <div className="absolute top-full end-0 mt-2 w-52 rounded-2xl overflow-hidden shadow-2xl z-50"
 
                       style={{ background: 'rgba(7,17,30,0.98)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(16px)' }}>
 
@@ -1845,7 +1845,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                       <button type="button" onClick={() => { onNavigate('services'); setServicesDropdownOpen(false); }}
 
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-right text-white hover:bg-white/5 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-end text-white hover:bg-white/5 transition-colors"
 
                         style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
 
@@ -1863,7 +1863,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                           onClick={() => { onNavigateServiceDetail(sp.slug); setServicesDropdownOpen(false); }}
 
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-right text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-end text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
 
                           <span className="text-sm">{sp.icon || '📄'}</span>
 
@@ -2115,7 +2115,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                   type="button"
 
-                  className={`w-full text-base font-medium py-2 border-b border-white/5 text-right transition-colors ${
+                  className={`w-full text-base font-medium py-2 border-b border-white/5 text-end transition-colors ${
 
                     currentPage === l.page || (isServices && currentPage === 'service-detail') ? 'text-amber-300' : 'text-white'
 
@@ -2137,7 +2137,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                 {isServices && subPages.length > 0 && (
 
-                  <div className="flex flex-col pr-4 mt-1 space-y-1 border-r border-white/8">
+                  <div className="flex flex-col pe-4 mt-1 space-y-1 border-e border-white/8">
 
                     {subPages.map(sp => (
 
@@ -2145,7 +2145,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                         onClick={() => { onNavigateServiceDetail(sp.slug); setMobileOpen(false); }}
 
-                        className="text-sm text-slate-400 py-1.5 text-right hover:text-white transition-colors flex items-center gap-2">
+                        className="text-sm text-slate-400 py-1.5 text-end hover:text-white transition-colors flex items-center gap-2">
 
                         <span>{sp.icon || '📄'}</span>
 
@@ -2171,7 +2171,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
               type="button"
 
-              className="text-sm font-semibold text-sky-300 py-2 text-right"
+              className="text-sm font-semibold text-sky-300 py-2 text-end"
 
               onClick={() => { onOpenDashboard(); setMobileOpen(false); }}
 
@@ -2189,7 +2189,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
                 type="button"
 
-                className="font-bold py-2 text-right text-base"
+                className="font-bold py-2 text-end text-base"
 
                 style={{ color: settings?.header_login_color ?? '#7dd3fc' }}
 
@@ -2237,7 +2237,7 @@ function Navbar({ currentPage, onNavigate, onNavigateServiceDetail, currentUser,
 
             onClick={() => { toggleLanguage(); setMobileOpen(false); }}
 
-            className="w-full text-left py-2 border-b border-white/5 text-sm font-bold text-white/70 flex items-center gap-2"
+            className="w-full text-start py-2 border-b border-white/5 text-sm font-bold text-white/70 flex items-center gap-2"
 
           >
 
@@ -2961,7 +2961,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
         <div
 
-          className="absolute bottom-0 left-0 right-0 h-48"
+          className="absolute bottom-0 start-0 end-0 h-48"
 
           style={{ background: 'linear-gradient(to bottom, transparent, #4A6FA5)' }}
 
@@ -2971,7 +2971,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
         <div
 
-          className="absolute top-0 left-0 right-0 h-32"
+          className="absolute top-0 start-0 end-0 h-32"
 
           style={{ background: 'linear-gradient(to top, transparent, rgba(6,14,28,0.7))' }}
 
@@ -2991,7 +2991,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
       <motion.div
 
-        className="blob-1 orb-a absolute bottom-0 right-0 w-[35rem] h-[35rem] sm:w-[52rem] sm:h-[52rem] bg-teal-500/20 rounded-full blur-[180px] pointer-events-none"
+        className="blob-1 orb-a absolute bottom-0 end-0 w-[35rem] h-[35rem] sm:w-[52rem] sm:h-[52rem] bg-teal-500/20 rounded-full blur-[180px] pointer-events-none"
 
         style={{ y: blob1Y }}
 
@@ -2999,7 +2999,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
       <motion.div
 
-        className="blob-2 orb-b absolute top-1/4 right-8 w-72 h-72 sm:w-[26rem] sm:h-[26rem] bg-teal-400/18 rounded-full blur-[130px] pointer-events-none"
+        className="blob-2 orb-b absolute top-1/4 end-8 w-72 h-72 sm:w-[26rem] sm:h-[26rem] bg-teal-400/18 rounded-full blur-[130px] pointer-events-none"
 
         style={{ y: blob2Y }}
 
@@ -3007,7 +3007,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
       <motion.div
 
-        className="blob-3 orb-c absolute top-12 left-1/4 w-56 h-56 sm:w-80 sm:h-80 bg-amber-500/16 rounded-full blur-[115px] pointer-events-none"
+        className="blob-3 orb-c absolute top-12 start-1/4 w-56 h-56 sm:w-80 sm:h-80 bg-amber-500/16 rounded-full blur-[115px] pointer-events-none"
 
         style={{ y: blob3Y }}
 
@@ -3017,11 +3017,11 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
       {/* Extra depth orbs - larger and stronger */}
 
-      <div className="orb-d absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] bg-cyan-500/12 rounded-full blur-[200px] pointer-events-none" />
+      <div className="orb-d absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] bg-cyan-500/12 rounded-full blur-[200px] pointer-events-none" />
 
-      <div className="orb-b absolute bottom-1/4 left-12 w-64 h-64 bg-amber-400/14 rounded-full blur-[120px] pointer-events-none" />
+      <div className="orb-b absolute bottom-1/4 start-12 w-64 h-64 bg-amber-400/14 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="orb-a absolute top-1/3 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="orb-a absolute top-1/3 end-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
 
 
 
@@ -3177,7 +3177,7 @@ function Hero({ settings, onNavigate }: { settings: SiteSettings; onNavigate?: (
 
                       {t('hero.startFundraising')}
 
-                      <span className="ml-1">→</span>
+                      <span className="ms-1">→</span>
 
                     </button>
 
@@ -3267,9 +3267,9 @@ function GlobalNetwork({ settings }: { settings: SiteSettings }) {
 
       {/* Subtle section blobs */}
 
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-48 bg-teal-500/6 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[500px] h-48 bg-teal-500/6 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 end-0 w-72 h-72 bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
 
 
 
@@ -3533,7 +3533,7 @@ function Services({ settings }: { settings: SiteSettings }) {
 
     <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.75)' }} id="services">
 
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-80 h-80 bg-teal-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 start-0 -translate-y-1/2 w-80 h-80 bg-teal-500/5 rounded-full blur-[120px] pointer-events-none" />
 
 
 
@@ -3605,7 +3605,7 @@ function Services({ settings }: { settings: SiteSettings }) {
 
               {s.popular && (
 
-                <div className="absolute top-0 right-5 z-10">
+                <div className="absolute top-0 end-5 z-10">
 
                   <span className="bg-amber-400 text-[#0B1628] text-xs font-black px-3 py-1.5 rounded-full ring-2 ring-amber-300/60">
 
@@ -3651,9 +3651,9 @@ function Services({ settings }: { settings: SiteSettings }) {
 
 
 
-                <h3 className="text-xl font-bold text-white mb-3 text-right">{s.title}</h3>
+                <h3 className="text-xl font-bold text-white mb-3 text-end">{s.title}</h3>
 
-                <p className="text-white/55 text-sm leading-relaxed mb-6 text-right flex-1">{s.desc}</p>
+                <p className="text-white/55 text-sm leading-relaxed mb-6 text-end flex-1">{s.desc}</p>
 
 
 
@@ -3745,7 +3745,7 @@ function WhyUs({ settings }: { settings: SiteSettings }) {
 
     <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'rgba(11,22,40,0.75)' }} id="about">
 
-      <div className="absolute bottom-0 right-1/2 translate-x-1/2 w-[450px] h-48 bg-amber-500/5 rounded-full blur-[110px] pointer-events-none" />
+      <div className="absolute bottom-0 end-1/2 translate-x-1/2 w-[450px] h-48 bg-amber-500/5 rounded-full blur-[110px] pointer-events-none" />
 
 
 
@@ -3919,9 +3919,9 @@ function ProcessSteps({ settings }: { settings: SiteSettings }) {
 
       {/* Background gradients */}
 
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-64 bg-gradient-to-b from-teal-500/8 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[600px] h-64 bg-gradient-to-b from-teal-500/8 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-t from-amber-500/6 to-transparent rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 end-0 w-96 h-96 bg-gradient-to-t from-amber-500/6 to-transparent rounded-full blur-[120px] pointer-events-none" />
 
 
 
@@ -3969,7 +3969,7 @@ function ProcessSteps({ settings }: { settings: SiteSettings }) {
 
           {/* Vertical line */}
 
-          <div className="absolute right-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-500 via-amber-400 to-teal-500 hidden md:block" />
+          <div className="absolute end-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-500 via-amber-400 to-teal-500 hidden md:block" />
 
 
 
@@ -4185,7 +4185,7 @@ function FlipCard({ card }: { card: ShowcaseCardData }) {
 
           <div
 
-            className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
+            className="absolute -top-10 -end-10 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
 
             style={{ background: glowFrom }}
 
@@ -4405,11 +4405,11 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
       {/* background blobs */}
 
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-64 bg-gradient-to-b from-teal-500/8 to-transparent rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[800px] h-64 bg-gradient-to-b from-teal-500/8 to-transparent rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="absolute bottom-0 right-0 w-[500px] h-96 bg-gradient-to-t from-violet-500/6 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 end-0 w-[500px] h-96 bg-gradient-to-t from-violet-500/6 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="absolute top-1/2 left-0 w-72 h-72 bg-gradient-to-r from-amber-500/5 to-transparent rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 start-0 w-72 h-72 bg-gradient-to-r from-amber-500/5 to-transparent rounded-full blur-[120px] pointer-events-none" />
 
 
 
@@ -4605,9 +4605,9 @@ function HomeBlogPreview({ onNavigate, settings }: { onNavigate?: (page: PageKey
 
       {/* blobs */}
 
-      <div className="absolute top-0 right-0 w-[500px] h-64 bg-gradient-to-bl from-teal-500/7 to-transparent rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 end-0 w-[500px] h-64 bg-gradient-to-bl from-teal-500/7 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="absolute bottom-0 left-0 w-96 h-64 bg-gradient-to-tr from-amber-500/6 to-transparent rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 start-0 w-96 h-64 bg-gradient-to-tr from-amber-500/6 to-transparent rounded-full blur-[120px] pointer-events-none" />
 
 
 
@@ -4799,7 +4799,7 @@ function FAQSection({ settings, onNavigate }: { settings: SiteSettings; onNaviga
 
       {/* blobs */}
 
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-[180px] pointer-events-none" />
 
 
 
@@ -4865,7 +4865,7 @@ function FAQSection({ settings, onNavigate }: { settings: SiteSettings; onNaviga
 
                   onClick={() => toggle(i)}
 
-                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-right"
+                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-end"
 
                 >
 
@@ -5037,7 +5037,7 @@ function VideoBlock({ block }: { block: VideoBlockData }) {
 
             <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border-2 border-white/30 group-hover:scale-110 group-hover:bg-white/20 transition-all duration-300 backdrop-blur-sm z-10">
 
-              <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 ml-1"><path d="M8 5v14l11-7z"/></svg>
+              <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 ms-1"><path d="M8 5v14l11-7z"/></svg>
 
             </div>
 
@@ -5045,7 +5045,7 @@ function VideoBlock({ block }: { block: VideoBlockData }) {
 
         </button>
 
-        {block.caption && <p className="mt-2 text-sm text-white/50 text-right">{block.caption}</p>}
+        {block.caption && <p className="mt-2 text-sm text-white/50 text-end">{block.caption}</p>}
 
         {/* Lightbox */}
 
@@ -5083,7 +5083,7 @@ function VideoBlock({ block }: { block: VideoBlockData }) {
 
                 onClick={() => setLightboxOpen(false)}
 
-                className="absolute top-3 left-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors text-lg font-bold"
+                className="absolute top-3 start-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors text-lg font-bold"
 
               >×</button>
 
@@ -5119,7 +5119,7 @@ function VideoBlock({ block }: { block: VideoBlockData }) {
 
       </div>
 
-      {block.caption && <p className="mt-2 text-sm text-white/50 text-right">{block.caption}</p>}
+      {block.caption && <p className="mt-2 text-sm text-white/50 text-end">{block.caption}</p>}
 
     </div>
 
@@ -5229,7 +5229,7 @@ function ImageGalleryBlock({ block }: { block: ImageGalleryBlockData }) {
 
               onClick={handlePrev}
 
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
+              className="absolute end-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
 
             >
 
@@ -5241,7 +5241,7 @@ function ImageGalleryBlock({ block }: { block: ImageGalleryBlockData }) {
 
               onClick={handleNext}
 
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
+              className="absolute start-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
 
             >
 
@@ -5251,7 +5251,7 @@ function ImageGalleryBlock({ block }: { block: ImageGalleryBlockData }) {
 
             {/* Dots */}
 
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+            <div className="absolute bottom-3 start-1/2 -translate-x-1/2 flex gap-1.5 z-10">
 
               {items.map((_, i) => (
 
@@ -5329,7 +5329,7 @@ function GalleryLightbox({ items, idx, onClose }: {
 
         {items.length > 1 && (
 
-          <button onClick={handlePrev} className="absolute right-0 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors">
+          <button onClick={handlePrev} className="absolute end-0 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors">
 
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-5 h-5"><path d="M15 18l-6-6 6-6"/></svg>
 
@@ -5353,7 +5353,7 @@ function GalleryLightbox({ items, idx, onClose }: {
 
         {items.length > 1 && (
 
-          <button onClick={handleNext} className="absolute left-0 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors">
+          <button onClick={handleNext} className="absolute start-0 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors">
 
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-5 h-5"><path d="M9 18l6-6-6-6"/></svg>
 
@@ -5361,7 +5361,7 @@ function GalleryLightbox({ items, idx, onClose }: {
 
         )}
 
-        <button onClick={onClose} className="absolute top-0 left-0 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors text-lg font-bold">×</button>
+        <button onClick={onClose} className="absolute top-0 start-0 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/90 transition-colors text-lg font-bold">×</button>
 
       </div>
 
@@ -5761,11 +5761,11 @@ function Testimonials({ settings }: { settings: SiteSettings }) {
 
                   <img src={item.avatar_url} alt={item.name}
 
-                    className="w-12 h-12 rounded-full object-cover ml-4 flex-shrink-0" />
+                    className="w-12 h-12 rounded-full object-cover ms-4 flex-shrink-0" />
 
                 ) : (
 
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold ml-4 flex-shrink-0"
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold ms-4 flex-shrink-0"
 
                     style={{ background: AVATAR_COLORS[idx % AVATAR_COLORS.length] }}>
 
@@ -5881,7 +5881,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
           onClick={scrollToTop}
 
-          className="back-to-top-btn fixed bottom-8 left-8 z-50 w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full shadow-lg shadow-teal-500/30 flex items-center justify-center text-white hover:shadow-xl hover:shadow-teal-500/40 transition-all hover:scale-110"
+          className="back-to-top-btn fixed bottom-8 start-8 z-50 w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-full shadow-lg shadow-teal-500/30 flex items-center justify-center text-white hover:shadow-xl hover:shadow-teal-500/40 transition-all hover:scale-110"
 
         >
 
@@ -5897,11 +5897,11 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
       {/* Background gradients */}
 
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <div className="absolute top-0 start-0 w-full h-full pointer-events-none">
 
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-teal-500/5 to-transparent rounded-full blur-[120px]" />
+        <div className="absolute top-0 end-0 w-96 h-96 bg-gradient-to-br from-teal-500/5 to-transparent rounded-full blur-[120px]" />
 
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-amber-500/5 to-transparent rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 start-0 w-80 h-80 bg-gradient-to-tr from-amber-500/5 to-transparent rounded-full blur-[100px]" />
 
       </div>
 
@@ -5913,7 +5913,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
         {/* Links Row — 4 dynamic columns */}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-12 text-right">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-12 text-end">
 
 
 
@@ -5939,7 +5939,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => onNavigate(link.page as PageKey, undefined, undefined, link.anchor)}
 
-                        className="text-white hover:text-teal-400 text-sm transition-colors text-right w-full">
+                        className="text-white hover:text-teal-400 text-sm transition-colors text-end w-full">
 
                         {link.label}
 
@@ -5957,7 +5957,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => { setShowTerms(true); setTermsChecked(false); }}
 
-                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-right w-full flex items-center gap-2"
+                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-end w-full flex items-center gap-2"
 
                       >
 
@@ -6003,7 +6003,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => onNavigate(link.page as PageKey, undefined, link.category as BlogFilter | undefined)}
 
-                        className="text-white hover:text-teal-400 text-sm transition-colors text-right w-full">
+                        className="text-white hover:text-teal-400 text-sm transition-colors text-end w-full">
 
                         {link.label}
 
@@ -6021,7 +6021,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => { setShowTerms(true); setTermsChecked(false); }}
 
-                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-right w-full flex items-center gap-2"
+                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-end w-full flex items-center gap-2"
 
                       >
 
@@ -6067,7 +6067,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => onNavigate(link.page as PageKey, undefined, undefined, link.anchor)}
 
-                        className="text-white hover:text-teal-400 text-sm transition-colors text-right w-full">
+                        className="text-white hover:text-teal-400 text-sm transition-colors text-end w-full">
 
                         {link.label}
 
@@ -6085,7 +6085,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                         onClick={() => { setShowTerms(true); setTermsChecked(false); }}
 
-                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-right w-full flex items-center gap-2"
+                        className="text-amber-400 hover:text-amber-300 text-sm transition-colors text-end w-full flex items-center gap-2"
 
                       >
 
@@ -6261,7 +6261,7 @@ function Footer({ onNavigate, settings }: { onNavigate: (page: PageKey, postSlug
 
                     placeholder={settings.footer_newsletter_placeholder ?? `${t('blog.emailPlaceholder')}...`}
 
-                    className="flex-1 bg-white/8 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20 text-right transition-all"
+                    className="flex-1 bg-white/8 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20 text-end transition-all"
 
                   />
 
@@ -7081,7 +7081,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
         href="#main-content" 
 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-white focus:rounded-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-white focus:rounded-lg"
 
       >
 
@@ -7093,7 +7093,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
       {/* Reading Progress Bar */}
 
-      <div className="fixed top-20 left-0 right-0 h-1 bg-white/10 z-40" aria-hidden="true">
+      <div className="fixed top-20 start-0 end-0 h-1 bg-white/10 z-40" aria-hidden="true">
 
         <div 
 
@@ -7145,7 +7145,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
 
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+        <div className="absolute bottom-0 start-0 end-0 p-6 md:p-10">
 
           <div className="mx-auto max-w-7xl">
 
@@ -7697,7 +7697,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                         onClick={() => onBack()}
 
-                        className="w-full text-right group"
+                        className="w-full text-end group"
 
                       >
 
@@ -8070,7 +8070,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
           <div className="relative">
 
-            <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40" size={20} aria-hidden="true" />
+            <Search className="absolute end-4 top-1/2 -translate-y-1/2 text-white/40" size={20} aria-hidden="true" />
 
             <input
 
@@ -8082,7 +8082,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
               onChange={(e) => handleSearchChange(e.target.value)}
 
-              className="w-full bg-white/5 border border-white/10 rounded-xl pr-12 pl-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
+              className="w-full bg-white/5 border border-white/10 rounded-xl pe-12 ps-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-teal-500/50 focus:ring-2 focus:ring-teal-500/20 transition-all"
 
               aria-label={__t("جستجو در مقالات")}
 
@@ -8102,7 +8102,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
               id="search-suggestions"
 
-              className="absolute top-full left-0 right-0 mt-2 bg-[#0B1628]/95 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden z-10"
+              className="absolute top-full start-0 end-0 mt-2 bg-[#0B1628]/95 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden z-10"
 
               role="listbox"
 
@@ -8116,7 +8116,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                     onClick={() => handleSearchChange(suggestion)}
 
-                    className="w-full text-right px-4 py-3 text-sm text-white/80 hover:bg-white/10 transition-colors focus:bg-white/10 focus:outline-none"
+                    className="w-full text-end px-4 py-3 text-sm text-white/80 hover:bg-white/10 transition-colors focus:bg-white/10 focus:outline-none"
 
                     role="option"
 
@@ -8274,7 +8274,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                   {activeCategory === 'all' ? __t("همه مقالات") : blogCategories[activeCategory]?.label}
 
-                  <span className="text-white/40 text-sm font-normal mr-2">
+                  <span className="text-white/40 text-sm font-normal me-2">
 
                     ({regularPosts.length})
 
@@ -8374,7 +8374,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                     onClick={() => handleReadPost(post.slug)}
 
-                    className="w-full text-right group"
+                    className="w-full text-end group"
 
                   >
 
@@ -10274,7 +10274,7 @@ function MobileBottomNav({
 
       <nav
 
-        className="md:hidden fixed bottom-0 left-0 right-0 z-40"
+        className="md:hidden fixed bottom-0 start-0 end-0 z-40"
 
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
 
@@ -10432,7 +10432,7 @@ function MobileBottomNav({
 
                     <motion.span
 
-                      className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full"
+                      className="absolute -top-0.5 -end-0.5 w-1.5 h-1.5 rounded-full"
 
                       style={{ background: item.color }}
 
@@ -10560,7 +10560,7 @@ function MobileBottomNav({
 
                 <span
 
-                  className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2"
+                  className="absolute -bottom-0.5 -end-0.5 w-2.5 h-2.5 rounded-full border-2"
 
                   style={{ background: '#22c55e', borderColor: 'rgb(8,16,32)' }}
 
@@ -11394,7 +11394,7 @@ function MainApp() {
 
                 <div className="relative">
 
-                  <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
+                  <Search className="absolute end-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
 
                   <input
 
@@ -11414,7 +11414,7 @@ function MainApp() {
 
                     placeholder={__t("جستجو در صفحات و مقالات...")}
 
-                    className="w-full rounded-2xl border border-white/10 bg-slate-900/90 py-4 pr-14 pl-4 text-sm text-white placeholder-white/45 outline-none transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
+                    className="w-full rounded-2xl border border-white/10 bg-slate-900/90 py-4 pe-14 ps-4 text-sm text-white placeholder-white/45 outline-none transition focus:border-teal-400/50 focus:ring-2 focus:ring-teal-400/20"
 
                     aria-label={__t("جستجوی سایت")}
 
@@ -11468,7 +11468,7 @@ function MainApp() {
 
                                 onClick={() => handleSearchSelect(item)}
 
-                                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-right text-sm text-white transition hover:border-teal-400/40 hover:bg-white/10"
+                                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-end text-sm text-white transition hover:border-teal-400/40 hover:bg-white/10"
 
                               >
 
@@ -11510,7 +11510,7 @@ function MainApp() {
 
                                 onClick={() => handleSearchSelect(item)}
 
-                                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-right text-sm text-white transition hover:border-teal-400/40 hover:bg-white/10"
+                                className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 text-end text-sm text-white transition hover:border-teal-400/40 hover:bg-white/10"
 
                               >
 

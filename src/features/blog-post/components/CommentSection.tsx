@@ -49,7 +49,7 @@ function Comment({
   };
 
   return (
-    <div className={depth > 0 ? 'pr-8 border-r border-white/8 mr-4' : ''}>
+    <div className={depth > 0 ? "pe-8 border-e border-white/8 me-4" : ''}>
       <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-4 mb-3">
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
@@ -118,7 +118,7 @@ function Comment({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="overflow-hidden mb-3 pr-4"
+            className="overflow-hidden mb-3 pe-4"
           >
             <div className="space-y-2 p-3 rounded-xl border border-white/10 bg-white/[0.02]">
               <input
@@ -158,7 +158,7 @@ function Comment({
         <>
           <button
             onClick={() => setShowReplies((v) => !v)}
-            className="flex items-center gap-1 text-xs text-white/35 hover:text-white/60 transition-colors mb-2 mr-4 focus:outline-none"
+            className="flex items-center gap-1 text-xs text-white/35 hover:text-white/60 transition-colors mb-2 me-4 focus:outline-none"
             aria-expanded={showReplies}
           >
             <motion.span animate={{ rotate: showReplies ? 0 : -90 }} transition={{ duration: 0.18 }}>

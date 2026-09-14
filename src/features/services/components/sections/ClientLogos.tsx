@@ -92,8 +92,8 @@ export const ClientLogos = ({ logos }: ClientLogosProps) => {
           </div>
 
           {/* Gradient overlays for fade effect */}
-          <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-950/80 to-transparent pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-950/80 to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 start-0 w-32 bg-gradient-to-r from-slate-950/80 to-transparent pointer-events-none" />
+          <div className="absolute inset-y-0 end-0 w-32 bg-gradient-to-l from-slate-950/80 to-transparent pointer-events-none" />
         </div>
       </motion.div>
 

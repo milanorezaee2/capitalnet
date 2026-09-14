@@ -94,7 +94,7 @@ export default function VideoEmbed({ url, title = t("ویدئو"), poster, ratio
               />
             )}
             <div className="relative z-10 w-16 h-16 rounded-full bg-teal-500/90 flex items-center justify-center shadow-2xl group-hover:bg-teal-400/90 group-hover:scale-110 transition-all duration-200">
-              <Play size={28} className="text-white mr-1" fill="currentColor" aria-hidden="true" />
+              <Play size={28} className="text-white me-1" fill="currentColor" aria-hidden="true" />
             </div>
             <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" aria-hidden="true" />
           </button>

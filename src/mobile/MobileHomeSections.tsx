@@ -169,7 +169,7 @@ export function MnProcessSteps({ settings, themeMode = 'dark' }: { settings: Sit
       </motion.div>
       <div className="relative px-5 space-y-0">
         {/* connector */}
-        <div className="absolute right-[38px] top-5 bottom-5 w-[2px] rounded-full"
+        <div className="absolute end-[38px] top-5 bottom-5 w-[2px] rounded-full"
           style={{ background: 'linear-gradient(180deg,rgba(99,102,241,0.5),rgba(16,185,129,0.15))' }} />
         {steps.map((s: any, i: number) => {
           const c = STEP_COLORS[i % STEP_COLORS.length];
@@ -219,7 +219,7 @@ export function MnClientShowcase({ settings, themeMode = 'dark' }: { settings: S
         {all.map((card: any, i: number) => (
           <motion.div key={i} {...fv} transition={{ ...fv.transition, delay: i * 0.06 }}
             className={`${hoverCardClass} mn-card p-4 space-y-2 overflow-hidden relative`}>
-            <div className="absolute -top-6 -left-6 h-16 w-16 rounded-full blur-2xl opacity-20 pointer-events-none"
+            <div className="absolute -top-6 -start-6 h-16 w-16 rounded-full blur-2xl opacity-20 pointer-events-none"
               style={{ background: card.accentColor ?? '#6366f1' }} />
             <p className="text-[10px] font-black tracking-widest uppercase"
               style={{ color: card.accentColor ?? '#6366f1' }}>
@@ -370,7 +370,7 @@ export function MnFAQ({ settings, onNavigate, themeMode = 'dark' }: { settings: 
         {items.map((item: any, i: number) => (
           <div key={i} className={`${hoverCardClass} mn-card overflow-hidden transition-all duration-300 ${open === i ? 'border-mn-accent/30' : ''}`}>
             <button type="button" onClick={() => setOpen(open === i ? null : i)}
-              className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-right">
+              className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-end">
               <span className={`text-sm font-bold leading-snug flex-1 ${themeMode === 'light' ? 'text-slate-900' : 'text-white'}`}>{item.q}</span>
               <motion.div animate={{ rotate: open === i ? 180 : 0 }} transition={{ duration: 0.2 }}
                 className={`shrink-0 flex h-7 w-7 items-center justify-center rounded-full border ${themeMode === 'light' ? 'border-slate-200 bg-slate-100' : 'border-white/10 bg-white/[0.04]'}`}>

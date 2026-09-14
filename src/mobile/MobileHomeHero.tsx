@@ -95,7 +95,7 @@ export default function MobileHomeHero({ settings, onNavigate, themeMode = 'dark
       {stats.length > 0 && (
         <motion.div {...fadeUp(0.12)} className="grid grid-cols-3 gap-2.5">
           {stats.map((s: any, i: number) => (
-            <div key={i} className="mn-card text-right p-3">
+            <div key={i} className="mn-card text-end p-3">
               <p className={`text-xl font-black leading-none ${isLight ? 'text-slate-900' : 'text-white'}`}>{s.value}</p>
               <p className={`mt-1 text-[10px] font-semibold leading-tight ${isLight ? 'text-slate-600' : 'text-white/55'}`}>{s.label}</p>
             </div>

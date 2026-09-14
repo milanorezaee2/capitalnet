@@ -48,7 +48,7 @@ export const Pricing = ({ plans }: PricingProps) => (
             }`}
           >
             {plan.featured && (
-              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-cyan-500 px-4 py-1 text-[11px] font-black uppercase tracking-wider text-slate-950">
+              <span className="absolute -top-3.5 start-1/2 -translate-x-1/2 rounded-full bg-cyan-500 px-4 py-1 text-[11px] font-black uppercase tracking-wider text-slate-950">
                 {t("محبوب‌ترین")}
               </span>
             )}
@@ -61,7 +61,7 @@ export const Pricing = ({ plans }: PricingProps) => (
             <div className="mb-8">
               <span className="text-4xl font-black text-white">{fmt(plan.price)}</span>
               {plan.price > 0 && (
-                <span className="mr-1 text-sm text-slate-500"> {plan.currency} {t("/ ماه")}</span>
+                <span className="me-1 text-sm text-slate-500"> {plan.currency} {t("/ ماه")}</span>
               )}
             </div>
 

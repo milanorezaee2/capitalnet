@@ -247,7 +247,7 @@ export default function HeroNetworkGraph() {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 left-0 right-1/2 pointer-events-none hidden md:block"
+      className="absolute inset-0 start-0 end-1/2 pointer-events-none hidden md:block"
       aria-hidden
     >
       <canvas

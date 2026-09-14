@@ -256,7 +256,7 @@ export default function ChatWidget() {
   if (chatEnabled === false) return null;
 
   return (
-    <div className="chat-widget-fab fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3" dir="rtl">
+    <div className="chat-widget-fab fixed bottom-8 end-8 z-50 flex flex-col items-end gap-3" dir="rtl">
       {/* Chat Panel */}
       <AnimatePresence>
         {open && (
@@ -288,7 +288,7 @@ export default function ChatWidget() {
                     style={{ background: 'linear-gradient(135deg, #00BCD4, #00838F)' }}>
                     <MessageCircle size={18} className="text-white" />
                   </div>
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#081224]" />
+                  <span className="absolute bottom-0 end-0 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[#081224]" />
                 </div>
                 <div>
                   <p className="text-white font-bold text-sm leading-none mb-0.5">{tr("پشتیبانی CapNet")}</p>
@@ -396,7 +396,7 @@ export default function ChatWidget() {
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && send()}
                 placeholder={tr("پیام خود را بنویسید...")}
-                className="flex-1 bg-transparent text-white text-sm outline-none placeholder-white/30 text-right"
+                className="flex-1 bg-transparent text-white text-sm outline-none placeholder-white/30 text-end"
               />
               <button
                 onClick={() => send()}
@@ -443,7 +443,7 @@ export default function ChatWidget() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
-              className="absolute -top-1 -left-1 w-5 h-5 bg-amber-400 rounded-full text-[10px] font-black text-gray-900 flex items-center justify-center"
+              className="absolute -top-1 -start-1 w-5 h-5 bg-amber-400 rounded-full text-[10px] font-black text-gray-900 flex items-center justify-center"
             >
               {unread}
             </motion.span>

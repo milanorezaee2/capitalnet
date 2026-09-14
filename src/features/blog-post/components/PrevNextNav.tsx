@@ -26,7 +26,7 @@ export default function PrevNextNav({ prev, next, onNavigate }: Props) {
       {prev ? (
         <button
           onClick={() => onNavigate(prev.slug)}
-          className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-4 text-right hover:border-white/20 hover:bg-white/[0.04] transition-all duration-150 group focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+          className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-4 text-end hover:border-white/20 hover:bg-white/[0.04] transition-all duration-150 group focus:outline-none focus:ring-2 focus:ring-teal-500/40"
           aria-label={t('مقاله قبلی: {title}', { title: prev.title })}
         >
           <ChevronRight
@@ -50,7 +50,7 @@ export default function PrevNextNav({ prev, next, onNavigate }: Props) {
       {next ? (
         <button
           onClick={() => onNavigate(next.slug)}
-          className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-4 text-left hover:border-white/20 hover:bg-white/[0.04] transition-all duration-150 group focus:outline-none focus:ring-2 focus:ring-teal-500/40 sm:flex-row-reverse sm:text-right"
+          className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-4 text-start hover:border-white/20 hover:bg-white/[0.04] transition-all duration-150 group focus:outline-none focus:ring-2 focus:ring-teal-500/40 sm:flex-row-reverse sm:text-end"
           aria-label={t('مقاله بعدی: {title}', { title: next.title })}
         >
           <ChevronLeft

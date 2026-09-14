@@ -75,12 +75,12 @@ export function CategoryPage({ categoryName, posts, onNavigate, onBack }: Catego
 
         <motion.div variants={vFadeUp} initial="hidden" animate="show" className="mb-12">
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-teal-500/10 via-amber-500/5 to-purple-500/10 border border-white/10 p-8 md:p-12">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/20 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-amber-500/20 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-0 end-0 w-96 h-96 bg-teal-500/20 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 start-0 w-80 h-80 bg-amber-500/20 rounded-full blur-[100px] pointer-events-none" />
             
             <div className="relative">
               <div className={`inline-flex items-center rounded-full border border-teal-400/30 bg-teal-400/10 px-4 py-2 text-sm font-medium text-teal-200 mb-6`}>
-                <Star size={16} className="ml-2" />
+                <Star size={16} className="ms-2" />
                 {t("دسته‌بندی:")} {categoryInfo.label}
               </div>
               
@@ -122,7 +122,7 @@ export function CategoryPage({ categoryName, posts, onNavigate, onBack }: Catego
                   key={post.id}
                   variants={vFadeUp}
                   onClick={() => onNavigate('blog-post', post.slug)}
-                  className="card-glass rounded-2xl p-6 border border-white/10 hover:border-teal-500/50 transition-all group text-left"
+                  className="card-glass rounded-2xl p-6 border border-white/10 hover:border-teal-500/50 transition-all group text-start"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span className="inline-flex items-center rounded-full bg-teal-500/20 border border-teal-500/50 px-3 py-1 text-xs font-semibold text-teal-300">
@@ -200,12 +200,12 @@ export function TagPage({ tagName, posts, onNavigate, onBack }: TagPageProps) {
 
         <motion.div variants={vFadeUp} initial="hidden" animate="show" className="mb-12">
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-amber-500/10 border border-white/10 p-8 md:p-12">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-pink-500/20 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-0 end-0 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 start-0 w-80 h-80 bg-pink-500/20 rounded-full blur-[100px] pointer-events-none" />
             
             <div className="relative">
               <div className="inline-flex items-center rounded-full border border-purple-400/30 bg-purple-400/10 px-4 py-2 text-sm font-medium text-purple-200 mb-6">
-                <Star size={16} className="ml-2" />
+                <Star size={16} className="ms-2" />
                 {t("تگ:")} {tagName}
               </div>
               
@@ -235,7 +235,7 @@ export function TagPage({ tagName, posts, onNavigate, onBack }: TagPageProps) {
                   key={post.id}
                   variants={vFadeUp}
                   onClick={() => onNavigate('blog-post', post.slug)}
-                  className="card-glass rounded-2xl p-6 border border-white/10 hover:border-purple-500/50 transition-all group text-left"
+                  className="card-glass rounded-2xl p-6 border border-white/10 hover:border-purple-500/50 transition-all group text-start"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span className="inline-flex items-center rounded-full bg-purple-500/20 border border-purple-500/50 px-3 py-1 text-xs font-semibold text-purple-300">
@@ -307,8 +307,8 @@ export function AuthorPage({ authorName, posts, onNavigate, onBack }: AuthorPage
 
         <motion.div variants={vFadeUp} initial="hidden" animate="show" className="mb-12">
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-teal-500/10 border border-white/10 p-8 md:p-12">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/20 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-0 end-0 w-96 h-96 bg-green-500/20 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 start-0 w-80 h-80 bg-emerald-500/20 rounded-full blur-[100px] pointer-events-none" />
             
             <div className="relative">
               <div className="flex items-center gap-4 mb-6">
@@ -355,7 +355,7 @@ export function AuthorPage({ authorName, posts, onNavigate, onBack }: AuthorPage
                   key={post.id}
                   variants={vFadeUp}
                   onClick={() => onNavigate('blog-post', post.slug)}
-                  className="card-glass rounded-2xl p-6 border border-white/10 hover:border-green-500/50 transition-all group text-left"
+                  className="card-glass rounded-2xl p-6 border border-white/10 hover:border-green-500/50 transition-all group text-start"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span className="inline-flex items-center rounded-full bg-green-500/20 border border-green-500/50 px-3 py-1 text-xs font-semibold text-green-300">

@@ -13,7 +13,7 @@ export default function ReadingProgressBar() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-white/10"
+      className="fixed top-0 start-0 end-0 z-50 h-[3px] bg-white/10"
       aria-hidden="true"
     >
       <div

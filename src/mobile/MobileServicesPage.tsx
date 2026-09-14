@@ -86,7 +86,7 @@ export default function MobileServicesPage({ settings, onNavigate, themeMode = '
             >
               {/* Subtle gradient orb */}
               <div
-                className="absolute -top-8 -left-8 h-24 w-24 rounded-full blur-2xl opacity-25 pointer-events-none"
+                className="absolute -top-8 -start-8 h-24 w-24 rounded-full blur-2xl opacity-25 pointer-events-none"
                 style={{ background: `radial-gradient(circle, ${colors.from}, transparent)` }}
               />
 

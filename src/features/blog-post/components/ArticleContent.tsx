@@ -114,7 +114,7 @@ function AlertBox({ variant, children }: { variant: AlertVariant; children: Reac
 function BlockQuote({ text, author }: { text: string; author?: string }) {
   return (
     <blockquote className="bp-quote">
-      <Quote size={32} className="absolute top-4 left-4 text-teal-400/15" aria-hidden="true" />
+      <Quote size={32} className="absolute top-4 start-4 text-teal-400/15" aria-hidden="true" />
       <p className="text-base md:text-lg text-white/75 italic leading-relaxed">{renderInline(text)}</p>
       {author && (
         <footer className="mt-3 text-sm text-white/40 font-semibold">— {author}</footer>

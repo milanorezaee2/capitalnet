@@ -101,7 +101,7 @@ export function RelatedPosts({ currentPost, allPosts, onNavigate }: RelatedPosts
               key={post.id}
               variants={vFadeUp}
               onClick={() => onNavigate(post.slug)}
-              className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-white/5 to-white/2 border border-white/10 hover:border-teal-500/50 transition-all p-6 text-left h-full"
+              className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-white/5 to-white/2 border border-white/10 hover:border-teal-500/50 transition-all p-6 text-start h-full"
             >
               {/* Background gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-teal-500/0 to-amber-500/0 group-hover:from-teal-500/10 group-hover:to-amber-500/10 transition-all duration-300" />

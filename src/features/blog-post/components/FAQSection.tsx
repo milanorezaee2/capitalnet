@@ -66,7 +66,7 @@ export default function FAQSection({ items }: Props) {
                 <button
                   id={headingId}
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-right focus:outline-none focus:ring-2 focus:ring-teal-500/40 rounded-2xl"
+                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-end focus:outline-none focus:ring-2 focus:ring-teal-500/40 rounded-2xl"
                   aria-expanded={isOpen}
                   aria-controls={bodyId}
                 >

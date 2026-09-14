@@ -26,7 +26,7 @@ export const FAQ = ({ items }: FAQProps) => {
           className="rounded-2xl border border-white/10 bg-slate-950/40 transition-colors hover:border-white/20"
         >
           <button
-            className="flex w-full items-center justify-between gap-4 px-6 py-5 text-right"
+            className="flex w-full items-center justify-between gap-4 px-6 py-5 text-end"
             onClick={() => setOpenIndex(index === openIndex ? -1 : index)}
             aria-expanded={openIndex === index}
           >

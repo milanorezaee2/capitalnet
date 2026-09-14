@@ -266,7 +266,7 @@ export const Related = ({ services, blogPosts }: RelatedProps) => {
             />
 
             {/* Decorative pattern */}
-            <div className="absolute top-0 right-0 w-32 h-32 opacity-5">
+            <div className="absolute top-0 end-0 w-32 h-32 opacity-5">
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-bl-full" />
             </div>
 
@@ -325,7 +325,7 @@ export const Related = ({ services, blogPosts }: RelatedProps) => {
             />
 
             {/* Decorative pattern */}
-            <div className="absolute top-0 right-0 w-32 h-32 opacity-5">
+            <div className="absolute top-0 end-0 w-32 h-32 opacity-5">
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-bl-full" />
             </div>
 

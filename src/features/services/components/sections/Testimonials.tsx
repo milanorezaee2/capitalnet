@@ -79,7 +79,7 @@ export const Testimonials = ({ testimonials }: TestimonialsProps) => {
                   <p className="text-sm text-slate-400">{t.role} · {t.company}</p>
                 </div>
                 {/* stars */}
-                <div className="mr-auto flex gap-0.5">
+                <div className="me-auto flex gap-0.5">
                   {Array.from({ length: t.rating }).map((_, i) => (
                     <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
                   ))}

@@ -61,7 +61,7 @@ export const Categories = ({ categories }: CategoriesProps) => (
               style={{ borderColor: `${acc.border}30`, background: acc.bg }}
             >
               {/* number */}
-              <span className="absolute top-6 left-6 text-6xl font-black leading-none select-none"
+              <span className="absolute top-6 start-6 text-6xl font-black leading-none select-none"
                 style={{ color: `${acc.border}18` }}>
                 {String(i + 1).padStart(2, '0')}
               </span>

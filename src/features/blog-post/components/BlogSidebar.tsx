@@ -51,7 +51,7 @@ export default function BlogSidebar({
         <div className="relative">
           <Search
             size={15}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30"
+            className="absolute end-3 top-1/2 -translate-y-1/2 text-white/30"
             aria-hidden="true"
           />
           <input
@@ -60,7 +60,7 @@ export default function BlogSidebar({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("جستجو...")}
-            className="w-full text-sm bg-white/5 border border-white/10 rounded-xl pr-9 pl-3 py-2.5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/40"
+            className="w-full text-sm bg-white/5 border border-white/10 rounded-xl pe-9 ps-3 py-2.5 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-teal-500/40"
           />
         </div>
 
@@ -71,7 +71,7 @@ export default function BlogSidebar({
               <li key={p.id}>
                 <button
                   onClick={() => { setQuery(''); onNavigate(p.slug); }}
-                  className="w-full text-right text-xs text-white/60 hover:text-teal-300 transition-colors p-1.5 rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-teal-500/30"
+                  className="w-full text-end text-xs text-white/60 hover:text-teal-300 transition-colors p-1.5 rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-teal-500/30"
                 >
                   {p.title}
                 </button>
@@ -110,7 +110,7 @@ export default function BlogSidebar({
               <li key={p.id}>
                 <button
                   onClick={() => onNavigate(p.slug)}
-                  className="w-full text-right text-xs font-medium text-white/65 hover:text-teal-300 transition-colors line-clamp-2 leading-snug focus:outline-none focus:ring-2 focus:ring-teal-500/30 rounded-lg p-1"
+                  className="w-full text-end text-xs font-medium text-white/65 hover:text-teal-300 transition-colors line-clamp-2 leading-snug focus:outline-none focus:ring-2 focus:ring-teal-500/30 rounded-lg p-1"
                 >
                   {p.title}
                 </button>

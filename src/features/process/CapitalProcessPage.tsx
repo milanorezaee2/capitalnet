@@ -3,7 +3,7 @@
 // محتوا از processContentStore (localStorage) خوانده می‌شود
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import InlineBannerRenderer from '../../components/InlineBannerRenderer';
 import type { InlineBanner } from '../../lib/settingsApi';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
@@ -19,7 +19,7 @@ import {
   type ProcessContent,
 } from './processContentStore';
 
-import { t as tr } from '@/i18n';
+import { t as tr, useLanguage, deepTranslate } from '@/i18n';
 
 // ─── Capital Network Background Canvas ────────────────────────────────────────
 // شبکه سرمایه‌گذاری: نودهای VC/Startup متصل، جریان سرمایه، candlestick chart
@@ -626,7 +626,7 @@ function Hero({ onNavigate, c }: { onNavigate: (page: string) => void; c: Proces
 
       {/* Scroll cue */}
       <motion.div style={{ opacity: fadeOut }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600">
+        className="absolute bottom-8 start-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600">
         <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 2, repeat: Infinity }}>
           <ArrowDown size={18} />
         </motion.div>
@@ -716,7 +716,7 @@ function Timeline({ c }: { c: ProcessContent }) {
           <div className="space-y-2">
             {steps.map((step, i) => (
               <button key={step.id} onClick={() => setActive(i)}
-                className="w-full text-right flex items-center gap-4 px-5 py-4 rounded-2xl transition-all"
+                className="w-full text-end flex items-center gap-4 px-5 py-4 rounded-2xl transition-all"
                 style={{
                   background: active === i ? step.color + '15' : 'rgba(255,255,255,0.03)',
                   border: `1px solid ${active === i ? step.color + '40' : 'rgba(255,255,255,0.06)'}`,
@@ -757,7 +757,7 @@ function Timeline({ c }: { c: ProcessContent }) {
                           <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: step.color }}>{tr("مرحله")} {step.number}</p>
                           <h3 className="text-xl font-black text-white">{step.title}</h3>
                         </div>
-                        <span className="mr-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
+                        <span className="me-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
                           style={{ background: step.color + '18', color: step.color }}>
                           <Clock size={11} /> {step.duration}
                         </span>
@@ -950,7 +950,7 @@ function FaqSection({ c }: { c: ProcessContent }) {
               <div className="rounded-2xl overflow-hidden transition-all"
                 style={{ border: `1px solid ${open === i ? 'rgba(0,188,212,0.3)' : 'rgba(255,255,255,0.07)'}` }}>
                 <button onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex items-center justify-between px-6 py-4 text-right transition-all"
+                  className="w-full flex items-center justify-between px-6 py-4 text-end transition-all"
                   style={{ background: open === i ? 'rgba(0,188,212,0.06)' : 'rgba(255,255,255,0.03)' }}>
                   <span className="text-sm font-semibold text-white">{faq.q}</span>
                   <ChevronRight size={16} className="text-cyan-400 shrink-0 transition-transform"
@@ -981,7 +981,7 @@ function CTASection({ c }: { c: ProcessContent }) {
   return (
     <section className="py-24 px-6 md:px-16 relative overflow-hidden" style={{ background: '#111c2d' }}>
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-64 rounded-full opacity-15 blur-[80px]"
+        <div className="absolute top-0 start-1/2 -translate-x-1/2 w-[600px] h-64 rounded-full opacity-15 blur-[80px]"
           style={{ background: 'radial-gradient(ellipse, #00BCD4, #8b5cf6)' }} />
       </div>
       <div className="relative z-10 max-w-3xl mx-auto text-center">
@@ -1019,7 +1019,12 @@ function CTASection({ c }: { c: ProcessContent }) {
 
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
 export default function CapitalProcessPage({ onNavigate, banners = [] }: { onNavigate: (page: string) => void; banners?: InlineBanner[] }) {
-  const [c, setC] = useState<ProcessContent>(() => loadProcessContent());
+  const [rawContent, setC] = useState<ProcessContent>(() => loadProcessContent());
+  const { lang } = useLanguage();
+
+  // محتوای این صفحه از localStorage/دیتابیس به فارسی می‌آید؛ برای نسخهٔ انگلیسی
+  // در همین نقطه ترجمهٔ عمیق اعمال می‌شود.
+  const c = useMemo(() => deepTranslate(rawContent), [rawContent, lang]);
 
   // live reload وقتی ادمین ذخیره می‌کند
   useEffect(() => {

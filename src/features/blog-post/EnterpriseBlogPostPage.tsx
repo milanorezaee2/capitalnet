@@ -275,7 +275,7 @@ function BlogPostPageInner({ post, allPosts, onBack, onNavigate }: InnerProps) {
       {/* ── Skip link ────────────────────────────────────────────────────────── */}
       <a
         href="#article-main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-black focus:font-bold focus:rounded-xl"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:end-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-black focus:font-bold focus:rounded-xl"
       >
         {tr("رفتن به محتوا")}
       </a>

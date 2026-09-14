@@ -44,9 +44,27 @@
     <link rel="preload" as="font" type="font/woff2" href="/fonts/almarai-400-arabic.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/almarai-700-arabic.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/almarai-800-arabic.woff2" crossorigin />
+    <!-- Latin subsets for the English version of the site -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/almarai-400-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/almarai-700-latin.woff2" crossorigin />
     <!-- Non-critical weights: load async, don't block render -->
     <link rel="stylesheet" href="/fonts/almarai.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="/fonts/almarai.css" /></noscript>
+
+    <!-- ═══ LANGUAGE / DIRECTION BOOT: set lang+dir before first paint ══════════ -->
+    <!-- The site is bilingual: Persian (default, no prefix) and English (/en prefix).
+         Resolving the language here prevents a flash of RTL layout on English pages. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('cn_lang');
+          var isEnglish = /^\/en(\b|$)/.test(location.pathname) || stored === 'en';
+          var html = document.documentElement;
+          html.setAttribute('lang', isEnglish ? 'en' : 'fa');
+          html.setAttribute('dir', isEnglish ? 'ltr' : 'rtl');
+        } catch (e) {}
+      })();
+    </script>
 
     <!-- ═══ CRITICAL CSS: inline above-the-fold styles — zero render-blocking ═══ -->
     <!-- Extracted minimum to paint body background + spinner before any JS loads -->
@@ -59,6 +77,9 @@
       @font-face{font-family:'Almarai';font-style:normal;font-weight:400;font-display:optional;src:url('/fonts/almarai-400-arabic.woff2') format('woff2');unicode-range:U+0600-06FF,U+FB50-FDFF,U+FE70-FEFC}
       @font-face{font-family:'Almarai';font-style:normal;font-weight:700;font-display:optional;src:url('/fonts/almarai-700-arabic.woff2') format('woff2');unicode-range:U+0600-06FF,U+FB50-FDFF,U+FE70-FEFC}
       @font-face{font-family:'Almarai';font-style:normal;font-weight:800;font-display:optional;src:url('/fonts/almarai-800-arabic.woff2') format('woff2');unicode-range:U+0600-06FF,U+FB50-FDFF,U+FE70-FEFC}
+      /* Critical font-face: Latin 400/700 for above-the-fold English text */
+      @font-face{font-family:'Almarai';font-style:normal;font-weight:400;font-display:optional;src:url('/fonts/almarai-400-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122}
+      @font-face{font-family:'Almarai';font-style:normal;font-weight:700;font-display:optional;src:url('/fonts/almarai-700-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122}
       /* Loading spinner — shown before React hydrates */
       #initial-loader{position:fixed;inset:0;background:#030712;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .3s ease}
       #initial-loader.hidden{opacity:0;pointer-events:none}
