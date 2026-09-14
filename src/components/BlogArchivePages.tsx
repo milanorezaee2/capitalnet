@@ -4,7 +4,7 @@ import { ArrowLeft, TrendingUp, Eye, Star, Users } from 'lucide-react';
 import type { BlogPost, BlogCategory } from '../types/blog';
 import Breadcrumb from './Breadcrumb';
 
-import { t } from '@/i18n';
+import { t, formatNumber } from '@/i18n';
 
 
 const vFadeUp = {
@@ -130,7 +130,7 @@ export function CategoryPage({ categoryName, posts, onNavigate, onBack }: Catego
                     </span>
                     <div className="flex items-center gap-1 text-white/50 text-xs">
                       <Eye size={12} />
-                      {(post.views || 0).toLocaleString()}
+                      {formatNumber(post.views || 0)}
                     </div>
                   </div>
                   
@@ -243,7 +243,7 @@ export function TagPage({ tagName, posts, onNavigate, onBack }: TagPageProps) {
                     </span>
                     <div className="flex items-center gap-1 text-white/50 text-xs">
                       <Eye size={12} />
-                      {(post.views || 0).toLocaleString()}
+                      {formatNumber(post.views || 0)}
                     </div>
                   </div>
                   
@@ -363,7 +363,7 @@ export function AuthorPage({ authorName, posts, onNavigate, onBack }: AuthorPage
                     </span>
                     <div className="flex items-center gap-1 text-white/50 text-xs">
                       <Eye size={12} />
-                      {(post.views || 0).toLocaleString()}
+                      {formatNumber(post.views || 0)}
                     </div>
                   </div>
                   

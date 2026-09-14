@@ -255,8 +255,6 @@ export function formatDate(value: string | number | Date, options: DateFormatOpt
     return localizeDigits(String(value));
   }
 
-  const timePart = withTime && time ? `، ${pad(time.hour)}:${pad(time.minute)}` : '';
-
   if (lang === 'fa' && jalali) {
     const { jy, jm, jd } = jalali;
     const datePart = monthName

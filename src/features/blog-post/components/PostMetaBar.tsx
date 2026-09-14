@@ -5,7 +5,7 @@
  */
 import { Calendar, RefreshCw, Clock, Eye, ThumbsUp, MessageCircle, FileText, Tag } from 'lucide-react';
 
-import { t } from '@/i18n';
+import { t, formatNumber } from '@/i18n';
 
 
 interface Props {

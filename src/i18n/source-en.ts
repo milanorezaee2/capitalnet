@@ -410,7 +410,6 @@ const sourceEn: Record<string, string> = {
   'تحلیل‌های عمقی بازار و روند‌های صنعتی': 'In-depth market and industry trend analysis',
   'تاکتیک‌های مذاکره و نکات عملی': 'Negotiation tactics and practical tips',
   'تکنیک‌های مدل‌سازی و پیش‌بینی مالی': 'Financial modeling and forecasting techniques',
-  'بازگشت': 'Back',
   'دسته‌بندی یافت نشد': 'Category not found',
   'دسته‌بندی:': 'Category:',
   'مقاله در این دسته‌بندی': 'articles in this category',
@@ -498,7 +497,6 @@ const sourceEn: Record<string, string> = {
   'حجم فایل نباید بیشتر از 20MB باشد': 'File size must not exceed 20MB',
   'جزئیات': 'Details',
   'مستندات': 'Documents',
-  'تأیید': 'Confirm',
   'مثل: علی رضایی': 'e.g. Ali Rezaei',
   'ایمیل کاری': 'Work email',
   'شماره تماس / WhatsApp': 'Phone / WhatsApp',
@@ -592,7 +590,6 @@ const sourceEn: Record<string, string> = {
   'کوچک': 'Small',
   'عادی': 'Normal',
   'بزرگ': 'Large',
-  'دانلود {label}': 'Download {label}',
 
   // ── بخش‌های CTA ───────────────────────────────────────────────────────────
   'تیم ما با تجربه بیش از ۱۵ سال در زمینه تأمین مالی، همراه شماست.':
@@ -622,7 +619,6 @@ const sourceEn: Record<string, string> = {
   'گزارش نظر': 'Report comment',
   'پاسخ خود را بنویسید...': 'Write your reply...',
   'انصراف': 'Cancel',
-  'ارسال': 'Submit',
   'لطفاً نام و متن نظر را وارد کنید.': 'Please enter your name and comment.',
   'نظرات (': 'Comments (',
   'فرم ارسال نظر': 'Comment form',

@@ -142,7 +142,7 @@ import { ServicePage } from './features/services';
 
 import { FinancialBackground } from './components/FinancialBackground';
 
-import { t as __t } from '@/i18n';
+import { t as __t, deepTranslate, formatNumber } from '@/i18n';
 
 
 
@@ -1179,7 +1179,7 @@ function AdvancedBlogCard({
 
 }) {
 
-  const category = blogCategories[post.category];
+  const category = deepTranslate(blogCategories)[post.category];
 
   const [isLiked, setIsLiked] = useState(false);
 
@@ -1347,7 +1347,7 @@ function AdvancedBlogCard({
 
               <Eye size={12} />
 
-              {post.views?.toLocaleString()}
+              {formatNumber(post.views ?? 0)}
 
             </div>
 
@@ -1437,7 +1437,7 @@ function AdvancedBlogCard({
 
 function FeaturedPost({ post, onRead }: { post: BlogPost; onRead: (slug: string) => void }) {
 
-  const category = blogCategories[post.category];
+  const category = deepTranslate(blogCategories)[post.category];
 
   return (
 
@@ -4595,7 +4595,7 @@ function ClientShowcase({ settings }: { settings: SiteSettings }) {
 
 function HomeBlogPreview({ onNavigate, settings }: { onNavigate?: (page: PageKey, postSlug?: string, category?: BlogFilter) => void; settings: SiteSettings }) {
 
-  const featured = blogPosts.filter(p => p.featured).slice(0, 3);
+  const featured = deepTranslate(blogPosts).filter(p => p.featured).slice(0, 3);
 
 
 
@@ -4669,7 +4669,7 @@ function HomeBlogPreview({ onNavigate, settings }: { onNavigate?: (page: PageKey
 
           {featured.map((post, idx) => {
 
-            const catMeta = blogCategories[post.category];
+            const catMeta = deepTranslate(blogCategories)[post.category];
 
             return (
 
@@ -4749,7 +4749,7 @@ function HomeBlogPreview({ onNavigate, settings }: { onNavigate?: (page: PageKey
 
                       <Eye size={11} />
 
-                      {post.views?.toLocaleString('fa-IR') ?? __t("۰")}
+                      {formatNumber(post.views ?? 0)}
 
                     </div>
 
@@ -6899,7 +6899,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
 
 
-  const post = dbPost ?? blogPosts.find((p) => p.slug === slug);
+  const post = deepTranslate(dbPost ?? blogPosts.find((p) => p.slug === slug));
 
   const category = post ? blogCategories[post.category as BlogCategory] : null;
 
@@ -7033,7 +7033,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
 
 
-  const relatedPosts = blogPosts
+  const relatedPosts = deepTranslate(blogPosts)
 
     .filter((p) => p.id !== post.id && (p.category === post.category || p.tags.some((t) => post.tags.includes(t))))
 
@@ -7281,7 +7281,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                       <Eye size={16} className="text-teal-400" />
 
-                      <span>{post.views.toLocaleString()} {__t("بازدید")}</span>
+                      <span>{formatNumber(post.views)} {__t("بازدید")}</span>
 
                     </div>
 
@@ -7683,7 +7683,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                 <div className="space-y-3">
 
-                  {blogPosts
+                  {deepTranslate(blogPosts)
 
                     .sort((a, b) => (b.views || 0) - (a.views || 0))
 
@@ -7721,7 +7721,7 @@ function BlogPostDetail({ slug, onBack }: { slug: string; onBack: () => void }) 
 
                               <Eye size={12} />
 
-                              {popularPost.views?.toLocaleString()} {__t("بازدید")}
+                              {formatNumber(popularPost.views ?? 0)} {__t("بازدید")}
 
                             </div>
 
@@ -7794,7 +7794,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
 
 
-  const allPosts = postsLoaded && dbPosts.length > 0 ? dbPosts : blogPosts;
+  const allPosts = deepTranslate(postsLoaded && dbPosts.length > 0 ? dbPosts : blogPosts);
 
 
 
@@ -8398,7 +8398,7 @@ function BlogPage({ onNavigate, initialCategory, settings }: { onNavigate: (page
 
                           <Eye size={12} />
 
-                          {post.views?.toLocaleString()} {__t("بازدید")}
+                          {formatNumber(post.views ?? 0)} {__t("بازدید")}
 
                         </div>
 
@@ -11092,7 +11092,7 @@ function MainApp() {
 
 
 
-    const blogItems: SearchItem[] = blogPosts.map((post) => ({
+    const blogItems: SearchItem[] = deepTranslate(blogPosts).map((post) => ({
 
       id: `blog-${post.id}`,
 

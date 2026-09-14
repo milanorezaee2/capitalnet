@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Eye, Clock } from 'lucide-react';
 import type { BlogPost, BlogCategory } from '../types/blog';
 
-import { t } from '@/i18n';
+import { t, formatNumber } from '@/i18n';
 
 
 interface RelatedPostsProps {
@@ -138,7 +138,7 @@ export function RelatedPosts({ currentPost, allPosts, onNavigate }: RelatedPosts
                 <div className="flex items-center justify-between text-xs text-white/50 pt-4 border-t border-white/10">
                   <div className="flex items-center gap-2">
                     <Eye size={12} />
-                    {(post.views || 0).toLocaleString()}
+                    {formatNumber(post.views || 0)}
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock size={12} />

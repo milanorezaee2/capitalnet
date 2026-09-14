@@ -10,11 +10,11 @@
  * - tailwindcss
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, TrendingUp, Layers, Search, Users, FileText, Star, Briefcase, Lock } from 'lucide-react';
 
-import { t } from '@/i18n';
+import { t, useLanguage, deepTranslate } from '@/i18n';
 
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -143,7 +143,14 @@ interface EvaluationSectionProps {
 }
 
 export default function EvaluationSection({ data = {}, className = '' }: EvaluationSectionProps) {
-  const settings = { ...defaultData, ...data };
+  //订阅 تغییر زبان تا محتوا دوباره رندر شود
+  const { lang } = useLanguage();
+
+  // محتوای پیش‌فرض این بخش به فارسی است؛ برای نسخهٔ انگلیسی ترجمهٔ عمیق اعمال می‌شود
+  const settings = useMemo(
+    () => deepTranslate({ ...defaultData, ...data }),
+    [data, lang]
+  );
 
   return (
     <section className={`relative overflow-hidden py-24 ${className}`}>

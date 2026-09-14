@@ -50,7 +50,6 @@ const missingTranslations = new Set<string>();
 
 function isDev(): boolean {
   try {
-    // @ts-expect-error — import.meta.env فقط در محیط Vite تعریف می‌شود
     return Boolean(import.meta.env && import.meta.env.DEV);
   } catch {
     return false;
@@ -107,8 +106,6 @@ const NON_TRANSLATABLE_KEYS = new Set([
   'className', 'style', 'pattern', 'variant', 'size', 'align', 'dir', 'lang',
   'locale', 'currency', 'created_at', 'updated_at', 'date', 'status',
 ]);
-
-const PERSIAN_DIGIT = /[۰-۹٠-٩]/;
 
 /**
  * ترجمهٔ بازگشتیِ یک ساختار داده (رشته، آرایه یا شیء).
